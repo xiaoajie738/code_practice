@@ -1,0 +1,18 @@
+class Bag {
+public:
+	vector<int> ret;
+    // 每次拿一个球都会调用这个函数，N表示第i次调用
+    vector<int> carryBalls(int N, int k) 
+    {
+       if(N<=k)
+           ret.push_back(N);
+        else
+       {
+            int a=rand()%N;
+            //压入概率k/N
+            if(a<k)//随机等概率吐出球
+                ret[a]=N;
+        }
+        return ret;
+    }
+};

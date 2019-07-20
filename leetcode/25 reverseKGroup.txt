@@ -1,0 +1,87 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+struct ListNode {
+	    int val;
+        ListNode *next;
+	    ListNode(int x) : val(x), next(NULL) {}
+	 };
+
+
+void listPrint(ListNode *head)
+{
+	while(head != NULL)
+	{
+		cout << head->val << endl;
+		head = head->next;
+	}
+}
+
+ListNode* createList(vector<int> A)
+{
+	ListNode* head = new ListNode(A[0]);
+	ListNode* pc = head;
+	for(int i = 1; i < A.size(); ++i)
+	{
+		ListNode* newNode = new ListNode(A[i]);
+		pc->next = newNode;
+		pc = pc->next;
+	}
+	return head;
+}
+
+ListNode *reverseKGroup(ListNode *head, int k) 
+{
+	if(!head)
+		return head;
+	ListNode* dummy = new ListNode(-1);
+	dummy->next = head;
+	ListNode* pre = dummy;
+	ListNode* curr = head;
+	ListNode* nex = head->next;
+	ListNode* test = head;
+	while(nex != NULL)
+	{
+	    int i;
+		for(i = 0; i < k&&test != NULL; ++i)
+			test = test->next;
+		if(i == k)
+		{
+		    for(int i = 0; i < k-1 && nex != NULL; ++i)
+			{
+			   curr->next = nex->next;
+			   nex->next = pre->next;
+			   pre->next = nex;
+			   nex = curr->next;
+			}
+			pre = curr;
+			curr = curr->next;
+			if(curr != NULL)
+				nex = curr->next;
+			else
+				break;
+		}
+		else
+			break;
+	}
+	return dummy->next;
+}
+int main(void)
+{
+	int array[7] = {1,2,3,4,5,6,7};
+	int array1[4] = {2,4,6,8};
+
+	vector<int> A(array,array+7);
+	vector<int> A1(array1,array1+4);
+	ListNode* head;
+	ListNode* head1;
+	head = createList(A);
+	 listPrint(head);
+	 ListNode* newList;
+     newList = reverseKGroup(head,3);
+	 listPrint(newList);
+	system("pause");
+	
+	return 0;
+}

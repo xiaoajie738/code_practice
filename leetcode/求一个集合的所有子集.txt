@@ -1,0 +1,67 @@
+#include <iostream>
+
+#include <vector>
+
+#include <algorithm>
+
+using namespace std;
+
+
+void dfs(vector<vector<int> > &res,vector<int> &path, const int left,vector<int> &S)
+
+{
+	if(left < S.size())
+	
+    {
+		
+for(int i = left; i < S.size(); ++i)
+	
+	{
+			
+           path.push_back(S[i]);
+			
+           res.push_back(path);
+			
+          dfs(res,path,i+1,S);
+			
+          path.pop_back();
+		
+        }
+	
+      }
+
+}
+
+
+vector<vector<int> > subsets(vector<int> &S) 
+{
+	vector<vector<int> > res;
+	vector<int> nul;
+	res.push_back(nul);
+	if(S.size() == 0)
+		return res;
+	sort(S.begin(),S.end());
+	vector<int> path;
+	dfs(res,path,0,S);
+	return res;
+}
+
+
+
+
+int main(void)
+
+{
+
+	int array[3] = {1,2,3};
+
+	vector<int> A(array,array+3);
+
+	vector<vector<int> > res;
+	
+res = subsets(A);
+	
+system("pause");
+	
+return 0;
+}

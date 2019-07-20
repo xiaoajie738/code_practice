@@ -1,0 +1,18 @@
+//单例模式，利用静态只能初始化一次。
+class Singleton{
+public:
+	static Singleton* getInstance();
+private:
+	Singleton(){
+
+	}
+	//Singleton(const Singleton &);
+	//Singleton& operator=(const Singleton &);
+	static Singleton* m_pStest;
+};
+
+ Singleton* Singleton::m_pStest = new Singleton();
+ Singleton* Singleton::getInstance()
+ {
+     return m_pStest;
+ }

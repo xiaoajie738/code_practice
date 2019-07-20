@@ -1,0 +1,38 @@
+#include<iostream>
+#include<string>
+#include<vector>
+using namespace std;
+
+
+//输入例子:
+//abcd12345ed125ss123456789
+//abcd12345ed125ss1234 5678
+//输出例子:
+//123456789
+int main()
+{
+   string s;
+   while(getline(cin,s))
+   {
+      string res;
+	   string tmp;
+	  for(int i = 0; i < s.size(); ++i)
+	  {  
+		  if(s[i]-'0' >= 0 && s[i]-'0' <= 9)
+		  {
+			  tmp += s[i];
+		  }
+		  else
+		  {
+			  if(tmp.size() > res.size())
+				  res = tmp;
+			  tmp.clear();
+		  }
+	  }
+	  if(tmp.size() > res.size())
+		  res = tmp;
+	  cout << res;
+   }
+   system("pause");
+   return 0;
+}

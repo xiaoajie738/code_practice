@@ -1,0 +1,30 @@
+现在有一个行和列都排好序的矩阵，请设计一个高效算法，快速查找矩阵中是否含有值x。
+给定一个int矩阵mat，同时给定矩阵大小nxm及待查找的数x，请返回一个bool值，代表矩阵中是否存在x。所有矩阵中数字及x均为int范围内整数。保证n和m均小于等于1000。
+
+//有序矩阵查找练习题
+bool findX(vector<vector<int> > mat, int n, int m, int x) 
+{
+	// write code here
+	if(mat.size() == 0 || mat.size() != n || mat[0].size() != m)
+		return false;
+	int i = 0, j = m-1;
+	int Num = mat[i][j];
+	while(i <= n-1 && j >=0)
+	{
+	    if(Num > x)
+		{
+		   j--;
+		   Num = mat[i][j];
+		}
+		else if(Num < x)
+		{
+		    i++;
+			Num = mat[i][j];
+		}
+		else
+		{
+		   return true;
+		}
+	}
+	return false;
+}

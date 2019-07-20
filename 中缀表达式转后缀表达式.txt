@@ -1,0 +1,100 @@
+#include <fstream>  
+#include <string> 
+#include <stack> 
+#include <iostream> 
+#include <vector>
+using namespace std;
+
+void infixToPostinfix(const string& src, string& det)
+{
+   if(src.size() == 0)
+	   return;
+   stack<char> tmp;
+   for(int i = 0; i < src.size(); ++i)
+   {
+	   if(src[i] >= '0' && src[i] <= '9')
+	   {
+		   det += src[i];
+	   }
+	   else if(src[i] == '*' || src[i] == '/')
+	   {
+		   if(tmp.empty())
+			   tmp.push(src[i]);
+		   else
+		   {
+			   while(!tmp.empty())
+			   {
+				   char ch;
+				   ch = tmp.top();
+				   if(ch == '*' || ch == '/')
+				   {
+					   det.push_back(ch);
+					   tmp.pop();
+				   }
+				   else
+					   break;
+			   } 
+			    tmp.push(src[i]);
+		   }
+	   }
+	   else if(src[i] == '+' || src[i] == '-')
+	   {
+		   if(tmp.empty())
+			   tmp.push(src[i]);
+		   else
+		   {
+			   while(!tmp.empty())
+			   {
+				   char ch;
+				   ch = tmp.top();
+				   if(ch == '(')
+				   {
+					   break;
+				   }
+				   else
+				   {
+					   det.push_back(ch);
+					   tmp.pop();
+				   }
+			   } 
+			   tmp.push(src[i]);
+		   }
+	   }
+	   else if(src[i] == '(')
+		   tmp.push('(');
+	   else
+	   {
+		   while(!tmp.empty())
+		   {
+			   char ch;
+			   ch = tmp.top();
+			   if(ch != '(')
+			   {
+				   det.push_back(ch);
+				   tmp.pop();
+			   }
+			   else 
+			   {
+				   tmp.pop();
+				   break;
+			   }
+		   } 
+	   }
+   }
+   while(!tmp.empty())
+   {
+      char ch;
+	  ch = tmp.top();
+	  det.push_back(ch);
+	  tmp.pop();
+   }
+}
+
+int main (){
+	string src = "9+(3-1)*3+10/2";
+	string det;
+	infixToPostinfix(src,det);
+	cout << det;
+	system("pause");
+	return 0;
+}

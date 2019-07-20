@@ -1,0 +1,53 @@
+#include<iostream>
+#include<string>
+#include<vector>
+#include<stack>
+#include<algorithm>
+using namespace std;
+
+void numOfnumericalCode(vector<int> &vec,vector<int> &res)
+{
+	for(int i = 0; i < vec.size(); ++i)
+	{
+	    int num;
+		int index;
+		num = vec[i];
+		while(num)
+		{
+		   index = num%10;
+		   num = num/10;
+		}
+		res[index]++;
+	}
+}
+ void commonDivisor(vector<int> &vec,int num)
+ {
+     for(int i = 1; i <= num; ++i)
+	 {
+		 if(num%i == 0)
+			 vec.push_back(i);
+	 }
+ }
+int main()
+{
+      int l,r;
+	  while(cin >> r >> l)
+	  {
+         vector<int> res(10);
+	     for(int i = r; i <= l; ++i)
+		 {
+			 vector<int> vec;
+			 commonDivisor(vec,i);
+			 numOfnumericalCode(vec,res);
+		 }
+		 //打印数码出现的次数
+		 for(int i = 1; i < res.size(); ++i)
+		 {
+			 cout << res[i] << endl;
+		 }
+	  }
+	  system("pause");
+	  return 0;
+}
+
+

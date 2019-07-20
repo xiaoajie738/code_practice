@@ -1,0 +1,98 @@
+//排序主函数
+void mergeSort(vector<int> &A,int n) 
+{
+	// write code here
+	if(A.size() == 0 || A.size() != n)
+		return ;
+	int begin = 0;
+	int end = A.size() -1;
+	M_sort(A,begin,end);
+	
+}
+//子函数1
+void M_sort(vector<int> &A,int begin,int end)
+{
+	if((end - begin) == 0)
+		return;
+    int mid = (begin + end)/2;
+	M_sort(A, begin, mid);
+	M_sort(A, mid+1, end);
+    merge(A,begin,mid,end);
+}
+//子函数2
+void merge(vector<int> &A, int left, int mid, int right)
+{
+	int i = left, j = mid+1, k = 0;
+	//int* temp = new int[right - left + 1];
+	vector<int> temp(right - left + 1);
+	while (i <= mid && j <= right)
+	{
+		if (A[i] <= A[j])
+		{
+			temp[k++] = A[i++];
+		}
+		else
+		{
+			temp[k++] = A[j++];
+		}
+	}
+	while (i <= mid)
+	{
+		temp[k++] = A[i++];
+	}
+	while (j <= right)
+	{
+		temp[k++] = A[j++];
+	}
+	for (i = 0; i < k; i++)
+	{
+		A[left+i] = temp[i];
+	}
+	//delete []temp;
+}
+
+//非递归版本
+void MergeSortNonRecursion(vector<int> &arr,int length)//length表示数组长度  
+{  
+	vector<int> tmp(length);
+	int step=1;  
+	while(step<length)//由于步长小于length所以左侧的必然存在  
+	{  
+		int i=0;//控制坐标变化  
+		int left,right,leftToPos,rightToPos;  
+		while(i<length)  
+		{  
+			left=i;leftToPos=left+step-1>length-1?length-1:left+step-1;  
+			right=leftToPos+1;//保证剩下的部分不足low+step时用剩余部分  
+			rightToPos=right+step-1>length-1?length-1:right+step-1;  
+			int p=left;int q=right;int k=left;  
+			while(p<=leftToPos&&q<=rightToPos)  
+			{  
+				if(arr[p]>arr[q])//升序  
+				{  
+					tmp[k++]=arr[q++];  
+				}else  
+				{  
+					tmp[k++]=arr[p++];  
+				}  
+			}  
+			if(p<=leftToPos)  
+			{  
+				while(p<=leftToPos)  
+					tmp[k++]=arr[p++];  
+			}  
+			if(q<=rightToPos)  
+			{  
+				while(q<=rightToPos)  
+					tmp[k++]=arr[q++];  
+			}  
+			//返还给arr  
+			for(int j=left;j<=rightToPos;j++)  
+			{  
+				arr[j]=tmp[j];  
+			}  
+			i+=2*step;  
+		}  
+		step*=2;  
+	}  
+} 

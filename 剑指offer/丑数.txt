@@ -1,0 +1,76 @@
+int GetUglyNumber_Solution(int index) {
+	if(index <= 0)
+		return 0;
+	vector<int> res(index);
+	res[0] = 1;
+	int t1 = 0,t2 = 0,t3 = 0;
+	int tmp1,tmp2,tmp3;
+	for(int i = 1; i < index; ++i){
+		tmp1 = res[t1]*2;
+		tmp2 = res[t2]*3;
+		tmp3 = res[t3]*5;
+		if(tmp1 < tmp2 && tmp1 < tmp3){
+			++t1;
+			res[i] = tmp1;
+		}
+		else if(tmp2 < tmp1 && tmp2 < tmp3){
+			++t2;
+			res[i] = tmp2;
+		}
+		else if(tmp3 < tmp1 && tmp3 < tmp2){
+			++t3;
+			res[i] = tmp3;
+		}
+		else if(tmp1 == tmp2 && tmp1 < tmp3){
+			++t1;
+			++t2;
+			res[i] = tmp1;
+		}
+		else if(tmp1 == tmp3 && tmp1 < tmp2){
+			++t1;
+			++t3;
+			res[i] = tmp1;
+		}
+		else if(tmp2 == tmp3 && tmp2 < tmp1){
+			++t2;
+            ++t3;
+			res[i] = tmp2;
+		}
+		else{
+			++t1;
+			++t2;
+			++t3;
+			res[i] = tmp1;
+		}
+	}
+	return res[index-1];
+}
+
+bool isUglyNumber(int num){
+	if(num <= 0)
+		return false;
+	while(!(num % 2)){
+		num = num /2;
+	}
+	while(!(num % 3)){
+		num = num / 3;
+	}
+	while(!(num % 5)){
+		num = num / 5;
+	}
+	return num == 1 ? true : false;
+}
+
+int GetUglyNumber_Solution1(int index) {
+	if(index <= 0)
+		return 0;
+	int number = 1;
+	int count = 1;
+	while(count < index){
+		++number;
+		if(isUglyNumber(number)){
+			++count;
+		}	
+	}
+	return number;
+}

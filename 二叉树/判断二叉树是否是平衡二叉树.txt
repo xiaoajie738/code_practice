@@ -1,0 +1,58 @@
+#include <vector>
+#include <sstream>
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+struct TreeNode {
+	int val;
+	struct TreeNode *left;
+	struct TreeNode *right;
+	TreeNode(int x):val(x), left(NULL), right(NULL) {}
+};
+
+void createBiTree(TreeNode **root)  
+{  
+	char c;  
+	cin >> c;  
+	if('#' == c)  
+		return;  
+	else  
+	{  
+		*root = new TreeNode(c);  
+		createBiTree(&(*root)->left);  
+		createBiTree(&(*root)->right);  
+	}  
+} 
+
+int getDepth(TreeNode*root) {
+	if (root == NULL)
+		return 0;
+	int left = getDepth(root->left) + 1;
+	int right = getDepth(root->right) + 1;
+	return left > right ? left : right;
+}
+bool balance1(TreeNode*root) {
+	if (root == NULL)
+		return true;
+	int left = getDepth(root->left);
+	int right = getDepth(root->right);
+	int diff = left - right;
+	if (diff<-1||diff > 1)
+		return false;
+	return balance1(root->left) && balance1(root->right);
+}
+
+bool check(TreeNode* root) {
+	// write code here
+	return balance1(root);
+}
+int main()
+{
+	vector<int> vec;
+	TreeNode* root;
+	createBiTree(&root);
+	cout << getDepth(root);
+	system("pause");
+}

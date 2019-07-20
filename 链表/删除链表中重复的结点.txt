@@ -1,0 +1,35 @@
+//在一个排序的链表中，存在重复的结点，请删除该链表中重复的结点，
+//重复的结点不保留，返回链表头指针。例如，链表1->2->3->3->4->4->5 处理后为 1->2->5
+ListNode* deleteDuplication(ListNode* pHead)
+{
+	if(pHead == NULL || pHead->next == NULL)
+		return pHead;
+	else
+	{
+	   //新建一个头结点，以防止结点被删除
+	   ListNode* newHead = new ListNode(-1);
+	   newHead->next = pHead;
+	   ListNode* pre = newHead;
+	   ListNode* p = pHead;
+	   ListNode* next = NULL;
+	   while( p != NULL && p->next != NULL)
+	   {
+	      next = p->next;
+		  if(p->val == next->val)
+		  {
+		     while(next != NULL && next->val == p->val)
+				 next = next->next;
+			 pre->next = next;
+			 p = next;
+		  }
+		  else//如果当前结点和下一个结点不等，则像后移动一位
+		  {
+			  pre = p;
+			  p = p->next;
+		  }
+	   }
+	   return newHead->next;//返回头结点的下一个结点
+
+	}
+
+}

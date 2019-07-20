@@ -1,0 +1,55 @@
+#include<iostream>
+#include<time.h>
+using namespace std;
+
+int main()
+{
+   clock_t start,finish;
+   int a; 
+   srand((unsigned)time(NULL)); 
+   a = rand()%100;
+   cout << "——" << "猜数字" << "——" << endl;
+   cout << "请输入你猜的数字（0-100之间）" << endl;
+   bool initnum = false;
+   start = clock();
+   while(1)
+   {   
+	   if(initnum)
+	   {
+	      a = rand()%100;
+		  initnum = false;
+		  start = clock();
+		  cout << "请输入你猜的数字（0-100之间）" << endl;
+	   }
+	   int guess;
+	   cin >> guess;
+	   if(a > guess)
+	   {
+	       cout << "你猜的数小了，请再输入一个数" << endl;
+		   continue;
+	   }
+	   if(a < guess)
+	   {
+		   cout << "你猜的数大了，请再输入一个数" << endl;
+		   continue;
+	   }
+	   if(a == guess)
+	   {
+	      cout << "恭喜你猜对了!" << endl;
+		  finish = clock();
+		  cout << "你一共花了" << (double)(finish-start)/CLOCKS_PER_SEC << "秒" << endl;
+		  cout << "是否继续？（Y/N)" << endl;
+		  char isContinue;
+		  cin >> isContinue;
+		  if(isContinue == 'Y'|| isContinue == 'y')
+			 { 
+				 initnum = true;
+				 continue;   
+		     }
+		  else if(isContinue == 'N'|| isContinue == 'n')
+			  break;
+	   }
+
+   }
+   return 0;
+}

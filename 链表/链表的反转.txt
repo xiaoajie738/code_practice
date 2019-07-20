@@ -1,0 +1,16 @@
+//链表反转的实现
+listNode* reverseList(listNode* head)
+{
+    listNode* preNode = NULL;
+	listNode* pp = head;
+	listNode* pc = head->next;
+	while(pc != NULL)
+	{
+	   pp->next = preNode;
+	   preNode = pp;
+	   pp = pc;
+	   pc = pc->next;
+	}
+	pp->next = preNode;
+	return pp;
+}

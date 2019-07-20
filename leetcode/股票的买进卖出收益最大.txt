@@ -1,0 +1,19 @@
+
+//¶¯Ì¬¹æ»®
+int maxProfit(vector<int> &prices) 
+{
+	if(prices.size() < 2)
+		return 0;
+	vector<int> dp(prices.size());
+	int minPrice = prices[0];
+	int maxProfit = 0;
+	for(int i = 1; i < prices.size(); ++i)
+	{
+	    dp[i] = max(dp[i-1],prices[i]-minPrice);
+		if(prices[i] < minPrice)
+			minPrice = prices[i];
+		if( dp[i] > maxProfit)
+			maxProfit = dp[i];
+	}
+	return maxProfit;
+}

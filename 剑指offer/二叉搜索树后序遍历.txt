@@ -1,0 +1,41 @@
+
+//输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。
+//如果是则输出Yes,否则输出No。假设输入的数组的任意两个数字都互不相同。
+bool func(vector<int> vec)
+{
+	int len;
+	len = vec.size();
+	if(len == 1 || len ==0)
+		return true;
+	int root = vec[len-1];
+	int i = 0;
+	for(; i < len-1; i++)
+	{
+		if(vec[i] > root)
+			break;
+	}
+	vector<int> leftPoint,rightPoint;
+	for(int m = 0; m < i; m++)
+	{
+		leftPoint.push_back(vec[m]);
+	}
+	for(int m = i; m < len-1; m++ )
+	{
+		if(root >= vec[m])
+			return false;
+		rightPoint.push_back(vec[m]);
+	}
+	bool left,right;
+	left = func(leftPoint);
+	right = func(rightPoint);
+	return left&&right;
+}
+
+bool VerifySquenceOfBST(vector<int> sequence) 
+{
+	bool res;
+	if(sequence.size() == 0)
+		return false;
+	res = func(sequence);
+	return res;
+}

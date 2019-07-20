@@ -1,0 +1,34 @@
+ListNode *removeNthFromEnd(ListNode *head, int n) 
+{
+	ListNode* pSlow = head;
+	ListNode* pQuick = head;
+	ListNode* pp = NULL;
+	int k = n-1;
+	while(k--)
+	{  
+	   if(pQuick == NULL)
+		   return head;
+	   pQuick = pQuick->next;
+	}
+	while(pQuick->next != NULL)
+	{
+	   pQuick = pQuick->next;
+	   pp = pSlow;
+	   pSlow = pSlow->next;
+	}
+	if(pp)
+	{
+	  pp->next = pSlow->next;
+	  delete pSlow;
+	  pSlow = NULL;
+
+	}
+	else
+	{
+		ListNode* tmp = head;
+		head = head->next;
+		delete tmp;
+		tmp = NULL;
+	}
+	return head;
+}

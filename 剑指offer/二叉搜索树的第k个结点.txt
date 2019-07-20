@@ -1,0 +1,42 @@
+ int count1 = 0;
+ TreeNode* KthNode(TreeNode* pRoot, int k)
+ {
+	 if(pRoot == NULL)
+		 return NULL;
+	 TreeNode* node = KthNode(pRoot->left,k);
+	 if(node != NULL)
+		 return node;
+	 if(++count1 == k)
+		 return pRoot;
+	 node = KthNode(pRoot->right,k);
+	 if(node != NULL)
+		 return node;
+	 return NULL;
+ }
+
+TreeNode* KthNode(TreeNode* root,int k)
+ {
+	 if(root == NULL)
+		 return NULL;
+	 stack<TreeNode*> sta;
+	 TreeNode* pp = root;
+	 int count = 0;
+	 while(pp != NULL || !sta.empty())
+	 {
+		 while(pp != NULL)
+		 {
+			 sta.push(pp);
+			 pp = pp->left;
+		 }
+		 if(!sta.empty())
+		 {
+			 TreeNode* temp;
+			 temp = sta.top();
+			 sta.pop();
+			 count++;
+			 if(count == k)
+				 return temp;
+			 pp = temp->right;
+		 }
+	 }
+ }

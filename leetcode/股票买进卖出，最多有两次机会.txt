@@ -1,0 +1,28 @@
+int maxProfit(vector<int> &prices) 
+{
+	if(prices.size() < 2)
+		return 0;
+	int len = prices.size();
+	vector<int> preProfits(len);
+	vector<int> posProfits(len);
+	int minCurr = prices[0];
+	for(int i = 1; i < len; ++i)
+	{
+	    preProfits[i] = max(preProfits[i-1],prices[i]-minCurr);
+		if(prices[i] < minCurr)
+			minCurr = prices[i];
+	}
+	int maxCurr = prices[len-1];
+	for(int i = len-2; i >= 0; --i)
+	{
+		posProfits[i] = max(posProfits[i+1],maxCurr-prices[i]);
+		if(prices[i] > maxCurr)
+			maxCurr = prices[i];
+	}
+        int maxProfit = 0;
+	for(int i = 0; i < len; ++i)
+	{
+	    maxProfit = max(preProfits[i] + posProfits[i],maxProfit);
+	}
+	return maxProfit;
+}

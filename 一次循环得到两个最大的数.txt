@@ -1,0 +1,41 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
+//一次遍历，得出数组中最大的两个数
+vector<int> twoMaxNum(vector<int> array)
+{
+   vector<int> res;
+   if(array.size() < 2)
+	   return res;
+   int max_first = array[0],max_second = array[1];
+   if(max_first < max_second)
+	   swap(max_first,max_second);
+   for(int i = 2; i < array.size(); i++)
+   {
+      if(array[i] > max_first)
+	  {
+		  max_second = max_first;
+		  max_first = array[i];
+	  }
+	  if(array[i] < max_first && array[i] > max_second)
+	  {
+	     max_second = array[i];
+	  }
+   }
+   res.push_back(max_first);
+   res.push_back(max_second);
+   return res;
+
+}
+
+int main()
+{    
+	 int array[2] = {10,12};
+	 vector<int> vec(array,array+2);
+
+	twoMaxNum(vec);
+	system("pause");
+	return 0;
+
+}

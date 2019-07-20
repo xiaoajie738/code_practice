@@ -1,0 +1,28 @@
+ vector<vector<int> > fourSum(vector<int> &num, int target) 
+{
+	vector<vector<int>> res;
+	if(num.size() < 4)
+		return res;
+	vector<int> tmp;
+	int i,j,k,t;
+	int len = num.size();
+	for(i = 0; i < len-3; ++i)
+		for(j = i+1; j < len-2; ++j)
+			for(k = j+1; k < len-1; ++k)
+				for(t = k+1; t < len; ++t)
+			     {
+					 if(num[i]+num[j]+num[k]+num[t] == target)
+					 {
+						 tmp.push_back(num[i]);
+						 tmp.push_back(num[j]);
+						 tmp.push_back(num[k]);
+						 tmp.push_back(num[t]);
+						 sort(tmp.begin(),tmp.end());
+						 res.push_back(tmp);
+						 tmp.clear();
+					 }
+			      }
+     sort(res.begin(),res.end());
+	 res.erase(unique(res.begin(),res.end()),res.end());
+     return res;
+}

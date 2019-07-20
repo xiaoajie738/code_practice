@@ -1,0 +1,52 @@
+//思路：先找到两个单链表的入环节点，判断入环节点是否相等，如果相等，则两单链表相交，否则
+//以链表1的入环地址为起点进行遍历，如果遇到链表2的入环节点，则两链表相交，如果链表1遍历完一圈还没有遇到链表2的入环节点，则
+	//；两链表不相交。
+
+ListNode* startNodeOfRing(ListNode* head)
+{
+  if(head == NULL || head->next == NULL)
+	  return NULL;
+   ListNode* pSlow = head;
+   ListNode* pQuick = head;
+   while(pQuick != NULL)
+   {
+       pSlow = pSlow->next;
+	   pQuick = pQuick->next == NULL?NULL:pQuick->next->next;
+	   if(pSlow == pQuick)
+		   break;
+   }
+   if(pQuick == NULL)
+	   return NULL;
+   pSlow = head;
+   while(pSlow != pQuick)
+   {
+       pSlow = pSlow->next;
+	   pQuick = pQuick->next;
+   }
+   return pSlow;
+}
+
+bool chkInter(ListNode* head1, ListNode* head2, int adjust0, int adjust1) 
+{
+	// write code here
+	if(head1 == NULL || head2 == NULL || head1->next == NULL || head2->next == NULL)
+		return false;
+	ListNode* pA;
+	ListNode* pB;
+	pA = startNodeOfRing(head1);
+	pB = startNodeOfRing(head2);
+	if(pA == pB)
+		return true;
+	else
+	{
+		ListNode* pp = pA->next;
+		while(pp != pA)
+		{
+		   if(pp == pB)
+			   return true;
+		   else
+			   pp = pp->next;
+		}
+		return false;
+	}
+}

@@ -1,0 +1,11 @@
+//随机打乱顺序化初始的值
+vector<int> Trans(vector<int> &A, int n)
+{
+	srand((unsigned)time(NULL));
+	for(int i = 0; i < n; i++)
+	{
+		int j = rand() % n;
+		swap(A[i], A[j]);
+	}
+	return A;
+}

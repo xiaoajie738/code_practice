@@ -1,0 +1,63 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+using namespace std;
+ 
+bool arrayTransform(vector<int> &vec)
+{
+    int max = vec[0];
+    int index = 0;
+    for(int i = 1; i< vec.size(); ++i)
+    {
+        if(max < vec[i])
+        {
+            max = vec[i];
+            index = i;
+        }
+ 
+    }
+    int count = 0;
+    for(int i = 0; i < vec.size()-1; ++i)
+    {
+        if(vec[i] == vec[i+1])
+            count++;
+    }
+    if(count == vec.size()-1)
+        return true;
+    //遍历数组，小于最大数的数，应该都能被大数整除，且得到的值是偶数
+    for(int i = 0; i < vec.size(); ++i)
+    {
+        if(i == index)
+            continue;
+        int a,b;
+        a = max % vec[i];
+        b = max / vec[i];
+        if(a != 0 || b & 0x1)
+            return false;
+    }
+    return true;
+}
+ 
+int main(void)
+{
+    int N;
+    while(cin >> N)
+    {
+        vector<int> vec(N);
+        for(int i = 0; i < N; ++i)
+        {
+            int num;
+            cin >> num;
+            vec[i] = num;
+        }
+        int res = arrayTransform(vec);
+        if(res == 1)
+            cout << "YES";
+        else
+            cout << "NO";
+          
+    }
+    //system("pause");
+    return 0;
+}

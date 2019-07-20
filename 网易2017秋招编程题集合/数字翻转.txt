@@ -1,0 +1,29 @@
+Êý×Ö·­×ª
+#include<iostream>
+#include<algorithm>
+#include<vector>
+using namespace std;
+
+int revnum(int a)
+{
+	int temp = 0,res = 0;
+	while(a != 0)
+	{
+		temp = a %10;
+		a = a/10;
+		res = 10*res + temp;
+	}
+	return res;
+}
+
+int main()
+{
+    int x,y;
+	while(cin >> x >> y)
+	{
+	   cout << revnum(revnum(x)+revnum(y)) << endl;
+		//cout << revnum(x);
+	}
+	//system("pause");
+    return 0;
+}

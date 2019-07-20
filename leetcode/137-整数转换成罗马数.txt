@@ -1,0 +1,45 @@
+
+#include<iostream>
+#include<vector>
+#include<string>
+#include<sstream>
+using namespace std;
+
+//
+string intToRoman(int num)
+{
+	//vector<vector<string>> mapTbl = {
+	//	{"", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"},  // 个位
+	//	{"", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"},  // 十位
+	//	{"", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"},  // 百位
+	//	{"", "M", "MM", "MMM"}  // 千位
+	//};
+	vector<vector<string>> mapTb1(4);
+	vector<string> vec[4];
+	string array[4][10] = {{"", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"},
+	                       {"", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"},
+	                      {"", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"},
+	                      {"", "M", "MM", "MMM"}};
+	for(size_t i = 0; i < mapTb1.size(); ++i)
+	{
+		vector<string> temp(array[i],array[i]+10);
+	    mapTb1[i]=temp;
+ 	}
+	string roman;
+	int row = 0;
+	while (num != 0)
+	{
+		roman = mapTb1[row][num % 10] + roman;
+		num /= 10;
+		row++;
+	}
+	return roman;
+}
+
+int main()
+{ 
+	cout << intToRoman(765) << endl;
+   system("pause"); 
+   return 0;
+
+}

@@ -1,0 +1,100 @@
+//method 1
+string ReverseSentence0(string str) {
+	string res,tmp;
+	for(unsigned int i = 0; i < str.size(); ++i)
+	{
+		if(str[i] == ' ') 
+		{
+			res = " " + tmp + res;
+			tmp = "";
+		}
+		else 
+			tmp += str[i];
+	}
+	if(tmp.size()) res = tmp + res;
+	return res;
+}
+
+// method 2
+string ReverseSentence(string str) 
+{
+	stack<string> s;
+	string temp;
+	string result;
+	//每个单词依次进栈
+	for(int i= 0; i < str.size(); i++)
+	{
+		if(str[i] != ' ')
+			temp += str[i]; 
+		else 
+		{
+            s.push(temp);
+			temp.clear();
+		}		
+	}
+	s.push(temp);
+	//依次出栈
+	while(!s.empty())
+	{   
+		if(s.size() != 1)
+		{
+			 result = result + s.top() + " ";
+		}
+		else
+			 result = result + s.top() ;
+		s.pop();
+	}
+	return result;
+}
+
+//method3
+string reverseSentence(string A, int n) 
+{
+	// write code here
+	stack<string> s;
+	string str;
+	for(int i = 0; i < n; i++)
+	{
+		if(A[i] != ' ')
+	       str.push_back(A[i]);
+		else
+		{
+		   s.push(str);
+		   str.clear();
+		}
+	}
+	s.push(str);
+	str.clear();
+	while(!s.empty())
+	{
+	   str += s.top() + ' ';
+	   s.pop();
+	}
+	return str.substr(0,str.size()-1);
+}
+//牛客网
+//局部逆序字符串函数
+   void reverseString(string &A,int begin, int end)
+{
+    for(int i = begin; i <= begin + (end - begin)/2; i++)
+	{
+	    swap(A[i],A[end-i+begin]);
+	}
+}
+
+string reverseSentence(string A, int n) 
+{
+	// write code here
+	reverseString(A,0,n-1);
+	int j = 0;
+	for(int i = 0; i < n; i++)
+	{
+	   if(A[i] == ' ')
+	   {
+		   reverseString(A,j,i-1);
+		   j = i+1;
+	   }	   
+	}
+	   reverseString(A,j,A.size()-1);
+   return A;
+}

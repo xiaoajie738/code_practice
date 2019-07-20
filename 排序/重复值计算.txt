@@ -1,0 +1,49 @@
+请设计一个高效算法，判断数组中是否有重复值。必须保证额外空间复杂度为O(1)。
+给定一个int数组A及它的大小n，请返回它是否有重复值。
+
+//由于要求了空间复杂度为O(1),所以只能选择非递归实现的堆排序
+void make_heap(vector<int> &A, int i, int n)
+{
+    int temp = A[i];
+   for(int j = 2*i + 1; j < n; j = j*2 + 1)
+   {
+       if(j < n-1 && A[j] < A[j+1])
+		   j++;
+	   if(temp > A[j])
+		   break;
+	   swap(A[i],A[j]);
+	   i = j;
+   }
+}
+
+void heap_Sort(vector<int> &A, int n)
+{
+    for(int i = n/2 - 1; i >= 0; i--)
+	{
+	   make_heap(A,i,n);
+	}
+	for(int i = n-1; i >= 0; i--)
+	{
+	   swap(A[0],A[i]);
+	    make_heap(A,0,i);
+	}
+}
+bool checkDuplicate(vector<int> a, int n) 
+{
+	// write code here
+	bool isDuplicate = false;
+	heap_Sort(a,n);
+	int num = a[0];
+	for(int i = 1; i < n; i++)
+	{
+	   if(a[i] == num)
+	   {
+		   isDuplicate = true;
+		   break;
+	   }   
+		   num = a[i];
+	}
+	return isDuplicate;
+}
+
+

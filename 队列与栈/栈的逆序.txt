@@ -1,0 +1,30 @@
+stack<int> stackA;
+//移除栈底元素并返回
+int get(stack<int> &Stack)
+{
+    int result = Stack.top();
+	Stack.pop();
+	if(Stack.empty())
+		return result;
+	else
+	{
+	   int last = get(Stack);
+	   Stack.push(result);
+	   return last; 
+	}
+}
+
+void reverse(stack<int> &Stack)
+{
+   if(Stack.empty())
+	   return;
+   int i = get(Stack);
+   reverse(Stack);
+   Stack.push(i);
+}
+stack<int> reverseStack(stack<int> stackA, int n) 
+{
+	// 元素入栈
+	reverse(stackA);
+     return stackA;
+}

@@ -1,0 +1,70 @@
+#include<iostream>
+#include<string>
+#include<vector>
+using namespace std;
+
+vector<int> printMatrix(vector<vector<int> > matrix)
+{
+	int rows,cols;
+	rows = matrix.size();
+	cols = matrix[0].size();
+	vector<int> vec;
+	int leftX = 0,leftY = 0,rightX = rows-1,rightY = cols-1;
+	while(leftX <= rightX && leftY <= rightY)
+	{
+     if(leftX == rightX)
+	 {
+		 for(int i =  leftY; i <= rightY; i++)
+			 vec.push_back(matrix[leftX][i]);
+	 }
+	 else if(leftY == rightY)
+	 { 
+		 for(int i = leftX; i <= rightX; i++ )
+			 vec.push_back(matrix[i][leftY]);
+	 }
+	 else
+	 {
+	  for(int i =  leftY; i < rightY; i++)
+		  vec.push_back(matrix[leftX][i]);
+	  for(int j = leftX; j < rightX; j++)
+	      vec.push_back(matrix[j][rightY]);
+	  for(int i = rightY; i > leftY; i--)
+		  vec.push_back(matrix[rightX][i]);
+	  for(int i = rightX; i > leftX; i-- )
+		  vec.push_back(matrix[i][leftY]);
+	 }
+	  /* if(leftX == rightX && leftY == rightY)
+	  {
+	  vec.push_back(matrix[leftX][rightY]);
+	  }*/
+	  leftX++;
+	  leftY++;
+	  rightX--;
+	  rightY--;
+	}
+	return vec;
+}
+
+int main()
+{
+	
+
+	vector<vector<int>> mat;
+	vector<int> result;
+	int array[5][1]={1,2,3,4,5};
+	
+	vector<int> a(array[0],array[0]+1);
+	vector<int> a1(array[1],array[1]+1);
+	vector<int> a2(array[2],array[2]+1);
+	vector<int> a3(array[3],array[3]+1);
+	vector<int> a4(array[4],array[4]+1);
+	//vector<int> a3(array[3],array[3]+1);
+	mat.push_back(a);
+	mat.push_back(a1);
+	mat.push_back(a2);
+	mat.push_back(a3);
+	mat.push_back(a4);
+	result = printMatrix(mat);
+	system("pause");
+	return 0;
+}

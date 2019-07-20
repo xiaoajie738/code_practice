@@ -1,0 +1,27 @@
+vector<int> findCommonParts(ListNode* headA, ListNode* headB) 
+{
+	// write code here
+	vector<int> result;
+	if(headA == NULL || headB == NULL)
+		return result;
+	ListNode* pA = headA;
+	ListNode* pB = headB;
+	while(pA != NULL && pB != NULL)
+	{
+	   if(pA->val < pB->val)
+	   {
+	       pA = pA->next;
+	   }
+	   else if(pA->val == pB->val)
+	   {
+	       result.push_back(pA->val);
+		   pA = pA->next;
+		   pB = pB->next;
+	   }
+	   else
+	   {
+	      pB = pB->next;
+	   }
+	}
+    return result;
+}

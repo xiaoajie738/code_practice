@@ -1,0 +1,75 @@
+//˼·1
+stack<int> stackData;
+stack<int> stackMin;
+ 
+void push(int value) 
+{
+   stackData.push(value);
+   if(!stackMin.empty())
+   {
+      if(value <= stackMin.top())
+		  stackMin.push(value);
+	  else
+	  {
+	      stackMin.push(stackMin.top());
+	  }
+   }
+   else
+   {
+      stackMin.push(value);
+   }
+}
+void pop() 
+{
+	if(!stackData.empty())
+	{
+		stackData.pop();
+		stackMin.pop();
+	}
+	
+}
+int top() 
+{
+	return stackData.top();
+}
+int min() 
+{
+	return stackMin.top();
+}
+
+//˼·2
+ stack<int> stackData;
+stack<int> stackMin;
+ void push(int value) 
+{
+   stackData.push(value);
+   if(!stackMin.empty())
+   {
+      if(value < stackMin.top())
+		  stackMin.push(value);
+   }
+   else
+   {
+      stackMin.push(value);
+   }
+}
+void pop() 
+{
+	if(!stackData.empty())
+	{
+		int temp;
+		temp = stackData.top();
+		stackData.pop();
+		if(temp == stackMin.top())
+		    stackMin.pop();
+	}
+	
+}
+int top() 
+{
+	return stackData.top();
+}
+int min() 
+{
+	return stackMin.top();
+}

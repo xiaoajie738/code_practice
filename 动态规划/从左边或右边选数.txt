@@ -1,0 +1,59 @@
+//有一排正数，玩家A和玩家B都可以看到。
+//每位玩家在拿走数字的时候，都只能从最左和最右的数中选择一个。
+//玩家A先拿，玩家B再拿，两人交替拿走所有的数字，
+//两人都力争自己拿到的数的总和比对方多。请返回最后获胜者的分数。
+//例如：
+//5,2,3,4
+//玩家A先拿，当前他只能拿走5或者4。
+//如果玩家A拿走5，那么剩下2，3，4。轮到玩家B，此时玩家B可以选择2或4中的一个，…
+//如果玩家A拿走4，那么剩下5，2，3。轮到玩家B，此时玩家B可以选择5或3中的一个，…
+int f(int arr[], int i, int j);
+int s(int arr[], int i, int j); 
+int s(int arr[], int i, int j) 
+{
+	if (i == j) 
+	{
+		return 0;
+	}
+	return min(f(arr, i + 1, j), f(arr, i, j - 1));
+}
+ int f(int arr[], int i, int j)
+ {
+	 if (i == j) 
+	 {
+		 return arr[i];
+	 }
+	 return max(arr[i] + s(arr, i + 1, j), arr[j] + s(arr, i, j - 1));
+ }
+
+int win1(int arr[],int length) 
+{
+	if (arr == NULL || length == 0) 
+	{
+		return 0;
+	}
+	return max(f(arr, 0, length - 1), s(arr, 0, length - 1));
+}
+
+ int win2(int arr[],int length) 
+{
+	if (arr == NULL || length == 0) {
+		return 0;
+	}
+	vector<vector<int> > f(length);
+	vector<vector<int> > s(length);
+	for(int i = 0; i < length; ++i){
+		f[i].resize(length);
+		f[i].resize(length);
+	}
+	for (int j = 0; j < length; j++) {
+
+		f[j][j] = arr[j];
+		for (int i = j - 1; i >= 0; i--) {
+			f[i][j] = max(arr[i] + s[i + 1][j], arr[j] + s[i][j - 1]);
+			s[i][j] = min(f[i + 1][j], f[i][j - 1]);
+		}
+	}
+	return max(f[0][length - 1], s[0][length - 1]);
+ }
+

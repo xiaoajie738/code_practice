@@ -1,0 +1,42 @@
+#include <iostream>
+#include <algorithm>
+#include <vector>
+using namespace std;
+
+//2 3 5 4 7 2
+//动态规划
+int func(vector<int> &vec, int len)
+{
+  //dp[i]表示前i个元素所能达到的最大差值，index表示前i个
+  //元素达到最大差值时，较大值的索引
+  vector<int> dp(len); 
+  dp[0] = 0;
+  int index = 0;
+  for(int i = 1; i < len; ++i)
+  {
+      if(vec[i] < vec[i-1])
+	  {
+		  dp[i] = dp[i-1];
+		  if(index == 0)
+			  index = i;
+	  }
+	  else
+	  {
+		  dp[i] = max(dp[i-1],dp[i-1] + (vec[i]-vec[index]));
+		  if(vec[i] - vec[i-1] > dp[i])
+			  dp[i] = vec[i] - vec[i-1];
+		  index = i;
+	  }
+  }
+  return dp[len-1];
+}
+
+
+int main() 
+{
+	int array[5] = {5,3,10,1,9};
+	vector<int> vec(array,array+5);
+	cout << func(vec,5);
+	system("pause");
+	return 0;
+}

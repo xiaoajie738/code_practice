@@ -1,0 +1,24 @@
+#include<iostream>
+#include<string>
+
+using namespace std;
+
+int main()
+{
+	string hexStr;
+	
+	while(cin >> hexStr)
+	{
+		long long deciStr = 0;
+		for(size_t i = 2; i < hexStr.size(); ++i)
+		{
+			if(hexStr[i] >= '0' && hexStr[i] <= '9')
+				deciStr = 16*deciStr + (hexStr[i]-'0');
+			else
+			    deciStr = 16*deciStr +(hexStr[i]-55);
+		}
+		cout << deciStr << endl;
+	}
+	return 0; 
+
+}

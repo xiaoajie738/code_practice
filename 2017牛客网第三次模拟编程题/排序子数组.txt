@@ -1,0 +1,78 @@
+#include <iostream>    
+#include <algorithm>
+#include <vector>
+
+using namespace std;   
+  
+//’“π’µ„
+int findExtremePoint(vector<int> &vec)
+{
+    int count = 0;
+	int begin = vec[0];
+	bool innitial = false;
+	bool isincrease;
+	bool flag = true;
+	for(int i = 1; i < vec.size(); ++i)
+	{
+        if(!innitial)
+		{
+			if(flag)
+			  count++;
+		    if(vec[i-1] < vec[i])
+			{
+				flag = true;
+				isincrease = true;
+			}
+				
+			else if(vec[i-1] == vec[i])
+			{
+				flag = false;
+				continue;
+			}	  
+			else {
+				flag = true;
+				isincrease = false;
+			}
+			innitial = true;
+			continue;
+		}
+		if(isincrease)
+		{
+		    if(vec[i-1] > vec[i])
+			{
+				innitial = false;
+				if(i == vec.size()-1)
+					count++;
+			}
+		}
+		else
+		{
+			if(vec[i-1] < vec[i])
+			{
+				innitial = false;
+				if(i == vec.size()-1)
+					count++;
+			}
+		}
+	}
+	return count;
+}
+
+int main()
+{      
+	int n;
+	while(cin >> n)
+	{
+	   vector<int> vec(n);
+	   for(int i = 0; i < n; ++i)
+	   {
+	        int num; 
+			cin >> num;
+			vec[i] = num;
+	   }
+	   cout <<  findExtremePoint(vec);
+
+	}
+	//system("pause");
+	return 0;
+} 

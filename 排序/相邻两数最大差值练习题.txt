@@ -1,0 +1,35 @@
+有一个整形数组A，请设计一个复杂度为O(n)的算法，算出排序后相邻两数的最大差值。
+给定一个int数组A和A的大小n，请返回最大的差值。保证数组元素多于1个。
+//相邻两数最大差值练习题
+int maxGap(vector<int> A, int n) 
+{
+	// write code here
+	if(A.size() == 0 || A.size() != n)
+		return 0;
+	int max = 0;
+	findMaxOfArray(A,max);
+	vector<int> bucket(max+1);
+	for(int i = 0; i < A.size(); i++)
+	{
+	   bucket[A[i]]++;
+	}
+	int MaxDifer = 1;
+	int count = 1;
+	for(int i = 0; i < max+1; i++)
+	{
+	   if(bucket[i] == 0)
+	   {
+	      count++;
+	   }
+	   if(bucket[i] != 0)
+	   {
+	      if(count > MaxDifer)
+		  {
+			  MaxDifer = count;
+		  }
+		  count = 1;
+			  
+	   }
+	}
+	return MaxDifer;
+}

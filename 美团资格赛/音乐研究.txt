@@ -1,0 +1,53 @@
+#include<iostream>
+#include<string>
+#include<vector>
+#include<stack>
+#include<algorithm>
+using namespace std;
+
+int main()
+{
+	  int n,m;
+	  cin >> n;
+	  vector<int> vec1(n);
+	  for(int i = 0; i < n; ++i)
+	  {
+		  int num;
+		  cin >> num;
+		  vec1[i] = num;
+	  }
+	  cin >> m;
+	  vector<int> vec2(m);
+	  for(int i = 0; i < m; ++i)
+	  {
+		  int num;
+		  cin >> num;
+		  vec2[i] = num;
+	  }
+	  //求两数组的最小差值
+	  
+	  int mindiffer = 0;
+	  for(int i = 0; i <= m-n; ++i)
+	  {
+		 int sum = 0;
+	     for(int j = 0; j < n; ++j)
+		 {
+			 if(i == 0)
+				 sum += (vec2[i+j]-vec1[j])* (vec2[i+j]-vec1[j]);
+			 else
+				  sum += (vec2[i+j]-vec1[j])* (vec2[i+j]-vec1[j]);
+
+		 }
+		 if(i == 0)
+			 mindiffer = sum;
+		 else
+		 {
+			 mindiffer = sum < mindiffer ? sum : mindiffer; 
+		 }
+	  }
+	  cout << mindiffer << endl;
+	  system("pause");
+	  return 0;
+}
+
+

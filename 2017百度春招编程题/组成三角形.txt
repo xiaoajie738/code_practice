@@ -1,0 +1,98 @@
+#include<iostream>    
+#include<algorithm>    
+#include<unordered_map>  
+#include<cmath>  
+#include<string>  
+#include<vector>    
+using namespace std;  
+
+//这是海伦公式
+//假设有一个三角形,边长分别为a、b、c,三角形的面积S可由以下公式求得： 
+//	S=√[p(p-a)(p-b)(p-c)] 
+//而公式里的p为半周长： 
+//	p=(a+b+c)/2 
+double juli(vector<int>a, vector<int>b) {  
+	int a1 = a[0] - b[0];  
+	int a2 = a[1] - b[1];  
+	int a3 = a[2] - b[2];  
+	return sqrt((1.0*a1*a1) + (1.0*a2*a2) + (1.0*a3*a3));  
+}  
+double space(vector<int>a, vector<int>b, vector<int>c) {  
+	double a1 = juli(a, b);  
+	double a2 = juli(a, c);  
+	double a3 = juli(b, c);  
+	double p = (a1 + a2 + a3) / 2.0;  
+	return sqrt(1.0*p*(p - a1)*(p - a2)*(p - a3));  
+}  
+int main() 
+{  
+	int N;
+	cin >> N;  
+	double result = 0;  
+	vector<vector<int>>R;  
+	vector<vector<int>>G;  
+	vector<vector<int>>B;  
+	while (N--) 
+	{  
+		char temp; vector<int>a(3,0);  
+		cin >> temp>>a[0]>>a[1]>>a[2];  
+		if (temp == 'R')R.push_back(a);  
+		else if (temp == 'G')G.push_back(a);  
+		else if (temp == 'B')B.push_back(a);      
+	}  
+	if (R.size() >= 3) 
+	{  
+		for (int i = 0; i < R.size() - 2; ++i) 
+		{  
+			for (int j = i + 1; j < R.size() - 1; ++j) 
+			{  
+				for (int z = j + 1; z < R.size(); ++z) 
+				{  
+					result = std::max(result, space(R[i], R[j], R[z]));  
+				}  
+			}  
+		}  
+	}  
+	if (G.size() >= 3) 
+	{  
+		for (int i = 0; i < G.size() - 2; ++i) 
+		{  
+			for (int j = i + 1; j < G.size() - 1; ++j) 
+			{  
+				for (int z = j + 1; z < G.size(); ++z) 
+				{  
+					result = std::max(result, space(G[i],G[j], G[z]));  
+				}  
+			}  
+		}  
+	}  
+	if (B.size() >= 3) 
+	{  
+		for (int i = 0; i < B.size() - 2; ++i) 
+		{  
+			for (int j = i + 1; j <B.size() - 1; ++j) 
+			{  
+				for (int z = j + 1; z < B.size(); ++z) 
+				{  
+					result = std::max(result, space(B[i], B[j], B[z]));  
+				}  
+			}  
+		}  
+	}  
+	if (R.size() && G.size() && B.size()) 
+	{  
+		for (int i = 0; i < R.size(); ++i) 
+		{  
+			for (int j = 0; j < G.size(); ++j) 
+			{  
+				for (int z = 0; z < B.size(); ++z) 
+				{  
+					result = max(result, space(R[i], G[j], B[z]));  
+				}  
+
+			}  
+		}  
+	}  
+	printf("%.5f", result);  
+	//  system("pause");  
+}

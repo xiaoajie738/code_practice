@@ -1,0 +1,44 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
+int MaxofconsequenSubArray(vector<int> &array)
+{
+    vector<int> vec(array.size());
+	vec[0] = array[0];
+	int Max = vec[0];
+	for(int i = 1; i < vec.size(); i++)
+	{
+	   if(vec[i-1] + array[i] < array[i])
+	   {
+		    vec[i] = array[i];
+			if(vec[i] > Max)
+				Max = vec[i];
+	   }
+	   else
+	   {
+            vec[i] = vec[i-1] + array[i];
+			if(vec[i] > Max)
+				Max = vec[i];
+	   }  
+	}
+	return Max;
+}
+int main() 
+{
+	int N;
+	while(cin >> N)
+	{
+		vector<int> array(N);
+	    for(int i = 0; i < N; i++)
+		{
+			int num;
+		    cin >> num;
+		    array[i] = num;
+		}
+		cout << MaxofconsequenSubArray(array);
+
+	}
+	//system("pause");
+	return 0;
+}

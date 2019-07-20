@@ -1,0 +1,62 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
+struct ListNode {
+	int val;
+	struct ListNode *next;
+	ListNode(int x) :
+	val(x), next(NULL) {
+	}
+};
+void insertNode(ListNode* pHead, int val)
+{
+   if(pHead == NULL)
+	   return;
+   ListNode* newNode = new ListNode(val);
+   ListNode* temp = pHead;
+   while(temp->next != NULL)
+	   temp = temp->next;
+   temp->next = newNode;
+}
+
+//输入一个链表，输出该链表中倒数第k个结点。
+//定义两个指向头结点的指针，一个指针先走k-1步，然后两个指针开始同时走，
+//当先走的指针走到最后一个结点时，后走的指针所指向的位置就是倒数第k个结点
+ListNode* FindKthToTail(ListNode* pListHead, unsigned int k) 
+{
+	if(pListHead == NULL)
+		return NULL;
+	ListNode* pFirst = pListHead;
+	ListNode* pSecond = pListHead;
+	for(int i = 0; i < k-1; i++)
+	{
+	  if(pFirst->next != NULL) //如果为空，说明链表小于k个节点
+   	      pFirst = pFirst->next;
+	  else 
+		  return NULL;
+	}
+	while(pFirst->next != NULL)
+	{
+	   pFirst = pFirst->next;
+	   pSecond = pSecond->next;
+	}
+	return pSecond;
+}
+
+int main()  
+{  
+	ListNode* pHead = new ListNode(0);
+	insertNode(pHead,1);
+	insertNode(pHead,2);
+	insertNode(pHead,3);
+	insertNode(pHead,4);
+	insertNode(pHead,5);
+	insertNode(pHead,6);
+	ListNode* temp = FindKthToTail(pHead,8);
+	cout << temp->val;
+	system("pause");
+	return 0;  
+
+}  
+

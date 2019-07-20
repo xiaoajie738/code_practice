@@ -1,0 +1,36 @@
+//»ù±¾×Ö·û´®µÄÑ¹Ëõ
+string zipString1(string iniString) 
+{
+	 write code here
+	int count = 1;
+	string strCount;
+	string result;
+	stringstream ss;
+	char iniChar = iniString[0];
+	for(int i = 1; i  iniString.size(); i++)
+	{
+	   if(iniChar == iniString[i])
+	   {
+	      count++;
+	   }
+	   else
+	   {
+	      iniString.erase(i-count+1,count-1);
+		  ss  count;
+		  ss  strCount;
+		  ss.clear();
+		  result.append(iniString[i-1]+strCount);
+		  count = 1;
+		  iniChar = iniString[i];
+	   }
+	}
+	ss  count;
+	ss  strCount;
+	ss.clear();
+	result.append(iniString[iniString.size()-1]+strCount);
+
+ if(result.size()  iniString.size())
+	 return result;
+ return iniString;
+	
+}

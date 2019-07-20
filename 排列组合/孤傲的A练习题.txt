@@ -1,0 +1,32 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+/*  A(A也是他的编号)是一个孤傲的人，在一个n个人(其中编号依次为1到n)的队列中，
+他于其中的标号为b和标号c的人都有矛盾，所以他不会和他们站在相邻的位置。
+现在问你满足A的要求的对列有多少种？
+给定人数n和三个人的标号A,b和c，请返回所求答案，保证人数小于等于11且大于等于3。*/
+int getWays(int n, int A, int b, int c) 
+{
+	// write code here
+	int res = 0;
+	int temp = 1;
+	for(int i = 1; i <= n-2; i++)
+	{
+	    temp *= i;
+	}
+	temp *= (n-3)*2;
+	res += temp;
+	 temp = 1;
+	for(int i = 1; i <= n-3; i++)
+		temp *= i;
+	temp *= (n-3)*(n-4)*(n-2);
+	res += temp;
+    return res;
+}
+int main()
+{
+   
+   cout << getWays(6,1,2,3);
+   system("pause");
+   return 0;
+}

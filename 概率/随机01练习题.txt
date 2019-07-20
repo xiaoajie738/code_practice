@@ -1,0 +1,19 @@
+class RandomP {
+public:
+	static int f();
+};
+
+class Random01 {
+public:
+    // 用RandomP::f()实现等概率的01返回
+    int random01() {
+        while(true) {
+            int a = RandomP::f();
+            int b = RandomP::f();
+            if (a != b) {
+                return a > b ? 1 : 0;
+            }
+        }
+        return 0;
+    }
+};

@@ -1,0 +1,34 @@
+//Implement atoi to convert a string to an integer.
+Hint: Carefully consider all possible input cases. If you want a challenge, please do not see below and ask yourself what are the possible input cases.
+Notes: It is intended for this problem to be specified vaguely (ie, no given input specs). You are responsible to gather all the input requirements up front.
+
+int atoi(const char *str) {  
+	// Start typing your C/C++ solution below  
+	// DO NOT write int main() function  
+	//  13141423  
+	bool negative = false;  
+
+	while(*str == ' ') ++str;  
+	if(*str == '-') {  
+		negative = true;  
+		++str;  
+	}  
+	if(*str == '+') ++str;  
+
+	long long res = 0;  
+	while(*str!='\0'){  
+		if( *str>='0' && *str<='9') {  
+			res = res*10 + *str - '0';  
+		} else {  
+			break;  
+		}  
+		++str;  
+	}  
+	if(*str != '\0')
+		return 0;
+	res = negative ? -res : res;  
+
+	if(res>INT_MAX) return INT_MAX;  
+	else if(res<INT_MIN) return INT_MIN;  
+	else return res;  
+} 

@@ -1,0 +1,101 @@
+
+#include<iostream>
+#include<vector>
+#include<string>
+#include<sstream>
+using namespace std;
+
+//给定一个字符串，请你将字符串重新编码，将连续的字符替
+//换成“连续出现的个数+字符”。比如字符串AAAABCCDAA会被编码成4A1B2C1D2A。
+int maxOfmatrix(vector<vector<int>> &mat, int N, int D)
+{
+    int max = 0;
+	int sum = 0;
+	//横
+	for(int i = 0; i < N; ++i)
+	{  
+		for(int j = 0; j < N-D+1; ++j)
+		{
+		    sum = 0;
+			for(int k = j; k < j + D; ++k)
+				sum += mat[i][k];
+			if(sum > max)
+				max = sum;
+		}
+	}
+	//竖
+	for(int j = 0; j < N; ++j)
+	{  
+		for(int i = 0; i < N-D+1; ++i)
+		{
+		    sum = 0;
+			for(int k = i; k < i + D; ++k)
+				sum += mat[k][j];
+			if(sum > max)
+				max = sum;
+		}
+	}
+	//左上到右下
+	for(int i = 0; i < N; ++i)
+	{
+	    for(int j = 0; j < N; ++j)
+		{
+		      sum = 0;
+			  int count = 0;
+			for(int k = 0; k < D; ++k)
+			{
+				if(i+k >= N || j+k >= N) 
+					break;
+			     sum += mat[i+k][j+k];
+				 count++;
+			}
+			if(count == D && sum > max)
+				max = sum;
+		}
+	}
+	
+	//右上到左下
+	for(int i = 0; i < N; ++i)
+	{
+		for(int j = 0; j < N; ++j)
+		{
+			 sum = 0;
+			 int count = 0;
+			for(int k = 0; k < D; ++k)
+			{
+				if(i+k >= N  || j-k < 0) 
+					break;
+				sum += mat[i+k][j-k];
+				count++;
+			}
+			if(count == D && sum > max)
+				max = sum;
+		}
+	}
+	return max;
+}
+
+int main()
+{ 
+	int N,D;
+	while(cin >> N >> D)
+	{
+		vector<vector<int>> matrx(N);
+		for(int i = 0; i < N; ++i)
+		{
+			vector<int> temp(N);
+			for(int j = 0; j < N; ++j)
+			{
+				int num;
+				cin >> num;
+				temp[j] = num;
+			}
+			matrx[i] = temp;
+		}
+		cout <<  maxOfmatrix(matrx,N,D);  
+	}
+  
+   system("pause"); 
+   return 0;
+
+}

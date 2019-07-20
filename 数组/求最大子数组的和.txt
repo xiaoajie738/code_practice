@@ -1,0 +1,37 @@
+#include<iostream>
+#include<math.h>
+#include<vector>
+#include<algorithm>
+using namespace std;
+
+int FindGreatestSumOfSubArray(vector<int> array) {
+	if(array.empty())
+		return 0;
+	int cSum = 0;
+	int result = array[0]; // result存储最大和，不能初始为0，存在负数
+	for(int i = 0;i<array.size();++i)
+	{
+		if(cSum < 0) // 当前和<0，抛弃不要
+			cSum = array[i];
+		else
+			cSum += array[i];
+
+		if(cSum > result) // 存储最大结果
+			result = cSum;
+	}
+	return result;
+}
+
+
+int main()
+{
+	int N;
+	int k =6;
+	vector<int> result;
+	int array[8] = {1,-2,3,10,-4,7,2,-5};
+	vector<int> number(array,array+8);
+	cout << FindGreatestSumOfSubArray(number) << endl; 
+    system("pause");
+	return 0;
+	
+}

@@ -1,0 +1,44 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+
+//在一个二维数组中，每一行都按照从左到右递增的顺序排序，
+//每一列都按照从上到下递增的顺序排序。请完成一个函数，
+//输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。
+
+//从右上角的第一个元素开始遍历
+bool Find(int target, vector<vector<int> > array) 
+{
+	int row = array.size();
+	int col = array[0].size();
+	int x = 0;
+	int y = col-1;
+	while(x <= row-1 && y >= 0)
+	{
+	    if(array[x][y] < target)
+			x++;
+		else if(array[x][y] > target)
+			y--;
+		else
+			return true;
+	}
+	return false;
+}
+
+int main()
+{
+	int arr[3] = {1,2,3};
+	int arr1[3] = {4,5,6};
+	int arr2[3] = {7,8,9};
+	vector<vector<int>> mat;
+	vector<int> vec(arr,arr+3);
+	vector<int> vec1(arr1,arr1+3);
+	vector<int> vec2(arr2,arr2+3);
+	mat.push_back(vec);
+	mat.push_back(vec1);
+	mat.push_back(vec2);
+	cout << Find(10,mat);
+	system("pause");
+	return 0;  
+}

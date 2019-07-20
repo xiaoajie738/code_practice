@@ -1,0 +1,61 @@
+//输入一个链表，从尾到头打印链表每个节点的值。
+
+
+struct ListNode 
+{
+	int val;
+	struct ListNode *next;
+	ListNode(int x) :
+	val(x), next(NULL) {} 
+};
+
+vector<int> printListFromTailToHead(ListNode* head) 
+{
+	vector<int> res;
+	if(head == NULL)
+		return res;
+	stack<ListNode* > sta;
+	while(head != NULL)
+	{
+	    sta.push(head);
+		head = head->next;
+	}
+	ListNode* temp;
+	while(!sta.empty())
+	{
+	   temp = sta.top();
+	   sta.pop();
+	   res.push_back(temp->val);
+	}
+   return res;
+}
+
+ListNode* ReverseList(ListNode* head)
+    {
+        if(head == NULL || head->next == NULL)
+            return head;
+         ListNode* pre = NULL;
+         ListNode* pC = head;
+         ListNode* pN = head->next;
+         while(pN != NULL)
+         {
+             pC->next = pre;
+             pre = pC;
+             pC = pN;
+             pN = pN->next;
+         }
+         pC->next = pre;
+         return pC;
+    }
+    vector<int> printListFromTailToHead(ListNode* head) {
+        vector<int> res;
+        ListNode* tmp;
+        tmp = ReverseList(head);
+        while(tmp != NULL)
+        {
+           res.push_back(tmp->val); 
+           tmp = tmp->next;
+        }
+        head = ReverseList(tmp);
+        return res;
+    }

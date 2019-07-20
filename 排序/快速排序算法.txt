@@ -1,0 +1,40 @@
+//改进的快速排序算法,改进的方法为优化选择划分时的基准
+
+int Partion(vector<int> &A, int low, int high)
+{
+	int mid = low + (high - low)/2;
+	if(A[low] > A[high])
+		swap(A[low],A[high]);
+	if(A[mid] > A[high])
+		swap(A[mid],A[high]);
+	if(A[low] < A[mid])
+		swap(A[low],A[mid]);
+    int keyNum = A[low];
+	while(low < high)
+	{
+		while(low < high && keyNum <= A[high])
+			high--;
+		swap(A[low],A[high]);
+		while(low < high && keyNum >= A[low])
+			low++;
+		swap(A[low],A[high]);
+	}
+	return low;
+}
+
+void Qsort(vector<int> &A, int low, int high)
+{
+    if(low >= high)
+		return;
+	int mid;
+	mid = Partion(A,low,high);
+	Qsort(A,low,mid-1);
+	Qsort(A,mid+1,high);
+}
+
+void quickSort(vector<int> &A, int n) 
+{
+	// write code here
+	Qsort(A,0,n-1);
+
+}

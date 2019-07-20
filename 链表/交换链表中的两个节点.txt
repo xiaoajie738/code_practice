@@ -1,0 +1,38 @@
+//LeetCode上有一道类似的题目Swap Nodes in Pairs，但是又不太一样。
+//这道题其实难度适中，但是需要注意的地方不少。首先需要交换的两个
+//结点有可能是相邻的两个结点，而且有可能v1在v2后面，也有可能首结点
+//就需要交换，那么我们还是一如既往的先设一个dummy结点，后面连上首结点，
+//我们的思路是遍历整个链表，如果cur的下一个结点存在，且等于v1或v2中的一个，
+//此时如果p1为空，说明这是要交换的第一个结点，我们将p1指向这个结点，然后讲pre
+//指向cur，交换操作需要记录要交换的结点的前一个位置，然后继续遍历，当又遇到一个和
+//v1或v2相等的结点，此时我们就需要交换了，我们用p2指向这个结点，然后用临时变量t指向下
+//一个结点，此时我们需要判断cur和p1是相等，相等的话说明p1和p2是相邻的，我们只需要把p2移到
+//p1前面去，如果不相等，说明p1和p2之间还有元素，那么我们交换p1和p2的位置即可，最后返回dummy->next即可：
+ListNode* swapNodes(ListNode* head, int v1, int v2) {
+	ListNode *dummy = new ListNode(-1);
+	dummy->next = head;
+	ListNode *pre = dummy, *cur = dummy, *p1 = NULL, *p2 = NULL;
+	while (cur->next) {
+		if (cur->next->val == v1 || cur->next->val == v2) {
+			if (!p1) {
+				p1 = cur->next;
+				pre = cur;
+			} else {
+				ListNode *t = cur->next->next;
+				p2 = cur->next;
+				pre->next = p2;
+				if (cur == p1) {
+					p2->next = p1;
+					p1->next = t;
+				} else {
+					p2->next = p1->next;
+					cur->next = p1;
+					p1->next = t;
+				}
+				return dummy->next;
+			}
+		}
+		cur = cur->next;
+	}
+	return dummy->next;
+}

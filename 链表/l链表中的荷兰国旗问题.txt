@@ -1,0 +1,59 @@
+
+//对于一个链表，我们需要用一个特定阈值完成对它的分化，使得小于等于这个值的结点移到前面，大于该值的结点在后面，同时保证两类结点内部的位置关系不变。
+给定一个链表的头结点head，同时给定阈值val，请返回一个链表，使小于等于它的结点在前，大于等于它的在后，保证结点值不重复。
+ListNode* listDivide2(ListNode* head, int val) 
+{
+	// write code here
+	if(head == NULL)
+		return head;
+	ListNode* p1 = NULL;
+	ListNode* p3 = NULL;
+	ListNode* p1Head = NULL;
+	ListNode* p3Head = NULL;
+	while(head != NULL)
+	{
+		if(head->val <= val)
+		{
+			if(p1 == NULL)
+			{
+				p1Head = new ListNode(head->val);
+			    p1 = p1Head;
+			}
+			else
+			{
+				p1->next = new ListNode(head->val);
+				p1 = p1->next;
+			}
+		}
+		if(head->val > val)
+		{
+			if(p3 == NULL)
+			{
+				p3Head = new ListNode(head->val);
+				p3 = p3Head;
+			}
+			else
+			{
+				p3->next = new ListNode(head->val);
+				p3 = p3->next;
+			}	
+		}
+      head = head->next;
+	}
+	//连接3条链表	
+	if(p1Head != NULL && p3Head != NULL)
+	{
+		p1->next = p3Head;
+		return p1Head;
+	}
+	if(p1Head != NULL)
+	{
+		return p1Head;
+	}	
+	if(p3Head != NULL)
+	{
+		return p3Head;
+	}
+	return head;
+}
+

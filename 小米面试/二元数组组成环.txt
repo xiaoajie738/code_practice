@@ -1,0 +1,239 @@
+#include <iomanip>
+#include <iostream>
+#include <vector>
+#include <stack>
+#include <string>
+using namespace std;
+
+#define MAX 100
+
+// 邻接表
+class ListDG
+{
+    private: // 内部类
+        // 邻接表中表对应的链表的顶点
+        class ENode
+        {
+            public:
+                int ivex;           // 该边所指向的顶点的位置
+                ENode *nextEdge;    // 指向下一条弧的指针
+        };
+        // 邻接表中表的顶点
+        class VNode
+        {
+            public:
+                string data;          // 顶点信息
+                ENode *firstEdge;   // 指向第一条依附该顶点的弧
+        };
+
+	private: // 私有成员
+        int mVexNum;             // 图的顶点的数目
+        int mEdgNum;             // 图的边的数目
+        VNode mVexs[MAX];
+
+    public:
+        // 创建邻接表对应的图(用已提供的数据)
+       ListDG(vector<string> &vexs, int vlen, vector<vector<string> > &edges, int elen);
+		~ListDG();
+		//求每个顶点的入度
+		void FindInDegree(vector<int> &indegree); 
+		//判断是否有环
+		bool TopologicalSort();  
+        // 打印邻接表图
+        void print();
+
+private:
+        // 返回ch的位置
+        int getPosition(string ch);
+        // 将node节点链接到list的最后
+        void linkLast(ENode *list, ENode *node);
+};
+
+/*
+ * 创建邻接表对应的图(用已提供的数据)
+ */
+
+ListDG::ListDG(vector<string> &vexs, int vlen, vector<vector<string> > &edges, int elen)
+{
+    string c1, c2;
+    int i, p1, p2;
+    ENode *node1, *node2;
+
+    // 初始化"顶点数"和"边数"
+    mVexNum = vlen;
+    mEdgNum = elen;
+    // 初始化"邻接表"的顶点
+    for(i=0; i<mVexNum; i++)
+    {
+        mVexs[i].data = vexs[i];
+        mVexs[i].firstEdge = NULL;
+    }
+
+    // 初始化"邻接表"的边
+    for(i=0; i< mEdgNum; i++)
+    {
+        // 读取边的起始顶点和结束顶点
+        c1 = edges[i][0];
+        c2 = edges[i][1];
+
+        p1 = getPosition(c1);
+        p2 = getPosition(c2);
+        // 初始化node1
+        node1 = new ENode();
+        node1->ivex = p2;
+        // 将node1链接到"p1所在链表的末尾"
+        if(mVexs[p1].firstEdge == NULL)
+          mVexs[p1].firstEdge = node1;
+        else
+            linkLast(mVexs[p1].firstEdge, node1);
+    }
+}
+
+/* 
+ * 析构函数
+ */
+ListDG::~ListDG() 
+{
+}
+
+/*
+ * 将node节点链接到list的最后
+ */
+void ListDG::linkLast(ENode *list, ENode *node)
+{
+    ENode *p = list;
+    while(p->nextEdge)
+        p = p->nextEdge;
+    p->nextEdge = node;
+}
+
+
+/*
+ * 返回ch的位置
+ */
+int ListDG::getPosition(string ch)
+{
+    int i;
+    for(i=0; i<mVexNum; i++)
+        if(mVexs[i].data == ch)
+            return i;
+    return -1;
+}
+
+
+
+/*
+ * 打印邻接表图
+ */
+void ListDG::print()
+{
+    int i,j;
+    ENode *node;
+
+    cout << "List Graph:" << endl;
+    for (i = 0; i < mVexNum; i++)
+    {
+        cout << i << "(" << mVexs[i].data << "): ";
+        node = mVexs[i].firstEdge;
+        while (node != NULL)
+        {
+            cout << node->ivex << "(" << mVexs[node->ivex].data << ") ";
+            node = node->nextEdge;
+        }
+        cout << endl;
+    }
+}
+
+void ListDG::FindInDegree(vector<int> &indegree)  
+{                                     //求每个顶点的入度  
+	int i;  
+	ENode *p;  
+	for (i=0;i < mVexNum;i++)  
+		indegree[i]=0;  
+	for (i=0; i < mVexNum;i++)  
+	{  
+		p = mVexs[i].firstEdge;  
+		while(p)  
+		{  
+			indegree[i]++;  //可能有问题
+			p = p->nextEdge;  
+		}  
+	}  
+}  
+
+bool ListDG::TopologicalSort()  
+{  
+	int count;  
+	int k,i;  
+	ENode *p;  
+	stack<int>s;
+	vector<int> indegree(mVexNum);
+	FindInDegree(indegree) ;   //对各顶点求入度  
+	for(i=0;i< mVexNum;i++ )  //将入度为0的顶点压入栈  
+		if(!indegree[i])  
+			s.push(i);  
+	count=0;  
+	while(!s.empty())  
+	{  
+		i=s.top();  
+		s.pop();  
+		count++;  
+		for(p = mVexs[i].firstEdge; p; p=p->nextEdge)  
+		{  
+			k = p->ivex;  
+			if (!(--indegree[k]))  
+				s.push(k);  
+		}  
+	}  
+	if(count  < mVexNum)  
+	   return true;
+	else  
+		return false;  
+}  
+
+//将顶点连接成边
+void vexsToEdges(vector<string>& vexs,vector<vector<string> >& edges)
+{
+    for(int i = 0; i < vexs.size(); ++i)
+	{
+		vector<string> tmp;
+	    for(int j = 0; j < vexs.size(); ++j)
+		{
+		    if(i != j && vexs[i][1] == vexs[j][0])
+			{
+				tmp.push_back(vexs[i]);
+				tmp.push_back(vexs[j]);
+				edges.push_back(tmp);
+				tmp.clear();
+			}	
+		}
+	}
+}
+
+
+int main()
+{
+    string vexs[3] = {"AB", "BC", "CA"};
+	vector<string> vec_vexs(vexs,vexs+3);
+	vector<vector<string> > vec_edges;
+	vexsToEdges(vec_vexs,vec_edges);
+    /*string edges[][2] = {
+        {"AB", "BC"}, 
+        {"BC", "CB"}, 
+        {"CA", "AB"},
+	    }; */
+    int vlen = vec_vexs.size();
+    int elen = vec_edges.size();
+    ListDG* pG;
+
+    // 采用已有的"图"
+    pG = new ListDG(vec_vexs, vlen, vec_edges, elen);
+   // pG->print();   // 打印图
+	//如果拓扑排序的方法判断邻接矩阵是否有环，则说明输入的二元数组可以组成环
+	if(pG->TopologicalSort())
+	  cout << "可以组成环" << endl;
+	else
+	  cout << "不能组成环" << endl;
+	system("pause");
+    return 0;
+}

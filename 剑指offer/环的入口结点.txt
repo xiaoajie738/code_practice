@@ -1,0 +1,27 @@
+//判断有环链表的入口节点：
+//思路：定义快慢指针分别指向头结点，慢指针每次走一个节点，快指针每次走两个节点，
+//当两个指针相遇时，它们一定指向环内的某个节点，此时再将慢指针指向头结点，再快慢指针
+//每次走一个节点，当他们再次相遇时，相遇节点就是换入口结点。
+ListNode* EntryNodeOfLoop(ListNode* pHead)
+{
+	if(pHead == NULL || pHead->next == NULL)
+		return NULL;
+	ListNode* pSlow = pHead;
+	ListNode* pQuick = pHead;
+	pSlow = pSlow->next;
+	pQuick = pQuick->next;
+	if(pQuick)
+		pQuick = pQuick->next;
+	while(pSlow != pQuick)
+	{
+	    pSlow = pSlow->next;
+		pQuick = pQuick->next->next;
+	}
+	pSlow = pHead;
+	while(pSlow != pQuick)
+	{
+		pSlow = pSlow->next;
+		pQuick = pQuick->next;
+	}
+	return pSlow;
+}

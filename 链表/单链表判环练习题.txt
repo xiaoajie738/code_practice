@@ -1,0 +1,33 @@
+ int chkLoop(ListNode* head, int adjust) 
+{
+	// write code here
+	if(head == NULL || head->next == NULL)
+		return -1;
+	ListNode* pSlow = head;
+	ListNode* pQuick = head;
+	bool loop = false;
+	while( pQuick != NULL)
+	{
+		if(pQuick->next == NULL)
+			return -1;
+                pSlow = pSlow->next;
+		pQuick = pQuick->next->next;
+		if(pSlow == pQuick)
+		{
+			loop = true;
+			break;
+		}
+		
+	}
+	if(loop) //当快慢指针相遇后，再让慢指针指向头结点，两个指针重新开始每次走一个结点，则它们再次相遇的结点就是 入环结点
+	{
+	   pSlow = head;
+	   while(pSlow != pQuick)
+	   {
+	       pSlow = pSlow->next;
+		   pQuick = pQuick->next;
+	   }
+	   return pSlow->val;
+	}
+	return -1;
+}

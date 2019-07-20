@@ -1,0 +1,53 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+//时间复杂度O（N），空间复杂度O(1)
+int findNum(vector<int> &vec) 
+{
+	if (vec.size() == 0) 
+		return -1;
+	//定义四个辅助变量，num1，num2用于存数，cnt1,cnt2分别记录其对应出现的次数。
+	int num1 = 0, num2 = 0, cnt1 = 0, cnt2 = 0;
+	for (int i = 0; i< vec.size(); ++i) 
+	{
+		//初始化和记录num1和其出现的次数
+		if (!cnt1 || num1 == vec[i]) 
+		{
+			num1 = vec[i];
+			cnt1++;
+		} 
+		//初始化和记录num2和其出现的次数
+		else if (!cnt2 || num2 == vec[i]) 
+		{
+			num2 = vec[i];
+			cnt2++;
+		} 
+		//num1和num2都存在时，且当新出现的数与他们不相等时，则同时去除数组中三个不相等的数。
+		else
+		{
+			cnt1--;
+			cnt2--;
+		}
+	}
+	//最后剩下的超过1/3D的数肯定是num1,和num2中的一个。由于可能会出现cnt1和cnt2相等的特殊情况，比如：2，2，3，4，5
+	cnt1 = 0; 
+	cnt2 = 0;
+	for (int i = 0; i< vec.size(); ++i) 
+	{
+		if (vec[i] == num1) cnt1++;
+		if (vec[i] == num2) cnt2++;
+	}
+	return cnt1 > cnt2 ? num1 : num2;
+}
+
+
+int main()
+{
+	int array[10] = {2,2,2,2,2,3,5,6,7,8};
+	vector<int> vec(array,array+5);
+	cout << findNum(vec);
+	system("pause");
+	return 0;
+
+}

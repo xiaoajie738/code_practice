@@ -1,0 +1,33 @@
+
+//输入一颗二叉树和一个整数，打印出二叉树中结点值的和为输入整数的所有路径
+//。路径定义为从树的根结点开始往下一直到叶结点所经过的结点形成一条路径。
+void FuncFindPath(TreeNode* root,vector<vector<int> > &res, vector<int> &temp,int& num, int expectNumber)
+{
+	num += root->val;
+	temp.push_back(root->val);
+	if(root->left == NULL && root->right == NULL)
+	{
+		if(num == expectNumber)
+			res.push_back(temp);
+		num -= temp[temp.size()-1];
+		temp.pop_back();
+		return;
+	}	
+    if(root->left)
+       FuncFindPath(root->left,res,temp,num,expectNumber);
+	if(root->right)
+       FuncFindPath(root->right,res,temp,num,expectNumber);
+	num -= temp[temp.size()-1];
+	temp.pop_back();
+}
+
+vector<vector<int> > FindPath(TreeNode* root,int expectNumber) 
+{
+	vector<vector<int> > res;
+	vector<int> tmp;
+	if(root == NULL)
+		return res;
+	int num = 0;
+	 FuncFindPath(root,res,tmp,num,expectNumber);
+	 return res;
+}

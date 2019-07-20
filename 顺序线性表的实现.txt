@@ -1,0 +1,131 @@
+#ifndef SQLIST_H
+#define SQLIST_H
+#include<iostream>
+
+class SqList
+{
+public:
+	SqList(int length):m_ilength(length)
+	{
+       std::cout << "SqList" << std::endl;
+	   m_ilenofSq = 0;
+	   m_ilist = new int[m_ilength];
+	}
+	~SqList()
+	{
+       std::cout << "~SqList" << std::endl;
+	   delete []m_ilist;
+	   m_ilist = NULL;
+	}
+	void initSqList();
+	bool isEmpty();
+	void clearSqList();
+	int lengthofSqlist();
+	void insert(int i, int e);
+	void specValofList(int i , int &e);
+	void delSpecValofList(int i, int &e);
+	void travesalSqlist();
+private:
+	int m_ilenofSq;
+	const int m_ilength ;
+	int *m_ilist;
+};
+
+#endif
+
+#include"SqList.h"
+#include<iostream>
+//初始化顺序链表
+void SqList::initSqList()
+{
+   m_ilenofSq = 0;
+}
+//判空
+bool SqList::isEmpty()
+{
+   if(m_ilenofSq == 0)
+	   return true;
+   else 
+	   return false;
+}
+//清空顺序链表
+void SqList::clearSqList()
+{
+    m_ilenofSq = 0;
+}
+//当前顺序链表的长度
+int SqList::lengthofSqlist()
+{
+    return m_ilenofSq;
+}
+//从链表的指定位置插入元素
+void SqList::insert(int i , int e)
+{
+    if(i <= 0 || i > m_ilenofSq +1)
+		return;
+
+	else if(i >= 1 && i <= m_ilenofSq)
+	{
+	    for(int j = m_ilenofSq - 1; j >= i-1; j--)
+			m_ilist[j + 1] = m_ilist[j];
+		m_ilist[i-1] = e;
+	}
+	else  
+	    m_ilist[i-1] = e;
+	m_ilenofSq++;
+}
+//获取顺序链表指定位序的元素
+void SqList::specValofList(int i , int &e)
+{
+   if(i >= 1 && i <= m_ilenofSq)
+       e = m_ilist[i-1];
+   else
+	   return;
+}
+//删除指定位序的元素
+void SqList::delSpecValofList(int i, int &e)
+{
+	if(i <= 0 || i >= m_ilenofSq)
+		return;
+	else if(i >= 1 && i <= m_ilenofSq)
+	{
+		e = m_ilist[i-1];
+		for(int j = i-1; j <= m_ilenofSq - 1; j++)
+		{
+			m_ilist[j] = m_ilist[j+1];
+		}
+	}
+	m_ilenofSq--;
+}
+//遍历顺序链表
+void SqList::travesalSqlist()
+{
+   for(int i = 1; i <= m_ilenofSq; i ++)
+	   std::cout << m_ilist[i-1] << std::endl;
+}
+
+#include"SqList.h"
+#include<iostream>
+
+using namespace std;
+
+int main()
+{
+  SqList sqlist(10);
+  int e1 = 5, e2 = 3, e3 = 7, e4 = 8, e5 = 2;
+  sqlist.insert(1,e1);
+  sqlist.insert(1,e2);
+  sqlist.insert(1,e3);
+  sqlist.insert(1,e4);
+  sqlist.insert(1,e5);
+  sqlist.travesalSqlist();
+  int e;
+  sqlist.delSpecValofList(3,e);
+	  cout << e << endl;
+  sqlist.travesalSqlist();
+ // sqlist.insert(1,e6);
+  //sqlist.insert(1,e7);
+  system("pause");
+  return 0;
+
+}

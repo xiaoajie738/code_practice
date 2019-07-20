@@ -1,0 +1,21 @@
+#include<iostream>
+#include<string>
+using namespace std;
+int main()
+{
+	string a, b;
+	cin >> a >> b;
+	int maxlen = 0;
+	for(int i = 0; i <= b.length() - a.length(); i++)
+	{
+		int count = 0;
+		for(int k = 0; k < a.length(); k++)
+		{
+			if(a[k] == b[i+k])  
+				count++;
+		}
+		maxlen = max(count, maxlen);
+	}
+	cout << a.length() - maxlen << endl;
+	return 0;
+}

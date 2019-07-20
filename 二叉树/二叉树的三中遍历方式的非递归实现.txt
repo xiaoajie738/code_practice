@@ -1,0 +1,170 @@
+#include <iostream>
+#include <vector>
+#include<stack>
+using namespace std;
+
+struct TreeNode 
+{
+	int val;
+	struct TreeNode *left;
+	struct TreeNode *right;
+	TreeNode(int x) :
+	val(x), left(NULL), right(NULL) 
+	{
+	}
+};
+
+/* 二叉树
+       1
+    2     3
+  4   5 6   7
+ */
+TreeNode* CreatTreeNode(TreeNode* root)
+{
+	int leftVal,rightVal;
+	cout << "输入左孩子：";
+	cin >> leftVal ;
+	if(leftVal != 0)
+	{
+		TreeNode* newNode = new TreeNode(leftVal);
+		root->left = newNode;
+		CreatTreeNode(root->left);
+	}
+	cout << "输入右孩子：" << endl;
+	cin >> rightVal;
+	if(rightVal != 0)
+	{
+		TreeNode* newNode1 = new TreeNode(rightVal);
+		root->right = newNode1;
+		CreatTreeNode(root->right);
+	}
+	return root;
+}
+
+
+//先序遍历的非递归函数版本，借助一个栈。
+void PreOrderTraverse(vector<int> &vec,TreeNode* root)
+{
+    if(root == NULL)
+		return;
+	stack<TreeNode*> sta;
+	sta.push(root);
+	while(!sta.empty())
+	{
+	   TreeNode* temp;
+	   temp = sta.top();
+	   vec.push_back(temp->val);
+	   sta.pop();
+	   if(temp->right != NULL)
+		   sta.push(temp->right);
+	   if(temp->left != NULL)
+		   sta.push(temp->left);
+	}
+}
+
+void InOrderTraverse(vector<int> &vec,TreeNode* root)
+{
+   if(root == NULL)
+	   return;
+   stack<TreeNode*> sta;
+   TreeNode* pp = root;
+   while(pp != NULL || !sta.empty())
+   {
+        while(pp != NULL)
+		{
+			sta.push(pp);
+			pp = pp->left;
+		}
+		if(!sta.empty())
+		{
+			TreeNode* temp;
+			temp = sta.top();
+			vec.push_back(temp->val);
+			sta.pop();
+			pp = temp->right;
+		}
+   }
+}
+//双栈法
+void PostOrderTraverse(vector<int> &vec,TreeNode* root)
+{
+	stack<TreeNode*> sta1,sta2;
+	TreeNode* pp = root;
+	sta1.push(pp);
+	while(!sta1.empty())
+	{
+	   TreeNode* temp;
+	   temp = sta1.top();
+	   sta1.pop();
+	   sta2.push(temp);
+	   if(temp->left != NULL)
+		   sta1.push(temp->left);
+	   if(temp->right != NULL)
+		   sta1.push(temp->right);
+	}
+	while(!sta2.empty())
+	{
+	   vec.push_back(sta2.top()->val);
+	   sta2.pop();
+	}
+}
+//单栈法
+void postorder(TreeNode* root, vector<int>& result) {
+	stack<TreeNode*> s;
+	TreeNode* h;
+	TreeNode* c;
+
+	s.push(root);
+	h = root;
+	c = NULL;
+	while(!s.empty()) 
+	{
+		c = s.top();
+		if(c->left != NULL && c->left != h && c->right != h) 
+		{
+			s.push(c->left);
+			c = s.top();
+		} 
+		else if(c->right != NULL && c->right != h) 
+		{
+			s.push(c->right);
+			c = s.top();
+		} 
+		else 
+		{
+			result.push_back(c->val);
+			h = c;
+			s.pop();
+		}
+	}
+}
+
+vector<vector<int> > convert(TreeNode* root) 
+{
+	// write code here
+	vector<vector<int>> res;
+	vector<int> temp;
+	PreOrderTraverse(temp,root);
+	res.push_back(temp);
+	temp.clear();
+	InOrderTraverse(temp,root);
+	res.push_back(temp);
+	temp.clear();
+	PostOrderTraverse(temp,root);
+	res.push_back(temp);
+	return res;
+}
+
+int main()
+{
+	vector<int> vec;
+	TreeNode* root = new TreeNode(1);
+	CreatTreeNode(root);
+	PreOrderTraverse(vec,root);
+	vec.clear();
+	InOrderTraverse(vec,root);
+	vec.clear();
+	PostOrderTraverse(vec,root);
+	system("pause");
+	return 0;
+}

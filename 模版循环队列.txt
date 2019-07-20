@@ -1,0 +1,167 @@
+#ifndef CIRCUITQUEUE_H
+#define CIRCUITQUEUE_H
+#include<iostream>
+using namespace std;
+
+template <class T>
+class circuitQueue
+{
+public:
+	circuitQueue(int capacity);
+	~circuitQueue();
+	void clearQueue();
+	bool isEmpty();
+	bool isFull();
+	bool enQueue(T e);
+	bool deQueue(T &e);
+	void traverseQueue();
+private:
+	T * m_pQueue;
+	int m_iCapOfQueue;
+	int m_iLenofQueue;
+	int m_iHead;
+	int m_iTail;
+};
+
+//构造函数
+template <class T>
+circuitQueue<T>::circuitQueue(int capacity)
+{
+	m_iCapOfQueue = capacity;
+	m_pQueue = new T[m_iCapOfQueue];
+	m_iLenofQueue = 0;
+	m_iHead = 0;
+	m_iTail = 0;
+}
+//析构函数
+template <class T>
+circuitQueue<T>::~circuitQueue()
+{
+	delete []m_pQueue;
+	m_pQueue = NULL;
+}
+//清空队列
+template <class T>
+void circuitQueue<T>::clearQueue()
+{
+	m_iLenofQueue = 0;
+	m_iHead = 0;
+	m_iTail = 0;
+}
+//判空
+template <class T>
+bool circuitQueue<T>::isEmpty()
+{
+	if(m_iLenofQueue == 0)
+		return true;
+	return false;
+}
+//判满
+template <class T>
+bool circuitQueue<T>::isFull()
+{
+	if(m_iLenofQueue == m_iCapOfQueue)
+		return true;
+	return false;
+}
+//入队列
+template <class T>
+bool circuitQueue<T>::enQueue(T e)
+{
+	if(isFull())
+		return false; 
+	m_pQueue[m_iTail] = e;
+	m_iTail++;
+	m_iTail = m_iTail % m_iCapOfQueue; 
+	m_iLenofQueue++;
+}
+//出队列
+template <class T>
+bool circuitQueue<T>::deQueue(T &e)
+{   
+	if(isEmpty())
+		return false;
+	e = m_pQueue[m_iHead];
+	m_iHead++;
+	m_iHead = m_iHead % m_iCapOfQueue;
+	m_iLenofQueue--;
+}
+//遍历队列
+template <class T>
+void circuitQueue<T>::traverseQueue()
+{
+	int i = m_iHead;
+	for(; i < m_iLenofQueue + m_iHead; i++)
+	{
+	    cout << m_pQueue[i%m_iCapOfQueue] << endl;
+	}
+}
+#endif
+
+#ifndef CUSTOMER_H
+#define CUSTOMER_H
+#include<iostream>
+#include <string>
+using namespace std;
+class Customer
+{
+	friend ostream& operator<<(ostream& output,Customer &c);
+public:
+	Customer(string name = "", int code = 0);
+	~Customer();
+	void printInfor();
+private:
+	string m_sName;
+	int m_iCode;
+};
+
+#endif
+
+#include"customer.h"
+#include<string>
+#include<iostream>
+using namespace std;
+
+ostream& operator<<(ostream& output,Customer &c)
+{
+     output << "name:" << c.m_sName << "," << "code:" << c.m_iCode << endl;
+	 return output;
+}
+
+Customer::Customer(string name , int code )
+{
+    m_sName = name; 
+	m_iCode = code;
+}
+
+Customer::~Customer()
+{
+   // cout << "~customer()" << endl;
+}
+void Customer::printInfor()
+{
+    cout << "name:" << m_sName << "," << "code:" << m_iCode << endl;
+}
+//主函数
+#include"circuitQueue.h"
+#include"customer.h"
+
+int main()
+{
+   circuitQueue<Customer> queue(4);
+   Customer e1("xiongjie",0);
+   Customer e2("zhoumiao",1);
+   Customer e3("wanzhiyuan",2);
+   Customer e4("zhangxiong",3);
+   queue.enQueue(e1);
+   queue.enQueue(e2);
+   queue.enQueue(e3);
+   queue.enQueue(e4);
+   queue.traverseQueue();
+   Customer e;
+   queue.deQueue(e);
+  cout << e << endl;
+   queue.traverseQueue();
+   system("pause");
+   return 0;
+}

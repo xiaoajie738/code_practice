@@ -1,0 +1,26 @@
+ //»¬¶¯´°¿ÚÁ·Ï°Ìâ
+vector<int> slide(vector<int> arr, int n, int w) 
+{
+	// write code here
+	vector<int> result;
+	deque<int> que;
+	for(int i = 0; i < n; i++)
+	{
+		if(que.empty())
+		{
+		   que.push_back(i);
+		}
+		else
+		{
+			while(!que.empty() && arr[que.back()] <= arr[i])
+				que.pop_back();
+			que.push_back(i);
+		}
+		
+		if(i - que.front() >= w)
+			que.pop_front();
+		if(i >= w-1)
+			result.push_back(arr[que.front()]);
+	}
+	return result;
+}

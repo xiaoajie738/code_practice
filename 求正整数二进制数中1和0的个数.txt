@@ -1,0 +1,40 @@
+#include<iostream>
+
+using namespace std;
+
+//求二进制数中的1的个数
+int numof1(int a)
+{
+   int count = 0;
+   while(a)
+   {
+      a = a & a-1; 
+	  count++;
+   }
+   return count;
+}
+//求二进制数中0的个数
+int numof0(int a)
+{
+   int m = 255;
+   int count = 0;
+   bool is = true;
+   while(is)
+   {
+      a = a | a+1;
+	  if(a == m)
+		  is = false;
+	  count++;
+   }
+   return count;
+}
+int main()
+{
+   int num;
+   while(cin >> num)
+   {
+      cout << "二进制数中的1的个数:" << numof1(num) << endl;
+	  cout << "二进制数中的0的个数:" << numof0(num) << endl;
+   }
+   return 0;
+}

@@ -1,0 +1,82 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+void help(int n, int m, vector<int>& v, int beg) {
+    //if (beg>n) return;
+    if (m == 0) {
+        for (int i = 0; i<v.size(); i++) {
+            i == 0 ? cout << v[i] : cout << " " << v[i];
+        }
+        cout << endl;
+    }
+    for (int i = beg; i <= n&&i <= m; i++) {
+        v.push_back(i);
+        help(n, m - i, v, i + 1);
+        v.pop_back();
+    }
+}
+int main() {
+    int n, m;
+    while (cin >> n >> m) {
+        vector<int>v;
+        help(n, m, v, 1);
+    }
+}
+
+
+//用递归写代码好难呀，擦
+#include <iostream>
+#include <algorithm>
+#include <vector>
+using namespace std;
+
+vector<int> v;
+void find_ans(vector<int> ret, int cur_pos, int n, int cur_sum, int sum) 
+{
+	if (cur_pos >= n) 
+		return ;
+	cur_sum += v[cur_pos];
+	ret.push_back(v[cur_pos]);
+	if (cur_sum == sum) 
+	{
+		for (int i = 0; i < ret.size() - 1; ++i) 
+		{
+			cout << ret[i] << " ";
+		}
+		cout << ret[ret.size() - 1];
+		cout << endl;
+		return ;
+	} 
+	else if (cur_sum > sum) 
+	{ // 大于sum，就没必要再继续往下了，剪枝操作
+		return ;
+	}
+	// 把当前的下标位置的值放进去，继续下一个位置
+	find_ans(ret, cur_pos+1, n, cur_sum, sum);
+	// 不要当前值，从下一个位置搜索，意思大概就是不从1开始找了，从2开始找
+	vector<int>::iterator it = ret.end();
+	--it;
+	ret.erase(it);
+	find_ans(ret, cur_pos+1, n, cur_sum - v[cur_pos], sum);
+	// 总体思想就是当前位置的数是要还是不要的事情，列出来所有的可能，挨个输出就行了
+}
+
+int main() 
+{
+	int n, num;
+	cin >> n >> num;
+
+	for (int i = 0; i < n; ++i) 
+	{
+		v.push_back(i+1);
+	}
+	// 因为如果n大于num的话，那么num后面的数字肯定不需要再考虑了，所以我们只需要考虑从1~num之间的可能组合就行了
+	if (n >= num)
+		n = num;
+	 
+	vector<int> ret;
+	int sum = 0;
+	// 利用递归的方法来做，0是当前位置，n是最大下标，sum是当前和，num就是要求的结果
+	find_ans(ret,0,n,sum,num);
+	return 0;
+}

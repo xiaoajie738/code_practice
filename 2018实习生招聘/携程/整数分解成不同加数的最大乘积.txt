@@ -1,0 +1,27 @@
+//方法1：找规律
+int maxNum(int k)
+{
+	int thr = 2;
+	vector<int> in(100);
+	int i = 0;
+	while(k >= thr)
+	{
+		in[i++] = thr;
+		k -= thr;
+		thr++;
+	}
+	if(k)
+	{
+		if(k==in[i-1])
+		{
+			in[i-1]++;
+			k--;
+		}
+		for(int j = 0; j < k; j++)
+			in[i-1-j]++;
+	}
+	int res =1;
+	for(int j = 0; j <= i-1;j++)
+		res *= in[j];
+	return res;
+}

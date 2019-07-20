@@ -1,0 +1,37 @@
+#include<iostream>
+#include<opencv2/opencv.hpp>
+#include<fstream>
+using namespace std;
+using namespace cv;
+
+int main()
+{
+   Mat img = imread("1.jpg");
+   Mat image = img.clone();
+   ofstream location;
+   location.open("res.txt",ios::out | ios::app);
+   if(!location.is_open())
+	   return 0;
+   for(int i=0;i<image.rows;i++)        
+     {
+	   for(int j=0;j<image.cols;j++)
+	     {
+			if(image.at<Vec3b>(i,j)[0] <= 255 && image.at<Vec3b>(i,j)[0] >= 180 && 
+				image.at<Vec3b>(i,j)[1] <= 200 && image.at<Vec3b>(i,j)[1] >= 80 && 
+				image.at<Vec3b>(i,j)[2] <= 100 && image.at<Vec3b>(i,j)[2] >= 0)
+			{
+				image.at<Vec3b>(i,j)[0] = 255;
+				image.at<Vec3b>(i,j)[1] = 255;
+				image.at<Vec3b>(i,j)[2] = 255;
+			}
+			//location << (int)image.at<Vec3b>(i,j)[0] << " " << (int)image.at<Vec3b>(i,j)[1] << " " << (int)image.at<Vec3b>(i,j)[2] << endl;
+		 }
+	  }
+   location.close();
+   imshow("src",img);
+   imshow("res",image);
+   imwrite("res2.jpg",image);
+   waitKey(1000);
+   system("pause");
+   return 0;
+}

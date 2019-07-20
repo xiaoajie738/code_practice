@@ -1,0 +1,46 @@
+
+#include <vector>
+#include <sstream>
+#include <iostream>
+#include <string>
+#include <assert.h>
+
+using namespace std;
+//strcpy函数的编写
+//不考虑内存覆盖
+char* strcpy1(char* strDest, const char* strSrc)
+{
+        assert(strDest != NULL && strSrc != NULL);
+	char* strRes = strDest;
+	while((*strDest++ = *strSrc++) != '\0');
+	return strRes;
+}
+void my_strCopy(char* strDest, const char* strSrc, int len)
+{
+    if(strDest >= strSrc && strDest <= strSrc + len - 1)
+	{
+	   //存在内存覆盖，从高地址往低地址开始幅值
+		strDest = strDest + len -1;
+		strSrc = strSrc + len -1;
+		while((*strDest-- = *strSrc--) != '\0');
+	}
+	//如果没有内存覆盖，则从高地址向低地址开始复制
+	 while((*strDest++ = *strSrc++) != '\0');
+
+}
+//考虑内存覆盖
+char* strcpy(char* strDest, const char* strSrc)
+{
+   assert(strDest != NULL && strSrc != NULL);
+   char* strRes = strDest;
+   my_strCopy(strDest,strSrc,strlen(strSrc)+1);
+   return strRes;
+}
+int main()
+{
+	char str1[20] = "hello";
+	char str2[8] = "houollw";
+	cout << strcpy(str1,str2);
+	system("pause");
+	return 0;
+}

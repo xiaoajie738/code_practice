@@ -1,0 +1,21 @@
+ 字符串移位练习题
+对于一个字符串，请设计一个算法，将字符串的长度为len的前缀平移到字符串的最后。
+给定一个字符串A和它的长度，同时给定len，请返回平移后的字符串。
+
+//code by XJ
+void reverseString(string &A, int begin, int end)
+{
+	for(int i = begin; i <= begin + (end - begin) / 2; i++)
+	{
+	   swap(A[i],A[end - i + begin]);
+	}
+}
+
+string stringTranslation(string A, int n, int len) 
+{
+	// write code here
+	reverseString(A, 0, len - 1);
+	reverseString(A, len, n-1);
+	reverseString(A, 0, n-1);
+	return A;
+}

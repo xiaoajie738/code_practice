@@ -1,0 +1,40 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
+
+int filp(int n)
+{  
+	return n ^ 1;  
+} 
+
+int sign(int n)
+{  
+	return filp((n >> 31) & 1);  //注意这里有一次filp，因为正数为1  
+}  
+ 
+int getMax(int a, int b) 
+{  
+	int c = a - b;  
+	int sa = sign(a);  
+	int sb = sign(b);  
+	int sc = sign(c);  
+	int diffab = sa ^ sb;  
+	int sameab = filp(diffab);  
+	int returnA = sameab * sc + diffab * sa;  
+	int returnB = filp(returnA);  
+	return returnA * a + returnB * b;  
+}  
+
+int getMax1(int a, int b) {
+	// write code here
+	int c = (a-b)>>31;                                                                                                                                                                                                                                                                                                                                                                                               
+	return a + c*(a-b);
+}
+int main()
+{
+   int a = 2, b = 3;
+   cout << getMax1(a,b) << endl;
+   system("pause");
+   return 0;
+}

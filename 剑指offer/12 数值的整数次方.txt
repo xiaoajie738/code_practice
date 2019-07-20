@@ -1,0 +1,67 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+bool g_inputValid = false;
+//一般连乘方法
+double func_power(double base,int exponet)
+{
+	double res = 1.0;
+    for(int i = 0; i < exponet; i++)
+	{
+		res *= base;
+	}
+	return res;
+}
+
+//改进方法
+double func_power(double base,int exponet)
+{
+	double res = base;
+	for(int i = exponet; i > 1; i >>= 1)
+	{
+		res *= res;
+	}
+	if((exponet % 2) == 1)
+		res *= base;
+	return res;
+}
+bool isDouble0(double base)
+{
+   if(base < 0.0000001 && base > -0.0000001)
+   {
+	   g_inputValid = true;
+	   return true;
+   }
+	   
+    return false;
+}
+//给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。
+
+
+double Power(double base, int exponent) 
+{
+	double res = 0.0;
+	if(exponent > 0)
+		res = func_power(base,exponent);
+	if(!isDouble0(base) && exponent < 0)
+	{
+	   res = 1.0 / func_power(base,-exponent);
+	}
+	if(exponent == 0)
+	{
+		if(!isDouble0(base))
+			res = 1;
+		else
+			res = 0;
+	}
+	return res;
+}
+
+int main( int argc, char** argv )  
+{  
+	cout << Power(-2.0,3);
+	system("pause");
+	return 0;  
+
+}  
+

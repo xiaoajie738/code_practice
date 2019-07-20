@@ -1,0 +1,19 @@
+#include<iostream>
+#include<cstring>
+#include<vector>
+#include<algorithm>
+using namespace std;
+int main(){
+    int n;
+    long long maxZhan = 0, add = 0, maxSum = 0, tZhan, tQian;
+    cin >> n;
+    for(int i = 0; i < n; i++){
+        cin >> tZhan >> tQian;
+        //潜力比战斗力大，记录潜力与战力差的总和和其中最高的战斗力
+        if(tZhan < tQian)    maxZhan = max(maxZhan, tZhan), add += tQian - tZhan;
+        //否则，记录最大的潜力、战力和
+        else    maxSum = max(maxSum, tZhan + tQian);
+    }
+    cout << add + max(2 * maxZhan, maxSum) << endl;
+    return 0;
+}

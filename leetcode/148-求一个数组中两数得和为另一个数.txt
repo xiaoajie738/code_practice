@@ -1,0 +1,102 @@
+//求一个数组中两数得和为另一个数
+Given an array of integers, find two numbers such that they add up to a specific target number.
+The function twoSum should return indices of the two numbers such that they add up to the target, where index1 must be less than index2. Please note that your returned answers (both index1 and index2) are not zero-based.
+You may assume that each input would have exactly one solution.
+Input: numbers={2, 7, 11, 15}, target=9
+Output: index1=1, index2=2
+
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+#include<map> 
+#include <unordered_map>
+using namespace std;
+
+vector<int> twoSum(vector<int> &numbers, int target) 
+{
+	unordered_map<int, int> hashtable;
+	vector<int> result;
+	for(int i=0; i < numbers.size(); i++)
+	{
+		hashtable[numbers[i]] = i;
+	}
+	for(int i=0; i < numbers.size(); i++)
+	{
+		const int diff = target - numbers[i];
+		if(hashtable.find(diff) != hashtable.end() && hashtable[diff] > i)
+		{
+			result.push_back(i+1);
+			result.push_back(hashtable[diff]+1);
+			break;
+		}
+	}
+	return result;
+}
+vector<int> twoSum2(vector<int> &numbers, int target) 
+{
+	map<int, int> m;
+	vector<int> res;
+	for(int i=0; i<numbers.size(); i++)
+	{
+		m[numbers[i]] = i;
+	}
+	for(int i=0; i<numbers.size(); i++)
+	{
+		const int diff = target - numbers[i];
+		if(m.find(diff) != m.end() && m[diff] > i)
+		{
+			res.push_back(i+1);
+			res.push_back(m[diff]+1);
+			break;
+		}
+	 }
+	return res;
+}
+
+vector<int> twoSum1(vector<int> &numbers, int target) 
+{
+	vector<int> results;
+	if(numbers.size() < 2)
+		return results;
+	vector<int> temp(numbers);
+	int begin = 0,end = temp.size()-1;
+	sort(temp.begin(),temp.end());
+	while(begin < end)
+	{
+	   if(temp[begin] + temp[end] > target)
+		   end--;
+	   else if(temp[begin] + temp[end] < target)
+		   begin++;
+	   else
+	   {
+		  int index1 = 0,index2 = 0;
+	     for(int i = 0; i < numbers.size(); i++)
+		 {
+
+			 if(numbers[i] == temp[begin] || numbers[i] == temp[end])
+			 {
+				 if(index1 == 0)
+				      index1 = i+1;
+				 else
+					 index2 = i+1;
+			 }
+		 }
+		 if(index1 > index2)
+			 swap(index1,index2);
+		 results.push_back(index1);
+		 results.push_back(index2);
+		  break;
+	   }
+	}
+	return results;
+
+}
+int main() 
+{
+	int arr[5] = {1,2,4,3};
+	vector<int> vec(arr,arr+4);
+	twoSum(vec,8);
+	return 0;
+}

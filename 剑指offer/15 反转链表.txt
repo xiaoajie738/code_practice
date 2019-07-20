@@ -1,0 +1,64 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+ 
+struct ListNode 
+{
+	int val;
+	struct ListNode *next;
+	ListNode(int x) :
+	val(x), next(NULL) {}
+};
+
+void insertNode(ListNode* pHead,int node)
+{
+   if(pHead == NULL)
+	   return;
+   ListNode* pC = pHead;
+   ListNode* newNode = new ListNode(node);
+   while(pC->next != NULL)
+   {
+       pC = pC->next;
+   }
+   pC->next = newNode;
+}
+void printList(ListNode* pHead)
+{
+	//pHead->val = 8;
+    while(pHead != NULL)
+	{
+	   cout << pHead->val << endl;
+	   pHead = pHead->next; 
+	}
+}
+ListNode* ReverseList(ListNode* pHead) 
+{
+	if(pHead == NULL)
+		return NULL;
+	ListNode* preNode = NULL;
+	ListNode* pC = pHead;
+	ListNode* pN;
+	while(pC != NULL)
+	{
+		pN = pC->next;
+	    pC->next = preNode;
+		preNode = pC;
+		pC = pN;
+	}
+	return preNode;
+}
+int main()
+{
+	ListNode* pHead = new ListNode(1);
+	insertNode(pHead,2);
+	insertNode(pHead,3);
+	insertNode(pHead,4);
+	insertNode(pHead,5);
+	printList(pHead);
+	ListNode* pReverse;
+	pReverse = ReverseList(pHead);
+	printList(pReverse);
+	system("pause");
+    return 0;
+}

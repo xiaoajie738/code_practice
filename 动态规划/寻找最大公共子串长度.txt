@@ -1,0 +1,56 @@
+//牛客网参考答案
+int findLCS(string A, int n, string B, int m) 
+{
+	int ret = 0;
+	for(int i = 0;i < n;++ i)
+		for(int j = 0;j < m;++ j)
+		{
+			f[i + 1][j + 1] = max(f[i][j + 1],f[i + 1][j]);
+			if(A[i] == B[j])
+				f[i + 1][j + 1] = max(f[i + 1][j + 1],f[i][j] + 1);
+			if(f[i + 1][j + 1] > ret) ret = f[i + 1][j + 1];
+		}
+		return ret;
+}
+
+//寻找最大公共子串长度，by牛友
+int findLCS1(string A, int n, string B, int m) {
+	// write code here
+	if (n <= 0 || m <= 0)
+		return 0;
+
+	int dp[305][305];
+
+	dp[0][0] = A[0] == B[0] ? 1 : 0;
+
+	for (int i = 1; i < n; i++)
+	{
+		if (dp[i - 1][0] == 1 || A[i] == B[0])
+			dp[i][0] = 1;
+		else
+			dp[i][0] = 0;
+	}
+
+	for (int j = 1; j < m; j++)
+	{
+		if (dp[0][j - 1] == 1 || A[0] == B[j])
+			dp[0][j] = 1;
+		else
+			dp[0][j] = 0;
+	}
+
+	int candidate = 0;
+	for (int i = 1; i < n; i++)
+	{
+		for (int j = 1; j < m; j++)
+		{
+			candidate = max(dp[i - 1][j], dp[i][j - 1]);
+			if (A[i] == B[j])
+				candidate = max(candidate, dp[i - 1][j - 1] + 1);
+
+			dp[i][j] = candidate;
+		}
+	}
+
+	return dp[n-1][m-1];
+}

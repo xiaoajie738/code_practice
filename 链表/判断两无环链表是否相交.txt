@@ -1,0 +1,52 @@
+//判断两无环单链表是否相交，方法1 时间复杂度O(N),空间复杂度O(1)
+bool chkIntersect(ListNode* headA, ListNode* headB) 
+{
+	// write code here
+	ListNode* pA = headA;
+	ListNode* pB = headB;
+	while(pA->next != NULL)
+	{
+	   pA = pA->next;
+	}
+	while(pB->next != NULL)
+	{
+		pB = pB->next;
+	}
+	if(pA == pB)
+		return true;
+	return false;
+}
+//方法二，时间复杂度O(N+M),空间复杂度O(1)
+bool chkIntersect1(ListNode* headA, ListNode* headB) 
+{
+	// write code here
+	if(headA == NULL || headB == NULL)
+		return false;
+	bool result = false;
+	ListNode* pA = headA;
+	ListNode* pB = headB;
+	while(pA->next != NULL)
+	{
+	  pA = pA->next;
+	}
+	pA->next = pB;
+	pA = headA;//慢
+	pB = headA;//快
+	while(pB != NULL)
+	{
+		pA = pA->next;
+		pB = pB->next == NULL?NULL:pB->next->next;
+		if(pA == pB)
+			break;
+	}
+	if(pA == pB)
+		result = true;
+	pA = headA;
+	while(pA != headB)
+	{
+	   pB = pA;
+	   pA = pA->next;
+	}
+	pB->next = NULL;
+	return result;
+}

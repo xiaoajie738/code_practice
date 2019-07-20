@@ -1,0 +1,36 @@
+#include<iostream>
+using namespace std;
+//有n个信封，包含n封信，现在把信拿出来，再装回去，
+//要求每封信不能装回它原来的信封，问有多少种装法?
+//给定一个整数n，请返回装发个数，为了防止溢出，请返
+//回结果Mod 1000000007的值。保证n的大小小于等于300。
+int countWays(int n) 
+{
+	// write code her
+	if(n <= 0)
+		return 0;
+	int arr[2] = {0,1};
+	if(n <= 2)
+		return arr[n-1];
+	int res = 0;
+	long long temp1,temp2;
+	temp1 = arr[0];
+	temp2 = arr[1];
+	for(int i = 3; i <= n; i++)
+	{
+	    res = (i-1)*((temp1 + temp2)%1000000007)%1000000007;
+		//res = res%1000000007;
+		temp1 = temp2;
+		temp2 = res;
+	}
+	return res;
+
+}
+
+int main()
+{
+
+	cout << countWays(143)<< endl;
+	system("pause");
+  
+}

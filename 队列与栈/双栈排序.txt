@@ -1,0 +1,33 @@
+vector<int> twoStacksSort(vector<int> numbers)
+{
+	// write code here
+	stack<int> help;
+	int temp = 0;
+	while(!numbers.empty())
+	{
+		temp = numbers.back();
+		numbers.pop_back();
+		if(help.empty() || temp >= help.top() )
+		{
+			help.push(temp);
+		}
+		else
+		{
+		   while(!help.empty() && temp < help.top())
+		   {
+		      int num = help.top();
+			  help.pop();
+			  numbers.push_back(num);
+		   }
+		   help.push(temp);
+		}
+	}
+	numbers.clear();
+	while(!help.empty())
+	{
+	   temp = help.top();
+	   help.pop();
+	   numbers.push_back(temp);
+	}
+	return numbers;
+}

@@ -1,0 +1,37 @@
+#include<iostream>
+#include<math.h>
+#include<vector>
+#include<algorithm>
+using namespace std;
+
+
+int NumberOf1Between1AndN_Solution(int n)
+{
+	int num = 0;
+	int i = 1;
+	int current,front,behind;
+	while((n/i) != 0)
+	{
+	  current = (n/i) % 10;
+	  front = n / (i*10);
+	  behind = n - (n/i)*i;
+	  if(current == 0)
+		  num += front*i;
+	  else if(current == 1)
+		  num += front*i + behind +1;
+	  else
+		  num += (front+1)*i;
+	  i = i*10;
+	}
+	return num;
+}
+
+int main()
+{
+	int N;
+    
+	cout << NumberOf1Between1AndN_Solution(93) << endl; 
+    system("pause");
+	return 0;
+	
+}

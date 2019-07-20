@@ -1,0 +1,47 @@
+void radixSort(vector<int> &A, int n) 
+{
+	// write code here
+	queue<int> que[10];
+	
+	for(int r = 1; r < 1001; r *= 10)
+	{
+	    for(int i = 0; i < n; i++)
+		{
+		   que[A[i]/r % 10].push(A[i]);
+		}
+		A.clear();
+		//³öÍ°
+		for(int i = 0; i < 10; i++)
+		{
+		    while(!que[i].empty())
+			{
+			    A.push_back(que[i].front());
+				que[i].pop();
+			}
+		}
+	}
+	
+}
+int* radixSort1(int* A, int n) 
+{
+	// write code here
+	queue<int> que[10];
+	for(int r = 1; r < 1001; r *= 10)
+	{
+		for(int i = 0; i < n; i++)
+		{
+			que[A[i]/r % 10].push(A[i]);
+		}
+		//³öÍ°
+		int j = 0;
+		for(int i = 0; i < 10; i++)
+		{
+			while(!que[i].empty())
+			{
+			    A[j++] = que[i].front();
+				que[i].pop();
+			}
+		}
+	}
+	return A;
+}

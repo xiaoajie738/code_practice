@@ -1,0 +1,50 @@
+
+#include<iostream>
+#include<vector>
+#include<string>
+#include<sstream>
+using namespace std;
+
+//给定一个字符串，请你将字符串重新编码，将连续的字符替
+//换成“连续出现的个数+字符”。比如字符串AAAABCCDAA会被编码成4A1B2C1D2A。
+
+string convertStr(string s)
+{
+    string resultStr = "";
+	stringstream intToStr;
+	int count = 1;
+	char ch;
+	size_t i = 0;
+	ch = s[i];
+	for(i = 1; i < s.size(); ++i)
+	{
+	   if(ch == s[i])
+		   count++;
+	   else
+	   {
+          intToStr << count << ch;
+		  resultStr += intToStr.str();
+		  intToStr.str("");
+	      ch = s[i];
+		  count = 1;
+		  continue;
+	   }
+	}
+	intToStr << count << ch;
+	resultStr += intToStr.str();
+	intToStr.str("");
+	return resultStr;
+}
+
+int main()
+{ 
+	string s;
+	while(cin >> s)
+	{
+		cout <<  convertStr(s) << endl;
+	}
+  
+   system("pause"); 
+   return 0;
+
+}

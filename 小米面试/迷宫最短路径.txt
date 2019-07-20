@@ -1,0 +1,108 @@
+#include<iostream>
+#include<vector>
+#include<stack>
+
+using namespace std;
+
+#define  M  8   //行数  
+#define  N  8     //列数 
+
+int mz[M+2][N+2] = {      //一个迷宫，其四周要加上均为1的外框  
+	{1,1,1,1,1,1,1,1,1,1},  
+	{1,0,0,1,0,0,0,1,0,1},  
+	{1,0,0,1,0,0,0,1,0,1},  
+	{1,0,0,0,0,1,1,0,0,1},  
+	{1,0,1,1,1,0,0,0,0,1},  
+	{1,0,0,0,1,0,0,0,0,1},  
+	{1,0,1,0,0,0,1,0,0,1},  
+	{1,0,1,1,1,0,1,1,0,1},  
+	{1,1,0,0,0,0,0,0,0,1},  
+	{1,1,1,1,1,1,1,1,1,1}  
+};  
+
+struct Postion{  
+	int i;      //路径横坐标  
+	int j;      //路径纵坐标  
+	int di;     //方向  
+	Postion(int x, int y,int z):i(x),j(y),di(z)
+	{}
+}; 
+
+int minLen = 10000;     //最短路径长度,初始化一个较大值  
+void MazePath()
+{   //路径为:(1,1)->(M,N)  
+	int i,j,di,find,k;  
+	stack<Postion> sta;
+	vector<Postion> tmp;
+	Postion p(1,1,-1);
+	sta.push(p);
+	mz[1][1]=-1;        //初始结点进栈  
+	 //栈不空时循环
+	while(!sta.empty())
+	{      
+	    i = sta.top().i;
+		j = sta.top().j;
+		di = sta.top().di;
+		//找到了出口
+		if(i==M && j==N)
+		{    
+			if(sta.size() < minLen)
+			{ 
+				//比较输出最短路径  
+				tmp.clear();
+				stack<Postion> sta_tmp;
+				sta_tmp = sta;
+				while(!sta_tmp.empty())
+				{
+					tmp.push_back(Postion(sta_tmp.top().i,sta_tmp.top().j,sta_tmp.top().di));
+					sta_tmp.pop();
+				}
+				minLen = sta.size(); 
+			}  
+			mz[sta.top().i][sta.top().j] = 0;   //让该位置变为其他路径的可走结点  
+			sta.pop();
+			i=sta.top().i;
+			j=sta.top().j;
+			di=sta.top().di;  
+		}  
+		find = 0;  
+		while(di < 4 && find==0)
+		{ 
+			//找下一个可走结点  
+			di++;  
+			switch(di){  
+			case 0: i = sta.top().i-1; j = sta.top().j;break;   //上面  
+			case 1: i = sta.top().i; j = sta.top().j + 1;break;   //右边  
+			case 2: i = sta.top().i+1; j=sta.top().j;break;   //下面  
+			case 3: i = sta.top().i; j = sta.top().j-1;break;   //左边  
+			}  
+			if(mz[i][j]==0)  
+				find=1;  
+		}  
+		if(find == 1)
+		{   
+			//找到了下一个可走结点  
+			sta.top().di = di;   //修改原栈顶元素的di值  
+			sta.push(Postion(i,j,-1));
+			mz[i][j]=-1;        //避免重复走到该结点  
+		}
+		else
+		{  
+			mz[sta.top().i][sta.top().j]=0;   //让该位置变为其他路径的可走结点  
+			sta.pop();  
+		}  
+	}  
+	cout << "最短路径的长度" << minLen << endl;
+	cout << "最短路径结点如下:" << endl;
+	for(int i = tmp.size()-1;i >= 0; --i)
+	{
+		cout << "(" << tmp[i].i << "," << tmp[i].j << ")" << endl;
+	}
+}  
+int main()
+{  
+	cout << "迷宫所有路径如下" << endl;  
+	MazePath();  
+	system("pause");
+	return 0;  
+}  

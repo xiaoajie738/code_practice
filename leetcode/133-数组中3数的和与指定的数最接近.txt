@@ -1,0 +1,45 @@
+//三重循环,时间复杂度O（n3）
+int threeSumCloset(vector<int> &num, int target)
+{
+   int minRes = INT_MAX;
+   for(int i = 0; i < num.size()-2; ++i)
+   {
+      for(int j = i+1; j < num.size()-1; ++j)
+		  for(int k = j+1; k < num.size(); ++k)
+		  {
+			  if(abs(num[i]+num[j]+num[k]-target) < abs(minRes))
+				  minRes = num[i]+num[j]+num[k]-target;
+		  }
+   }
+   return minRes;
+}
+
+//时间复杂度O（n2）
+int threeSumClosest(vector<int> &num, int target) 
+{  
+	int result = 0;  
+	int remainder = INT_MAX;  
+    sort(num.begin(), num.end());  
+	for(int i = 0; i < num.size(); i++)  
+		twoSum(num, i, result, remainder, target);  
+	return result;  
+}  
+
+void twoSum(vector<int> num, int targetIndex, int& result, int &remainder, int target)
+{  
+	int i = targetIndex + 1;   
+	int j = num.size() - 1;   
+	while(i < j)
+	{  
+		int thisRemainder = num[targetIndex] + num[i] + num[j] - target;  
+		if(abs(thisRemainder) <= remainder) 
+		{  
+			remainder = abs(thisRemainder);  
+			result = num[targetIndex] + num[i] + num[j];  
+		}  
+		if(thisRemainder > 0) 
+			j--;   
+		else
+			i++;  
+	}  
+} 

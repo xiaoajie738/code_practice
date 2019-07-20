@@ -1,0 +1,30 @@
+#include<iostream>
+#include<string>
+using namespace std;
+
+int index_BF(string str1,string str2,int pos)
+{
+   int i = pos, j = 0;
+   while(i + j < str1.size() && j < str2.size() )
+   {
+      if(str1[i+j] == str2[j])
+		  j++;
+	  else
+	  {
+		  i++;
+		  j = 0;
+	  }
+	  if(j == str2.size())
+		  return i;
+   }
+   return -1;
+}
+
+int main()
+{
+   string str1("abcabcabdabba");
+   string str2("abcabd");
+   cout << index_BF(str1,str2,1) << endl;
+   system("pause");
+   return 0;
+}

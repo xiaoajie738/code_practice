@@ -1,0 +1,37 @@
+
+struct TreeNode {
+	int val;
+	struct TreeNode *left;
+	struct TreeNode *right;
+	TreeNode(int x) :
+			val(x), left(NULL), right(NULL) {
+	}
+};
+
+//递归方法
+int TreeDepth(TreeNode* pRoot)
+{
+	if(!pRoot)
+		return 0;
+	return max(1+TreeDepth( pRoot->left),1+TreeDepth( pRoot->right));
+}
+
+//非递归方法
+int TreeDepth(TreeNode* pRoot)
+{
+	queue<TreeNode*> q;
+	if(!pRoot) return 0;
+	q.push(pRoot);
+	int level=0;
+	while(!q.empty()){
+		int len=q.size();
+		level++;
+		while(len--){
+			TreeNode* tem=q.front();
+			q.pop();
+			if(tem->left) q.push(tem->left);
+			if(tem->right) q.push(tem->right);
+		}
+	}
+	return level;
+}

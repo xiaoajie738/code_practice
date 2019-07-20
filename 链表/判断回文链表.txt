@@ -1,0 +1,70 @@
+//空间为O（N）的方法
+bool isPalindrome(ListNode* pHead) 
+{
+	// write code here
+	stack<int> s;
+	ListNode* pC = pHead;
+	ListNode* pN = pHead->next;
+	s.push(pC->val);
+	while(pN->next != NULL && pN->next->next != NULL)
+	{
+	   pC = pC->next;
+	   s.push(pC->val);
+	   pN = pN->next->next;
+	}
+	if(pN->next == NULL)
+        pC = pC->next;
+	else
+		pC = pC->next->next;
+	while(pC != NULL)
+	{
+		if(pC->val == s.top())
+		    s.pop();
+		else
+			return false;
+		pC = pC->next;
+	}
+	return true;
+}
+
+//空间复杂度为O（1）的方法
+ListNode* reverseList(ListNode* head)
+{
+	ListNode* prev=NULL;
+	ListNode* cur=head;
+	ListNode* tmp=NULL;
+	while(cur!=NULL)
+	{
+		tmp=cur->next;
+		cur->next=prev;
+		prev=cur;
+		cur=tmp;
+	}   
+	return prev;
+}
+
+bool isPalindrome1(ListNode* pHead) {
+	// write code here
+	if(pHead==NULL || pHead->next==NULL)
+		return true;
+
+	ListNode* pSlow=pHead;
+	ListNode* pQuick=pHead;
+	while(pQuick!=NULL&&pQuick->next!=NULL)
+	{
+		pSlow=pSlow->next;
+		pQuick=pQuick->next->next;
+	}   
+	pQuick=reverseList(pSlow);
+	pSlow=pHead;
+	while(pQuick!=NULL)
+	{
+		if(pSlow->val!=pQuick->val)
+			return false;
+		pSlow=pSlow->next;
+		pQuick=pQuick->next;
+	}   
+	reverseList(pSlow);
+
+	return true;
+}

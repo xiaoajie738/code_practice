@@ -1,0 +1,52 @@
+//自己写的，空间复杂度为logN，太low啦，还得继续努力学习啊啊啊啊
+int getPower(int k, int N) 
+{
+	// write code here
+	int result = 1;
+	vector<int> vec_binary;
+	vector<long long> vec_num;
+	while(N != 0)
+	{
+	    int num;
+		num = N % 2;
+		vec_binary.push_back(num);
+		N = N/2;
+	}
+	int size = vec_binary.size()-1;
+	long long temp = k;
+	vec_num.push_back(temp);
+	while(size--)
+	{
+	   temp = temp*temp%1000000007;  
+	 
+	   vec_num.push_back(temp);
+	}
+	for(int i = 0; i < vec_binary.size(); i++)
+	{
+		if(vec_binary[i] == 1)
+		{
+			 result = result*vec_num[i]%1000000007;
+			 
+		}
+	      
+	}
+	return result;
+}
+
+
+//时间复杂度为O(logN),空间复杂度为O(1);参考别人的写的，自己对底层的一些数字运算还不太熟
+int getPower(int k, int N) 
+{
+	// write code here
+	if(k == 0)
+		return 0;
+	long long res = 1;
+	long long temp = k;
+	for(; N != 0; N >>= 1)
+	{
+	    if(N&1)
+			res = res*temp%1000000007;
+		temp = temp*temp%1000000007;
+	}
+	return res%1000000007;
+}

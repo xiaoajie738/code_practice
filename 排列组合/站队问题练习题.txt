@@ -1,0 +1,33 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+//n个人站队，他们的编号依次从1到n，要求编号为a的人必须在编号为b的人的左边，但不要求一定相邻，请问共有多少种排法？
+//	第二问如果要求a必须在b的左边，并且一定要相邻，请问一共有多少种排法？
+//	给定人数n及两个人的编号a和b，请返回一个两个元素的数组，其中两个元素依次为两个问题的答案。保证人数小于等于10。
+vector<int> getWays(int n, int a, int b) 
+{
+	// write code here
+	vector<int> res;
+	int temp1 = 1;
+	int temp2;
+	if(n <= 0 && a < 0 && b < 0 && a == b)
+		return res;
+	for(int i = 1; i <= n; i++)
+	{
+		temp1 *= i;
+		if(i == n-1)
+			temp2 = temp1;
+	}
+		
+	temp1 /= 2;
+	res.push_back(temp1);
+	res.push_back(temp2);
+    return res;
+}
+int main()
+{
+   
+   getWays(7,1,2);
+   system("pause");
+   return 0;
+}

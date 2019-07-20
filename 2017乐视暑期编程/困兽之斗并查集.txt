@@ -1,0 +1,51 @@
+#include<iostream>
+#include<vector>
+#include<string>
+using namespace std;
+
+//发现boss函数
+int find(int x,vector<int>& vec)
+{
+    int y = x;
+	while(y != vec[y])
+		y = vec[y];
+	vec[x] = y;//压缩路径,没有这个函数复杂度就会变大
+	return y;
+}
+
+int main()
+{
+   string s;
+   while(cin >> s)
+   {
+      int n;
+	  cin >> n;
+	  int len = s.size();
+	  vector<int> vec(len);
+	  for(int i = 0; i < len; i++)
+	  {
+	     vec[i] = i;
+	  }
+	  for(int i = 0; i < n; i++)
+	  {
+		  int x,y;
+		  cin >> x >> y;
+		  int a = find(x,vec);
+		  int b = find(y,vec);
+		  if(a < b)
+			  vec[b] = a;
+		  else
+			  vec[a] = b;
+	  }
+	  for(int i = 0; i < len; i++)
+	  {
+	     for(int j = i+1; j < len; j++)
+		 {
+			 if(find(i,vec) == find(j,vec) && s[i] > s[j])
+				 swap(s[i],s[j]);
+		 }
+	  }
+	  cout << s << endl;
+   }
+  return 0;
+}

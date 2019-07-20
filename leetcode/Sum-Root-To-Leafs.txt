@@ -1,0 +1,22 @@
+int sum = 0;
+void calSum(TreeNode *root, int pathsum) 
+{
+	if(root->left == NULL && root->right == NULL) 
+	{
+		sum += pathsum;
+		pathsum = 0;
+	}
+	if(root->left) 
+		calSum(root->left, pathsum * 10 + root->left->val);
+	if(root->right)
+		calSum(root->right, pathsum * 10 + root->right->val);
+
+}
+
+int sumNumbers(TreeNode *root) 
+{
+	if(root == NULL) 
+		return 0;
+	calSum(root, root->val);
+	return sum;
+}

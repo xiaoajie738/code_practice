@@ -1,0 +1,38 @@
+//1、已知一个字符串都是由左括号(和右括号)组成，判断该字符串是否是有效的括号组合。
+//	例子：
+//有效的括号组合:()()(())(()())
+//无效的括号组合:(())(()()(()
+//2、题目进阶：
+//已知一个字符串都是由左括号(和右括号)组成，返回最长有效括号子串的长度。
+
+bool isBracketValid(string s){
+	if(s.size() == 0)
+		return false;
+    int count = 0;
+	for(size_t i = 0; i < s.size(); ++i){
+	    if(s[i] == '(')
+             ++count;
+		if(s[i] == ')' && --count < 0)
+		   return false;
+	}
+	return count == 0;
+}
+ int maxLength(string str) {
+	if (str.size() == 0)
+		return 0;
+	vector<int> dp(str.size());
+	int pre = 0;
+	int res = 0;
+	for (int i = 1; i < str.size(); i++) {
+		if (str[i] == ')') 
+		{
+			pre = i - dp[i - 1] - 1;
+			if (pre >= 0 && str[pre] == '(') 
+			{
+				dp[i] = dp[i - 1] + 2 + (pre > 0 ? dp[pre - 1] : 0);
+			}
+		}
+		res = max(res, dp[i]);
+	}
+	return res;
+}

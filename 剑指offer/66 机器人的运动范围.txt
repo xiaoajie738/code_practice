@@ -1,0 +1,125 @@
+#include<iostream>
+#include<string>
+#include<vector>
+using namespace std;
+
+/*
+大家好，我是yishuihan，这个题目是回溯法的典型题目；
+还有八皇后问题也是经典的回溯法例题，大家可以参考;在《剑指offer》书中也给出了八皇后问题的思路；
+不过，那个是在全排列问题中引出来的。其实回溯法也是全排列的一种方案，在本题中，也就是尝试了
+matrix矩阵中所有点作为起点的方法，然后依据这个点进行向四个方向的递归；
+在递归中，不满足题目的会自动出栈回到上一个状态；
+*/
+int getsum(int x, int y)
+{
+	int sum =0;
+	/*int x0 = x, y0 = y;
+	while(x0 != 0 || y0 != 0)
+	{
+		int a,b;
+		a = x0 % 10;
+		b = y0 % 10;
+		x0 = x0/10;
+		y0 = y0/10;
+		sum = sum + a + b;
+	}*/
+	while(x)
+	{
+		sum += x%10;
+		x = x/10;
+	}
+
+	while(y)
+	{
+		sum += y%10;
+		y = y/10;
+	}
+
+	return sum;
+}
+void huisu(int threshold,int x,int y,int rows,int cols,vector<vector<int>> &flagMat,int &count)
+{
+	//int index = x*rows + y; 
+	if(x < 0 || y<0 || x > rows-1 || y > cols-1 || flagMat[x][y] == true)
+		return;
+	flagMat[x][y] = true;
+	if(getsum(x,y) > threshold)
+		return;
+	else
+	 count++;
+	huisu(threshold,x-1,y,rows,cols,flagMat,count);
+	huisu(threshold,x+1,y,rows,cols,flagMat,count);
+	huisu(threshold,x,y-1,rows,cols,flagMat,count);
+	huisu(threshold,x,y+1,rows,cols,flagMat,count);
+	return;
+}
+
+int movingCount(int threshold, int rows, int cols)
+{
+	int x=0,y=0,count=0;
+	//bool* flag = new bool[rows*cols];
+	//memset(flag,false,rows*cols);
+	vector<vector<int>> flagMat(rows,vector<int>(cols,0));
+
+	huisu(threshold,x,y,rows,cols,flagMat,count);
+	//delete []flag;
+	return count;
+}
+   
+
+
+int main()
+{
+	int num;
+	
+	num = movingCount(15,10,1); 
+	cout << num << endl;
+	system("pause");
+	return 0;
+}
+
+
+
+int sumOfbits(int a,int b)
+{
+	int res = 0;
+	int tmp;
+	while(a)
+	{
+	   tmp = a % 10;
+	   a = a/10;
+	   res += tmp;
+	}
+	while(b)
+	{
+	    tmp = b%10;
+		b = b / 10;
+		res += tmp;
+	}
+	return res;
+}
+
+bool func(int thresold,int rows,int cols,int i,int j,int &k,vector<int> &flag)
+{
+	if(i < 0 || j < 0 || i >= rows || j >= cols || flag[i*cols+j] || sumOfbits(i,j) > thresold )
+		return false;
+	else
+	{
+       flag[i*cols+j] = 1;
+	   k++;
+	   if(func(thresold,rows,cols,i,j-1,k,flag)||func(thresold,rows,cols,i,j+1,k,flag)||func(thresold,rows,cols,i-1,j,k,flag)||func(thresold,rows,cols,i+1,j,k,flag))
+		    return true;
+	  // flag[i*cols+j] = 0;
+	   return false;
+	}
+}
+
+int movingCount(int threshold, int rows, int cols)
+{
+	int i = 0,j = 0,k = 0;
+	//bool *flag = new bool[rows*cols];
+	//memset(flag,false,rows*cols);
+	vector<int> flag(rows*cols);
+	func(threshold,rows,cols,i,j,k,flag);
+	return k;
+}

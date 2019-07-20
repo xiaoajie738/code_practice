@@ -1,0 +1,97 @@
+#include<iostream>
+#include<string>
+#include<algorithm>
+#include<vector>
+using namespace std;
+
+void FindNumsAppearOnce(vector<int> data,int* num1,int *num2) 
+{
+	sort(data.begin(),data.end());
+	int num = data[0];
+	int count = 0;
+	for(int i = 1; i < data.size(); )
+	{ 
+		
+		if(num == data[i])
+		{   
+			num = data[i+1];
+			if(i == data.size()-2)
+			{
+				*num2 = num;
+				return;
+			}
+		    i = i + 2;
+		}
+		else
+		{
+			if(count == 0)
+			 {
+				 *num1 = num;
+			     count++;
+				 num = data[i];
+				 if(i == data.size()-1)
+				 {
+				    *num2 = num;
+				 }
+				 i = i+1;
+			 }
+			else
+				{
+					*num2 = num;
+					return;
+			    }
+		}
+	}
+	return ;
+}
+
+bool IsBit(int num, int index)
+{
+    num >>= index;
+	return num&1;
+}
+void FindNumsAppearOnce1(vector<int> data,int* num1,int *num2) 
+{
+   int partion = 0;
+   vector<int> vec1;
+   vector<int> vec2;
+   for(size_t i = 0; i < data.size(); ++i)
+   {
+      partion ^= data[i];
+   }
+   int index = 0;
+   if(partion == 0)
+	   return;
+   while((partion&1) == 0)
+   {
+       partion >>= 1;
+	   ++index;
+   }
+   for(size_t i = 0; i < data.size(); ++i)
+   {
+      if(IsBit(data[i],index))
+		  vec1.push_back(data[i]);
+	  else
+		  vec2.push_back(data[i]);
+   }
+   *num1 = 0,*num2 = 0;
+   for(size_t i = 0; i < vec1.size(); ++i)
+   {
+       *num1 ^= vec1[i];
+   }
+   for(size_t i = 0; i < vec2.size(); ++i)
+   {
+	   *num2 ^= vec2[i];
+   }
+}
+int main()
+{
+	int array[6] = {4,6,1,1,1,1};
+	 vector<int> vec(array,array+6);
+	 int num1 ,num2;
+	 FindNumsAppearOnce(vec,&num1,&num2);
+
+    cout << num1 << " " << num2 << endl;
+	system("pause");
+	return 0;
+}

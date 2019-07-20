@@ -1,0 +1,118 @@
+int flipEven(int a)
+{
+	int num = a;
+	int count = 0;
+	vector<int> bits;
+    while(num != 0)
+	{
+	   count++;
+	   num /= 2;
+	}
+	for(int i = 0; i < count; i++)
+	{
+	    int bit = 0;
+	    bit = a%2;
+		bits.push_back(bit);
+		a = a/2;
+	}
+	for(int i = 0; i < count; i++)
+	{
+	   a += pow((double)2,count-1 - i) * bits[i];
+	}
+	return a;
+}
+//翻转偶数的函数，二进制的翻转
+
+int flipNum(int x)
+{
+	if (x & 1) return x;
+	int n = 0;
+	while (x)
+	{
+		n = (n << 1) | (x & 1);
+		x = x >> 1;
+	}
+	return n;
+}
+
+int main()
+{
+	int N;
+	
+   while(cin >> N)
+   {
+	   vector<int> vec;
+	   for(int i = 0; i < N; i++)
+	   {
+		   int num;
+		   cin >> num;
+		   vec.push_back(num);
+	   }
+	   for(int i = 0; i < N; i++)
+	   {
+	      if(vec[i] % 2 == 1)
+		  {
+			  if(i != N-1)
+				  cout << vec[i] << " ";
+			  else
+				  cout << vec[i];
+		  }
+			  
+		  else
+		  {
+			  if(i != N-1)
+			     cout << flipEven(vec[i]) << " ";
+			  else
+				   cout << flipEven(vec[i]);
+		  }
+	   }
+	   cout << endl;
+   }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,42 @@
+
+//by zuoshen
+bool chkParenthesis1(string A, int n) 
+{
+	// write code here
+	int num = 0;
+	for(int i = 0; i < n; i++)
+	{
+		if(num < 0)
+			return false;
+	   if(A[i] == '(')
+		   num++;
+	   else if(A[i] == ')')
+		   num--;
+	   else
+		   continue;
+	}
+	if(num == 0)
+		return true;
+	return false;
+}
+
+//ÓÃÕ»
+bool chkParenthesis(string A, int n) 
+{
+	// write code here
+	stack<char> s;
+	for(int i = 0; i < n; i++)
+	{
+	   if(A[i] == '(')
+		   s.push(A[i]);
+	   else if(A[i] == ')')
+	   {
+	      if(s.empty())
+			  return false;
+		  s.pop();
+	   }
+	}
+	if(s.empty())
+		return true;
+	return false;
+}

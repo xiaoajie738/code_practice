@@ -1,0 +1,86 @@
+#include <iostream>
+#include <map>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+//½øÖÆ×ª»»
+void BaseConversion(int M, int N,vector<int> &Base)
+{
+   while(M)
+   {
+      int temp;
+	  temp = M % N;
+	  M = M/N;
+	  Base.push_back(temp);
+   }
+}
+
+char int_to_char(int i)
+{
+	char res;
+   switch (i)
+   {
+   case 10:
+	   res = 'A';
+	   break;
+   case 11:
+	   res = 'B';
+   	   break;
+   case 12:
+	   res = 'C';
+	   break;
+   case 13:
+	   res = 'D';
+	   break;
+   case 14:
+	   res = 'E';
+	   break;
+   case 15:
+	   res = 'F';
+	   break;
+   default:
+	   res = ' ';
+	   break;
+   }
+   return res;
+}
+int main()
+{
+	int M,N;
+	
+	while(cin >> M >> N)
+	{
+	   vector<int> Base;
+	   if(M < 0)
+	       BaseConversion(-M,N,Base);
+	   else
+		   BaseConversion(M,N,Base);
+	   for(int i = Base.size()-1; i >= 0; i--)
+	   {
+	       if(Base[i] <= 9)
+		   {
+			   if(i == Base.size()-1 && M < 0)
+			   {
+				   cout << -Base[i];
+			   }
+			   else
+			    cout << Base[i];
+		   }
+			  
+		   else
+		   {
+			   if(i == Base.size()-1 && M < 0)
+			   {
+				   cout << -int_to_char(Base[i]);
+			   }
+			   else
+			      cout << int_to_char(Base[i]);
+		   }
+	   }
+	   cout << endl;
+	}
+	
+	return 0;
+}

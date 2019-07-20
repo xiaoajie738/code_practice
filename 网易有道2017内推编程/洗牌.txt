@@ -1,0 +1,49 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+
+void Shuffle_func(vector<int>& vec)
+{
+   vector<int> temp(vec.size());
+   int first = vec.size()/2-1;
+   int end = vec.size()-1;
+   int index = vec.size()-1;
+   while(first >= 0 && end >= vec.size()/2)
+   {
+	   temp[index--] = vec[end--];
+	   temp[index--] = vec[first--];
+   }
+   vec = temp;
+}
+
+int main()
+{
+	int T;
+	int n,k;
+	cin >> T;
+  	while(T != 0 && cin >> n >> k)
+	{
+	   vector<int> data(2*n);
+	   for(int i = 0; i < 2*n; i++)
+	   {
+	      int num;
+		  cin >> num;
+		  data[i] = num;
+	   }
+	   for(int i = 0; i < k; i++)
+	   {
+	      Shuffle_func(data);
+	   }
+	   for(int i = 0; i < 2*n; i++)
+	   {
+		   if(i == 2*n-1)
+			    cout << data[i] << endl;
+		   else
+		        cout << data[i] << " ";
+	   }
+	}
+	
+	system("pause");
+	return 0;  
+}

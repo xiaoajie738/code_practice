@@ -1,0 +1,80 @@
+//You are given two linked lists representing two non-negative numbers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
+Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
+Output: 7 -> 0 -> 8
+
+
+#include<iostream>
+#include<map>
+using namespace std;
+struct ListNode {
+	     int val;
+	    ListNode *next;
+	    ListNode(int x = 0) : val(x), next(NULL) {}
+	};
+
+void printList(ListNode* pHead)
+{
+   while(pHead != NULL)
+   {
+      cout << pHead->val << endl;
+	  pHead = pHead->next;
+   }
+}
+void appendTail(ListNode **pHead, int val)  
+{  
+	ListNode *pNew = new ListNode;  
+	pNew->next = NULL;  
+	pNew->val = val;  
+
+	if (*pHead == NULL)  
+	{  
+		*pHead = pNew;  
+	}  
+	else  
+	{  
+		ListNode *tmp = *pHead;  
+		while(tmp->next)  
+		{  
+			tmp = tmp->next;  
+		}  
+		tmp->next = pNew;  
+	}  
+}  
+ListNode* addTwoNumbers(ListNode* l1,ListNode* l2)
+{
+   ListNode head(0);
+   ListNode *p = &head;
+   int carry = 0;
+   while(l1 || l2 ||carry)
+   {
+      int v1 = l1?l1->val:0;
+	  int v2 = l2?l2->val:0;
+	  int sum = carry + v1 + v2;
+	  p->next = new ListNode(sum%10);
+	  p = p->next;
+	  l1 = l1?l1->next:l1;
+	  l2 = l2?l2->next:l2;
+	  carry = sum/10;
+   }
+   return head.next;
+}
+
+int main()
+{
+
+  ListNode* L1 = NULL;
+  ListNode* L2 = NULL;
+  appendTail(&L1,1);
+  appendTail(&L1,2);
+  appendTail(&L1,3);
+  appendTail(&L2,1);
+  appendTail(&L2,2);
+  appendTail(&L2,3);
+  ListNode* result = NULL;
+  result = addTwoNumbers(L1,L2);
+  printList(result);
+  
+  system("pause"); 
+  return 0;
+
+}

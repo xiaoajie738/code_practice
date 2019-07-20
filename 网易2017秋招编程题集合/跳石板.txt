@@ -1,0 +1,63 @@
+//动态规划思想
+#include<iostream>
+#include<algorithm>
+#include<vector>
+using namespace std;
+
+void yueshu(int N, vector<int> &vec)
+{
+	//int temp = (int)sqrt((double)N);
+	for(int i = 2; i <= (int)sqrt((double)N); i++)
+	{
+	  if(N % i == 0)
+	  {
+		  vec.push_back(i);
+		  if(N / i != i)
+		  {
+			  vec.push_back(N/i);
+		  }
+	  }
+	  
+	}
+}
+void get_yue_shu(int n, vector<int>&a)
+{
+	for(int i=2;i<=(int)sqrt((double)n);i++)
+	{
+		if(n%i==0)
+		{
+			a.push_back(i);
+			if(n/i != i)
+				a.push_back(n/i);
+		}
+	}
+}
+int main()
+{
+    int N,M;
+	while(cin >> N >> M)
+	{
+		vector<int> res(M+1);
+		res[N] = 1;
+		for(int i = N; i <= M; i++)
+		{
+			if(res[i] == 0)
+				continue;
+		   vector<int> vec;
+		   get_yue_shu(i,vec);
+		   for(int j = 0; j < vec.size(); j++)
+		   {
+			   if(vec[j]+i <= M && res[vec[j]+i] != 0)
+				   res[vec[j]+i] = min(res[i]+1,res[vec[j]+i]);
+			   else if(vec[j]+i <= M)
+		           res[vec[j]+i] = res[i]+1;
+		   }
+		}
+		if(res[M] == 0)
+			cout << -1 << endl;
+		else
+			cout << res[M]-1 << endl;
+	}
+	system("pause");
+    return 0;
+}

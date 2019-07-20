@@ -1,0 +1,14 @@
+bool checkSam(string stringA, string stringB) 
+{
+	// write code here
+	if(stringA.size() == 0 || stringB.size() == 0 ||stringA.size() != stringB.size())
+		return false;
+	sort(stringA.begin(),stringA.end());
+	sort(stringB.begin(),stringB.end());
+	for(int i = 0; i < stringA.size(); i++)
+	{
+	    if(stringA[i] != stringB[i])
+			return false;
+	}
+	return true;
+}

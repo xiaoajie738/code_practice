@@ -1,0 +1,97 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
+//输入一个整数数组，实现一个函数来调整该数组中数字的顺序，
+//使得所有的奇数位于数组的前半部分，所有的偶数位于位于数组的
+//后半部分，并保证奇数和奇数，偶数和偶数之间的相对位置不变。
+
+//空间复杂度O(N),时间复杂度O(N),典型的以时间换空间
+void reOrderArray(vector<int> &array) 
+{
+	vector<int> temp(array.size());
+	int begin = 0;
+	for(int i = 0; i < array.size(); i++)
+	{
+	   if(array[i] % 2 == 1)
+		   temp[begin++] = array[i];
+	}
+	for(int i = 0; i < array.size(); i++)
+	{
+		if(array[i] % 2 == 0)
+			temp[begin++] = array[i];
+	}
+	array = temp;
+}
+
+//空间复杂度O(1),时间复杂度O(N2),由于题目要求奇数与奇数，偶数与偶数之间的
+//相对位置不能变，因此不能借助快排的思想
+void reOrderArray1(vector<int> &array) 
+{
+	for(int i = 1; i <= array.size(); i++)
+	{
+		if(array[i] % 2 == 1)
+		{
+			for(int j = i; j >= 1; j--)
+			{
+				if(array[j-1] % 2 == 0)
+					swap(array[j],array[j-1]);
+				else
+					break;
+			}
+		}
+	}
+}
+//插入排序
+void insertSort(vector<int> &array)
+{
+	for(int i = 1; i < array.size(); i++)
+	{
+	   for(int j = i; j >= 1; j--)
+	   {
+	      if(array[j] < array[j-1])
+			  swap(array[j],array[j-1]);
+		  else
+			  break;
+	   }
+	}
+}
+
+int Partion(vector<int> &array,int low, int high)
+{
+	int num = array[low];
+	while(low < high)
+	{
+	   while(low < high && num <= array[high])
+		   high--;
+	   swap(array[low],array[high]);
+	   while(low < high && num >= array[low])
+		   low++;
+	   swap(array[low],array[high]);
+	}
+	return low;
+} 
+
+
+void QuickSort(vector<int> &array, int begin, int end)
+{
+	if(begin >= end)
+		return;
+    int mid;
+	mid = Partion(array,begin,end);
+	QuickSort(array,begin,mid-1);                                                      
+	QuickSort(array,mid+1,end);
+}
+
+int main()  
+{  
+	int array[8] = {5,6,8,7,6,3,4,5};
+	
+	vector<int> vec(array,array+8);
+	QuickSort(vec,0,7);
+	reOrderArray(vec);
+	system("pause");
+	return 0;  
+
+}  
+

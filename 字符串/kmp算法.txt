@@ -1,0 +1,50 @@
+int getIndexOf(string s, string m){
+  if (s.size() == 0 || m.size() == 0 || m.size() < 1 || s.size() < m.size()){
+		return -1;
+	  }
+  int si = 0;
+  int mi = 0;
+  vector<int> next;
+   getNextArray(m,next);
+	while (si < s.size() && mi < m.size()) {
+		if (s[si] == m[mi]) 
+		{
+			si++;
+			mi++;
+		} 
+		else if (next[mi] == -1) {
+
+			si++;
+		} 
+		else{
+			mi = next[mi];
+		}
+	}
+	return mi == m.size() ? si - mi : -1;
+}
+
+
+void getNextArray(string s,vector<int> &next) {
+
+		if (s.size() == 1) {
+			next.push_back(-1);
+			};
+	    next.resize(s.size());
+		next[0] = -1;
+		next[1] = 0;
+		int pos = 2;
+		int cn = 0;
+		while (pos < next.size()) {
+			if (s[pos - 1] == s[cn]) 
+			{
+				next[pos++] = ++cn;
+			} 
+			else if (cn > 0) {
+				cn = next[cn];
+			}
+			else {
+				next[pos++] = 0;
+			}
+		}
+		return ;
+	}

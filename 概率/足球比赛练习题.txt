@@ -1,0 +1,57 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+//有2k只球队，有k-1个强队，其余都是弱队，随机把它们分成k组比赛，每组两个队，
+//问两强相遇的概率是多大？给定一个数k，请返回一个数组，其中有两个元素，
+//分别为最终结果的分子和分母，请化成最简分数
+int f(int a,int b)
+{
+	int r;
+	while(r=a%b)
+	{
+		a=b;
+		b=r;
+	}
+	return b;
+}
+
+vector<int> calc(int k) 
+{
+	vector<int> res;
+	int total = 1;
+	int NoMeet = 1;
+	int Meet= 0;
+	int Max_yueshu = 1;
+	if(k <= 0)
+		return res;
+	//求分母
+	for(int i = 2*k-1; i >= 1; i -= 2)
+		total *= i;
+	//求分子
+	for(int i = 3; i <= k+1; i++)
+		NoMeet *= i;
+	Meet = total - NoMeet;
+	//找total和NoMeet的最大公约数
+	if(Meet != 0)
+	{
+		Max_yueshu = f(total,Meet);
+		res.push_back(Meet/Max_yueshu);
+		res.push_back(total/Max_yueshu);
+	}
+	else
+	{
+		res.push_back(0);
+		res.push_back(1);
+	}
+	
+	return res;
+}
+
+
+
+int main()
+{
+   calc(4);
+	system("pause");
+  
+}

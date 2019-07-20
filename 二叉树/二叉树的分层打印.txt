@@ -1,0 +1,67 @@
+两种思路：都是借助队列，但在打印分行时所用的方法有所不同
+//方法1 个人感觉方法1 要好于方法2
+vector<vector<int> > printTree(TreeNode* root) 
+{
+	// write code here
+    queue<TreeNode*> que;
+	vector<vector<int>> result;
+	vector<int> vec;
+	if(!root)
+		return result;
+	que.push(root);
+	while(!que.empty())
+	{
+		TreeNode* temp;
+		int len = que.size();
+		while(len--)
+		{ 
+			temp = que.front();
+			que.pop();
+			vec.push_back(temp->val);
+			if(temp->left) 
+				que.push(temp->left);
+			if(temp->right)
+				que.push(temp->right);   
+		}
+		result.push_back(vec);
+		vec.clear();
+	}
+	return result;
+}
+
+//方法2
+
+vector<vector<int> > printTree(TreeNode* root) 
+{
+	// write code here
+	queue<TreeNode*> que;
+	TreeNode* last = root;
+	TreeNode* nLast = root;
+	vector<vector<int>> result;
+	vector<int> vec;
+	if(!root)
+		return result;
+	que.push(root);
+	while(!que.empty())
+	{
+       vec.push_back(que.front()->val);
+	   if(que.front()->left)
+	   {
+	       que.push(que.front()->left);
+		   nLast = que.front()->left;
+	   }
+	   if(que.front()->right)
+	   {
+	      que.push(que.front()->right);
+		  nLast = que.front()->right;
+	   }
+	   if(que.front() == last)
+	   {
+	      last = nLast;
+		  result.push_back(vec);
+		  vec.clear();
+	   }
+	   que.pop();
+	}
+	 return result;
+}

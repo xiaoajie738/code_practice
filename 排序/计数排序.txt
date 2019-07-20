@@ -1,0 +1,94 @@
+//版本1
+void findMaxOfArray(vector<int> &A, int &max)
+{
+   for(int i = 1; i < A.size(); i++)
+   {
+	   if(A[i] > max)
+		   max = A[i];
+   }
+}
+
+void countingSort(vector<int> &A, int n) 
+{
+	// write code here
+	int max = A[0];
+	findMaxOfArray(A, max);
+	vector<int> vec(max+1);
+	for(int i = 0; i < A.size(); i++)
+	{
+		vec[A[i]]++;
+	}
+	A.clear();
+	for(int i = 0; i < vec.size(); i++)
+	{
+		while(vec[i]--)
+		{
+		   A.push_back(i);
+		}
+	}
+}
+
+//版本2
+void findMaxOfArray1(int *A, int &max, int n)
+{
+	for(int i = 1; i < n; i++)
+	{
+		if(A[i] > max)
+			max = A[i];
+	}
+}
+
+void countingSort1(int *A, int n) 
+{
+	// write code here
+	int max = A[0];
+	findMaxOfArray1(A, max, n);
+	vector<int> vec(max+1);
+	for(int i = 0; i < n; i++)
+	{
+		vec[A[i]]++;
+	}
+	int j = 0;
+	for(int i = 0; i < vec.size(); i++)
+	{
+		while(vec[i]--)
+		{
+			A[j++] = i;
+		}
+	}
+
+}
+
+//上面写的很复杂，真正的计数排序在此，尼玛
+void countingSort(vector<int> &A, int n) 
+{
+	// write code here
+	if (A.size() == 0  || A.size() != n) 
+		return;
+
+	int max=A[0];
+	int min=A[0];
+	for(int i=1;i<n;i++){
+		if(A[i]>max){
+			max=A[i];
+		}
+		if(A[i]<min){
+			min=A[i];
+		}
+	}
+
+	vector<int> B(max-min+1);
+	for(int i=0;i<n;i++)
+	{
+		B[A[i]-min]++;
+	}
+
+	int k=0;
+	for(int i=0;i<max-min+1;i++)
+      {
+		while(B[i]--)
+                { 
+		   A[k++]=i+min;
+		}
+      }
+}

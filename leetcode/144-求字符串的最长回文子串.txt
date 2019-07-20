@@ -1,0 +1,45 @@
+//求字符串的最长回文子串
+string longestPalindrome(string s)
+{
+	int len = s.size();
+	if(len == 0)
+		return s;
+	string resultStr = "";
+	//回文子串长度为奇数，对称点只有一个字符的情况
+	for(int i = 0; i < len; ++i)
+	{
+        //i为对称点
+		int left = i;
+		int right = i;
+		//向左向右遍历，直到发现不相同的时候停止
+		while(left > 0 && right < len-1 && s[left-1] == s[right+1])
+		{
+			--left;
+			++right;
+		}
+		//比较，更新最长回文串
+		if(right - left + 1 > resultStr.size())
+		{
+		    resultStr = s.substr(left,right - left + 1);
+		}
+	}
+	//回文子串长度为偶数时，对称点有两个字符
+	for(int i = 0; i < len - 1; ++i)
+	{
+		if(s[i] == s[i+1])
+		{
+		   int left = i;
+		   int right = i+1; 
+		   //向左向右遍历，直到发现不相同的时候停止
+		   while(left > 0 && right < len - 1 && s[left-1] == s[right+1])
+		   {
+			   --left;
+			   ++right;
+		   }
+		   //比较，更新最长回文串
+		   if(right - left + 1 > resultStr.size())
+			   resultStr = s.substr(left,right - left + 1);
+		 }
+	}
+	return resultStr;
+}

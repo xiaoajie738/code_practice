@@ -1,0 +1,54 @@
+
+
+void merge(vector<int> &data, int begin, int mid, int end,int& count){
+	vector<int> tmp(end-begin+1);
+	int i,j;
+	i = mid,j = end;
+	while(i >= begin && j >= mid+1){
+		if(data[i] > data[j]){
+			count += j-mid;
+			count %= 1000000007;
+			--i;
+		}
+		else if(data[i] < data[j]){
+			--j;
+		}
+	}
+	int index = 0;
+	i = begin,j = mid+1;
+	while(i <= mid && j <= end){
+		if(data[i] <= data[j]){
+			tmp[index++] = data[i];
+			++i;
+		}
+		else{
+			tmp[index++] = data[j];
+			++j;
+		}
+	}
+	while(j <= end){
+		tmp[index++] = data[j++];
+	}
+	while(i <= mid){
+		tmp[index++] = data[i++];
+	}
+	for(i = 0; i < end-begin+1; ++i){
+		data[begin+i] = tmp[i];
+	}
+}
+void InversePairsResolve(vector<int> &data, int begin, int end,int& count){
+	if(end == begin)
+		return;
+	int res = 0;
+	int mid = (end - begin) / 2 + begin;
+	InversePairsResolve(data, begin, mid,count);
+	InversePairsResolve(data, mid+1, end,count);
+	merge(data, begin, mid, end,count);
+}
+int InversePairs(vector<int> data) {
+	if(data.size() <= 1)
+		return 0;
+	int count = 0;
+	InversePairsResolve(data,0,data.size()-1, count);
+	return count;
+}  

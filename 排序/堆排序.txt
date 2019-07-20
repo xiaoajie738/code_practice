@@ -1,0 +1,55 @@
+//接口1
+void Make_heap(vector<int> &A,int i, int n) //n为数组的长度，i为完全二叉树的非终端节点
+{
+	int temp = A[i];
+	for(int j = 2*i + 1; j <= n-1; j = j*2 + 1)
+	{
+		if(j < n - 1 && A[j] < A[j + 1])
+			j++;
+		if(temp > A[j])
+			break;
+		swap(A[i],A[j]);
+        i = j;
+	}
+}
+
+void heapSort(vector<int> &A, int n) //n为数组的长度
+{
+	for(int i = n/2 -1; i >= 0; i--)  //将无序数组构成大顶堆
+		  Make_heap(A,i,n);       
+
+	for(int i = n-1; i >= 0; i--)   //依次数组最顶端的元素A[0]与A[i]进行交换，然后再重新构造大顶堆函数
+	{
+		swap(A[0],A[i]);
+		Make_heap(A,0,i);
+	}
+}
+
+//接口2
+void make_heap(int *A, int i, int n)
+{
+   int temp = A[i];
+   for(int j = 2*i + 1; j <= n - 1; j = 2*j + 1)
+   {
+      if(j < n-1 && A[j] < A[j+1])
+		  j++;
+	  if(temp > A[j])
+		  break;
+	  swap(A[i],A[j]);
+	  i = j;
+   }
+}
+
+int* heapSort(int* A, int n) 
+{
+	// write code here
+	for(int i = n/2 - 1; i >= 0; i--)
+	{
+	   make_heap(A, i, n);
+	}
+	for(int i = n-1; i >= 0; i--)
+	{
+	   swap(A[0],A[i]);
+	   make_heap(A, 0, i);
+	}
+}

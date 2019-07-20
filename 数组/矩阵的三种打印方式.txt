@@ -1,0 +1,96 @@
+//矩阵的三种打印方式，1 转圈打印，顺时针旋转90度，之字形打印
+void print(vector<vector<int> > &mat_, int th, int tv, int dh, int dv)
+{
+    if(th == dh)
+	{
+	    while(tv != dv)
+			cout << mat_[th][tv++] << " ";
+		cout << mat_[th][tv] << " ";
+	}
+	else if(tv == dv)
+	{
+	    while(th != dh)
+			cout << mat_[th++][tv] << endl;
+		cout << mat_[th][tv] << endl;
+	}
+	else
+	{
+	   int th1 = th,tv1 = tv;
+	    while(tv1 != dv)
+	   {
+	      cout << mat_[th][tv1++] << endl;
+	   }
+	   while(th1 != dh)
+	   {
+	        cout << mat_[th1++][dv] << endl;
+	   }
+	   while(tv1 != tv)
+	   {
+	       cout << mat_[dh][tv1--] << endl;
+	   }
+	   while(th1 != th)
+	   {
+	       cout << mat_[th1--][tv] << endl;
+	   }
+	}
+}
+
+void rotatePrintmat_(vector<vector<int> > &mat_)
+{
+	if(mat_.size() == 0)
+		return;
+    int th = 0, tv = 0;
+	int dh = mat_.size()-1;
+	int dv = mat_[0].size()-1;
+	while(th < dh)
+	{
+	    print(mat_,th++,tv++,dh--,dv--);
+	}
+}
+//将矩阵顺时针旋转
+void printEdge(vector<vector<int> >& mat_,int th, int tv, int dh, int dv)
+{
+	for(int i = 0; i < dv - tv; ++i)
+	{
+		//int th1 = th,tv1 = tv;
+		int temp =  mat_[th][tv+i];
+		mat_[th][tv+i] = mat_[dh-i][tv];
+		mat_[dh-i][tv] = mat_[dh][dv-i];
+		mat_[dh][dv-i] = mat_[th+i][dv];
+		mat_[th+i][dv] = temp;
+	} 
+}
+
+void rotate(vector<vector<int> > &mat_)
+{
+	if(mat_.size() == 0)
+		return;
+	int th = 0, tv = 0;
+	int dh = mat_.size()-1;
+	int dv = mat_[0].size()-1;
+	while(th < dh)
+	{
+		printEdge(mat_,th++,tv++,dh--,dv--);
+	}
+}
+
+
+int main (){
+	int array0[4] = {1,2,3,4};
+	int array1[4] = {5,6,7,8};
+	int array2[4] = {9,10,11,12};
+	int array3[4] = {13,14,15,16};
+	vector<int> vec0(array0,array0+4);
+	vector<int> vec1(array1,array1+4);
+	vector<int> vec2(array2,array2+4);
+	vector<int> vec3(array3,array3+4);
+	vector<vector<int> > mat_;
+	mat_.push_back(vec0);
+	mat_.push_back(vec1);
+	mat_.push_back(vec2);
+	mat_.push_back(vec3);	 
+	rotate(mat_);
+    //rotatePrintmat_(mat_);
+	system("pause");
+	return 0;
+}

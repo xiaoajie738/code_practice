@@ -1,0 +1,56 @@
+#include<iostream>
+#include<string>
+#include<vector>
+#include<sstream>
+#include<algorithm>
+using namespace std;
+
+
+//输入例子:
+//3 9 6 8 -10 7 -11 19 30 12 23 5
+//
+//输出例子:
+//-11 -10 3 6 7
+int main()
+{
+   string s;
+   while(getline(cin,s))
+   {
+      
+	  string res;
+	  int k = s[s.size()-1] - '0';
+	  vector<int> vec;
+	  string tmp;
+	  stringstream str;
+	  int num;
+	  for(int i = 0; i < s.size()-2; ++i)
+	  {  
+		  if(s[i] != ' ')
+			  tmp += s[i];
+		  else
+		  {
+			  
+			  str << tmp;
+			  str >> num;
+			  vec.push_back(num);
+			  tmp.clear();
+			  //str.clear();
+			  str.clear();
+		  }
+	  }
+	  str << tmp;
+	  str >> num;
+	  vec.push_back(num);
+	  sort(vec.begin(),vec.end());
+	  for(int i = 0; i < k; ++i)
+	  {
+		  if(i != k-1)
+	         cout << vec[i] << " ";
+		  else
+			  cout << vec[i];
+	  }
+	  
+   }
+   system("pause");
+   return 0;
+}

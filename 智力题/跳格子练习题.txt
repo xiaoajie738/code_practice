@@ -1,0 +1,6 @@
+ int checkWin(int n) {
+        if ((n-1)%4== 0)
+            return 0;
+        else
+            return 1;
+    }

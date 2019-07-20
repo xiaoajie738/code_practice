@@ -1,0 +1,18 @@
+#include <iostream>
+
+using namespace std;
+typedef long long LL;
+
+int main()
+{
+	LL N;
+	LL Ans = 0;
+	while (cin >> N)
+	{
+		Ans = 0;
+		for (LL i = N; i > 0; i = i / 2)
+			Ans += ((i + 1) / 2) * ((i + 1) / 2);
+		cout << Ans << endl;
+	}
+	return 0;
+}

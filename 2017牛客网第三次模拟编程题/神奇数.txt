@@ -1,0 +1,81 @@
+#include <iostream>
+#include <vector>
+#include <deque>
+#include <algorithm>
+using namespace std;
+
+bool isPrime(int num)
+{
+	for(int i = 2; i <= (int)sqrt((double)num); ++i)
+	{
+		if(num % i == 0)
+			return false;
+	}
+	return true;
+}
+
+bool isHavePrimeNum(vector<int> &vec)
+{
+    for(int i = 0; i < vec.size(); ++i)
+	{
+	    int num = vec[i];
+		if(isPrime(num))
+			return true;
+	}
+	return false;
+}
+vector<int> func(int num)
+{
+   vector<int> res;
+   vector<int> binaryofnum;
+   while(num != 0)
+   {
+	   int tmp;
+	   tmp = num%10;
+	   num = num/10;
+       binaryofnum.push_back(tmp);
+   }
+   //将要转换的数组合成两位的数字
+   for(int i = 0; i < binaryofnum.size(); ++i)
+   {
+        for(int j = 0; j < binaryofnum.size(); ++j)
+		{
+			if( j == i)
+				continue;
+			else
+			{
+			    int combineNum;
+				combineNum = binaryofnum[i]*10 +binaryofnum[j];
+				if(combineNum >= 10)
+				  res.push_back(combineNum);
+			}
+		}
+   }
+   return res;
+}
+
+int main(void)
+{
+	int a,b;
+	while(cin >> a >> b)
+	{
+	    int len = b-a+1;
+		vector<vector<int> > vec(len);
+		vector<int> tmp;
+		for(int i = 0; i < len; ++i)
+		{
+		   tmp = func(a+i);
+		   vec[i] = tmp;
+		}
+		//判断质数的数个数
+		int count = 0;
+		for(int i = 0 ; i < len; ++i)
+		{
+		    if(isHavePrimeNum(vec[i]))
+				count++;
+		}
+		cout << count;
+	}
+	//system("pause");
+	return 0;
+}

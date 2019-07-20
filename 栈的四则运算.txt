@@ -1,0 +1,49 @@
+#include<iostream>
+#include<string>
+#include<vector>
+#include<stack>
+using namespace std;
+
+int evalRPN(vector<string> &tokens) {
+	stack<int> s;
+	int size = tokens.size();
+	for(int i = 0; i < size; i++)
+	{
+		if(tokens[i] == "+" || tokens[i] == "-" || tokens[i] == "*" || tokens[i] == "/")
+		{
+			if(s.size() < 2)
+				return 0;
+			int num1,num2;
+			int result = 0 ; 
+			num1 = s.top();
+			s.pop();
+			num2 = s.top();
+			s.pop();
+			if(tokens[i] == "+")
+				result = num2 + num1;
+			else if(tokens[i] == "-")
+				result = num2 - num1;
+			else if(tokens[i] == "*") 
+				result = num2*num1;
+			else if(tokens[i] == "/")
+				result = num2/num1;
+			s.push(result);    
+		}
+		else
+			s.push(atoi(tokens[i].c_str()));//将字符串转换为整型，重要知识点、
+	}
+	return s.top();
+}
+
+int main()
+{   
+   vector<string> vec;
+   vec.push_back("4");
+   vec.push_back("13");
+   vec.push_back("5");
+   vec.push_back("/");
+   vec.push_back("+");
+   cout << evalRPN(vec) << endl;
+   system("pause");
+   return 0;
+}

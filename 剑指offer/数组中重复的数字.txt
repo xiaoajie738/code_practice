@@ -1,0 +1,68 @@
+
+
+//时间复杂度O(nlogn),空间复杂度O(1)
+bool duplicate(int numbers[], int length, int* duplication) 
+{
+	if(numbers == NULL || length <= 1)
+		return false;
+	sort(numbers,numbers+length);
+	for(int i = 0; i < length-1; ++i)
+	{
+	    if(numbers[i] == numbers[i+1])
+		{
+		    *duplication = numbers[i];
+			return true;
+		}
+	}
+	return false;
+}
+
+//时间复杂度O（n），空间复杂度O（1）
+bool duplicate(int numbers[], int length, int* duplication) 
+{
+	if(numbers == NULL || length <= 1)
+		return false;
+	int temp;
+	for(int i = 0; i < length;)
+	{
+	    temp = numbers[i];
+	   if(temp != i)
+	   {
+		  if(temp == numbers[temp])
+		  {
+			  *duplication = temp;
+			  return true;
+		  }
+	      numbers[i] = numbers[temp];
+		  numbers[temp] = temp;
+	   }
+	   if(numbers[i] == i)
+		   ++i;
+	}
+	return false;
+}
+
+
+//2017.6.17
+bool duplicate(int numbers[], int length, int* duplication) 
+{
+	if(numbers == NULL || length < 2)
+		return false;
+	for(int i = 0; i < length; ++i)
+	{
+	   if(numbers[i] != i)
+	   {
+	       if(numbers[numbers[i]] == numbers[i])
+		   {
+			   *duplication = numbers[i];
+			    return true;
+		   }
+		   else
+		   {
+			   swap(numbers[i],numbers[numbers[i]]);
+			    i--;
+		   }
+	   }
+	}
+	return false;
+}

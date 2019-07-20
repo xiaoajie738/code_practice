@@ -1,0 +1,28 @@
+int getMin(vector<int> arr, int n) 
+{
+	// write code here
+	if(arr.size() == 0 )
+		return -1;
+	if(arr.size() == 1)
+		return arr[0];
+	int begin = 0;
+	int end = n-1;
+	int mid = 0;
+	if(arr[begin] < arr[end])
+		return arr[begin];
+	while(begin < end)
+	{
+		if(begin == end -1)
+		   return arr[begin] > arr[end]?arr[end]:arr[begin];
+		mid = begin + (end-begin)/2;
+		if(arr[begin] > arr[mid])
+		{
+		    end = mid;
+		}
+		else if(arr[end] < arr[mid])
+		{	
+			begin = mid;
+		}
+	}
+	return -1;//不写一个返回值，有的编译器通过不了
+}

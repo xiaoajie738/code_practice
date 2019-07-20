@@ -1,0 +1,59 @@
+//Given a number represented as an array of digits, plus one to the number.
+
+vector<int> plusOne(vector<int> &digits) 
+{
+	vector<int> res;
+	if(digits.size() == 0)
+		return res;
+	int carry = 0;
+	int bit = digits[digits.size()-1]+1;
+	if(bit%10 == 0)
+	{
+		carry = 1;
+		res.push_back(0);
+	}
+	else
+		res.push_back(digits[digits.size()-1]+1);
+		
+	for(int i = digits.size()-2; i >= 0; --i)
+	{  
+        if(carry == 1)
+		{
+			if(digits[i] == 9)
+			{
+			   res.push_back(0);
+			   carry = 1;
+			}
+			else
+			{
+			   res.push_back(digits[i]+1);
+			   carry = 0;
+			}
+		}
+		else
+		 res.push_back(digits[i]);
+	}
+	if(carry == 1)
+		res.push_back(1);
+	reverse(res.begin(),res.end());
+	return res;
+}
+
+void plusone1(vector<int> &digits)
+{
+   int n = digits.size();
+   for(int i = n-1; i >= 0; --i)
+   {
+      if(digits[i] == 9)
+	  {
+		  digits[i] = 0;
+	  }
+	  else
+	  {
+		  digits[i]++;
+		  return;
+	  }
+   }
+   digits[0] = 1;
+   digits.push_back(0);
+}

@@ -1,0 +1,20 @@
+ //Reverse digits of an integer.
+Example1: x = 123, return 321
+Example2: x = -123, return -321
+click to show spoilers. 
+
+  int reverse (int x)
+{
+	long result = 0;
+	const int max = 0x7fffffff;  // int最大值  
+	const int min = 0x80000000;  // int最小值
+
+	for (; x != 0; x /= 10)
+	{
+		result = result * 10 + x % 10;
+		if (result > max || result < min)
+			result = 0; // 超出32位int的范围，置0 
+	}
+
+	return result;
+}

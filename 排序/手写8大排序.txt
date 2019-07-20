@@ -1,0 +1,233 @@
+#include <vector>
+#include <sstream>
+#include <iostream>
+#include <string>
+#include<stack>
+using namespace std;
+
+//8大排序的编写
+//1，冒泡排序 时间复杂度O(n2),空间复杂度O(1),稳定;
+void bubbleSort(vector<int> &A, int n)
+{
+   for(int i = 0; i < n; ++i)
+   {
+       for(int j = i+1; j < n; ++j)
+	   {
+		   if(A[i] > A[j])
+			   swap(A[i],A[j]);
+	   }
+   }
+}
+//选择排序，时间复杂度O(n2),空间复杂度O(1)，稳定；
+void SelectSort(vector<int> &A, int n)
+{
+	for(int i = 0; i < n; ++i)
+	{
+		int min = i;
+	   for(int j = i+1; j < n; ++j)
+	   {
+	      if(A[min] > A[j])
+			  min = j;
+	   }
+	   swap(A[i],A[min]);
+	}
+}
+
+//插入排序
+void InsertSort(vector<int> &A, int n)
+{
+   for(int i = 0; i < n; ++i)
+   {
+      for(int j = i; j > 0; j = j-1)
+	  {
+		  if(A[j] < A[j-1])
+			  swap(A[j],A[j-1]);
+		  else
+			  break;
+	  }
+   }
+}
+
+//快速排序，递归方法，平均时间复杂度O(n*log(n))，平均空间复杂度O(log(n));
+int Partion(vector<int> &A, int low, int high)
+{
+   int pivot = A[low];
+   int mid;
+   while(low < high)
+   {
+      while(low < high && pivot <= A[high])
+		  high--;
+	  swap(A[low],A[high]);
+	  while(low < high && pivot >= A[low])
+	      low++;
+	  swap(A[low],A[high]);
+   }
+   return low;
+}
+
+void Qsort(vector<int> &A, int begin, int end)
+{
+   if(begin >= end)
+	   return;
+   int mid = Partion(A,begin,end);
+   Qsort(A,begin,mid-1);
+   Qsort(A,mid+1,end);
+}
+//快速排序
+void QuickSort(vector<int> &A, int n)
+{
+   Qsort(A,0,n-1);
+}
+//快速排序非递归方法，平均时间复杂度O(n*log(n))，平均空间复杂度O(log(n));
+void Qsort1(vector<int> &A,int low, int high)
+{
+   stack<int> sta;
+   int mid = Partion(A,low,high);
+   if(mid-1 > low)
+   {
+       sta.push(mid-1); 
+	   sta.push(low);
+   }
+   if(mid+1 < high)
+   {
+	   sta.push(high);
+	   sta.push(mid+1);
+   }
+   while(!sta.empty())
+   {
+      int left = sta.top();
+	  sta.pop();
+	  int right = sta.top();
+	  sta.pop();
+	  mid = Partion(A,left,right);
+	  if(mid-1 > low)
+	  {
+		  sta.push(mid-1);
+		  sta.push(low);
+	  }
+	  if(mid+1 > high)
+	  {
+		  sta.push(right);
+		  sta.push(mid+1);
+	  }
+   }
+}
+
+void QuickSort1(vector<int> &A, int n)
+{
+	Qsort1(A,0,n-1);
+}
+//希尔排序，时间复杂度O(n1.5),空间复杂度O(1)，不稳定;
+void shellSort(vector<int> &A, int n)
+{
+    vector<int> increment;
+	for(int i = n/3+1; i > 1; i = i/3+1)
+		increment.push_back(i);
+	increment.push_back(1);
+	for(int i = 0 ; i < increment.size(); ++i)
+	{
+	   for(int j = 0; j < n; ++j)
+	   {
+	      for(int k = j; k-increment[i] >= 0 ; k = k - increment[i])
+			  if(A[k] < A[k-increment[i]])
+				  swap(A[k],A[k-increment[i]]);
+	   }
+	}
+}
+
+void make_heap(vector<int> &A, int i, int n)
+{
+   for(int j = 2*i+1; j < n; j = 2*j+1)
+   {
+       if(j < n-1 && A[j] < A[j+1])
+		   j++;
+	   if(A[i] < A[j])
+		   swap(A[i],A[j]);
+	   else
+		   break;
+	   i = j;
+   }
+}
+
+//堆排序，时间复杂度O(n*logn),空间复杂度O(1),不稳定
+void HeapSort(vector<int> &A, int n)
+{
+   //建立大根堆
+	for(int i = n/2-1; i >= 0; --i)
+	{
+	    make_heap(A,i,n);
+	}
+	//排序
+	int end = n-1;
+	for(int i = n-1; i > 0; --i)
+	{
+	   swap(A[0],A[i]);
+	   make_heap(A,0,i);
+	}
+}
+
+void merge(vector<int> &A, int low, int high)
+{
+   vector<int> temp(high-low+1);
+   int mid = (high-low)/2+low;
+   int i ,j;
+   int cnt = 0;
+   for( i = low,j = mid+1;i <= mid && j <= high;)
+   {
+	   if(A[i] < A[j])
+	   {
+		    temp[cnt++] = A[i];
+			++i;
+	   } 
+	   else
+	   {
+		    temp[cnt++] = A[j];
+			++j;
+	   }  
+   }
+   if(i > mid)
+   {
+      for(;j <= high; ++j)
+		  temp[cnt++] = A[j];
+   }
+   else
+   {
+	   for(;i <= mid; ++i)
+		  temp[cnt++] = A[i];
+   }
+   for(int i = 0; i < high-low+1; ++i)
+   {
+      A[low+i] = temp[i];
+   }
+}
+
+void sort(vector<int> &A, int low, int high)
+{
+	if(low >= high)
+		return;
+    int mid = (high-low)/2+low;
+	sort(A,low,mid);
+	sort(A,mid+1,high);
+	merge(A,low,high);
+}
+//归并排序，时间复杂度O(n*logn),空间复杂度O(n)
+void mergeSort(vector<int> &A, int n)
+{
+   int low = 0;
+   int high = n-1;
+   sort(A,low,high);
+}
+int main()
+{
+	int array[8] = {3,1,5,6,5,3,6,8};
+	vector<int> A(array,array+8);
+	//bubbleSort(A,A.size());
+     //SelectSort(A,8); 
+	//InsertSort(A,8);
+	 //QuickSort1(A,8);
+	 //shellSort(A,8   );
+	 //HeapSort(A,8);
+	  mergeSort(A,8);
+	 system("pause");
+	return 0;
+}

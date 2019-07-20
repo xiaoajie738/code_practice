@@ -1,0 +1,51 @@
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <string>
+using namespace std;
+
+vector<vector<string>> partition(string s) 
+{  
+	vector<vector<string>> results;  
+	vector<string> result;  
+	if(s.size()==0)  
+		return results;  
+	palindrome_search(results,result,s,0);  
+	return results;  
+}  
+
+void palindrome_search(vector<vector<string>>& results,vector<string>& result,string &s,int i)  
+{  
+	if (!(i<s.size()))  
+	{  
+		results.push_back(result);  
+		return;  
+	}  
+	string temp;  
+	while (i<s.size())  
+	{  
+		temp.push_back(s[i]);  
+		i++;  
+		if (palindrome_judge(temp))  
+		{  
+			result.push_back(temp);  
+			palindrome_search(results,result,s,i);  
+			result.pop_back();//还原上一次的结果  
+		}  
+	}  
+}  
+
+bool palindrome_judge(string str)  
+{  
+	string temp=str;  
+	reverse(temp.begin(), temp.end());  
+	return str==temp;  
+}  
+
+int main()
+{
+    int array[2] = {2,1};
+	vector<int> vec(array,array+2);
+    system("pause");
+	return 0;
+}

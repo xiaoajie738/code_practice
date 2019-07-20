@@ -1,0 +1,50 @@
+#include<iostream>
+#include<string>
+#include<vector>
+#include<sstream>
+#include<algorithm>
+using namespace std;
+
+//They are students.
+//	aeiou
+//
+//Êä³öÀı×Ó:
+//Thy r stdnts.
+bool isInclude(char s, string str2)
+{
+   for(unsigned int i = 0; i < str2.size(); ++i)
+   {
+      if(s == str2[i])
+		  return true;
+   }
+   return false;
+}
+string ReverseSentence0(string str1,string str2) 
+{
+	string res;
+	for(unsigned int i = 0; i < str1.size(); ++i)
+	{
+		if(str1[i] == ' ') 
+		{
+			res += ' ';
+			
+		}
+		else 
+		{
+			if(!isInclude(str1[i],str2))
+				res += str1[i];
+		}
+			
+	}
+	return res;
+}
+
+int main()
+{
+	string str1,str2;
+	while(getline(cin,str1) && getline(cin,str2))
+	{
+	  cout << ReverseSentence0(str1,str2);
+	}
+	return 0;
+}

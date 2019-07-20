@@ -1,0 +1,43 @@
+//将顺序序列处理得出结果
+//比如1 2 3 4 5，先将5插入到3、4之间（隔1），得到1 2 3 5 4，再将4插入到2、3之间（隔2），得到1 2 4 3 5，再将5插入
+//到1、2之间（隔3），得到1 5 2 4 3，最后将3插入到1前面（隔4），得到最终结果：3 1 5 2 4
+//从上面例子可看出，不断的将最后一个元素插入到前面，规律为相隔元素个数依次递增，上面是从1到4
+#include<iostream>
+#include<vector>
+using namespace std;
+
+int main() {
+	int t;
+	while (cin >> t) 
+	{
+		while (t) 
+		{
+			int n;
+			cin >> n;
+			vector<int> vec;
+			for (int i = 1; i <= n; i++) 
+			{
+				vec.push_back(i);
+			}
+			for (int i = 1; i < n; i++) 
+			{
+				int tmp = *(vec.end() - 1);
+				vec.insert(vec.end() - i - 1, tmp);
+				vec.pop_back();
+			}
+			bool flag = true;
+			for (int i = 0; i < vec.size(); i++) 
+			{
+				if (flag) 
+				{
+					flag = false;
+					cout << i;
+				}
+				else
+					cout << " " << i;
+			}
+			cout << endl;
+			t--;
+		}
+	}
+}

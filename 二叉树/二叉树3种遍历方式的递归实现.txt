@@ -1,0 +1,38 @@
+//二叉树3种方式的递归实现
+struct TreeNode 
+{
+	int val;
+	struct TreeNode *left;
+	struct TreeNode *right;
+	TreeNode(int x) :
+	val(x), left(NULL), right(NULL) 
+	{
+	}
+};
+
+void PreOrderTraverse(vector<int> &vec,TreeNode* root)
+{
+   if(root == NULL)
+	   return;
+   vec.push_back(root->val);
+   PreOrderTraverse(vec,root->left);
+   PreOrderTraverse(vec,root->right);
+}
+
+void InOrderTraverse(vector<int> &vec,TreeNode* root)
+{
+   if(root == NULL)
+	   return;
+   InOrderTraverse(vec,root->left);
+   vec.push_back(root->val);
+   InOrderTraverse(vec,root->right);
+}
+
+void PostOrderTraverse(vector<int> &vec,TreeNode* root)
+{
+	if(root == NULL)
+		return;
+	PostOrderTraverse(vec,root->left);
+	PostOrderTraverse(vec,root->right);
+	vec.push_back(root->val);
+}

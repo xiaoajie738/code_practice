@@ -1,0 +1,115 @@
+#include<iostream>  
+#include<random>  
+using namespace std;  
+
+//链表数据结构  
+struct ListNode  
+{  
+	int val;  
+	ListNode *next;  
+};  
+
+//在链表末尾追加元素  
+void appendTail(ListNode **pHead, int val)  
+{  
+	ListNode *pNew = new ListNode;  
+	pNew->next = NULL;  
+	pNew->val = val;  
+
+	if (*pHead == NULL)  
+	{  
+		*pHead = pNew;  
+	}  
+	else  
+	{  
+		ListNode *tmp = *pHead;  
+		while (tmp->next)  
+		{  
+			tmp = tmp->next;  
+		}  
+		tmp->next = pNew;  
+	}  
+}  
+
+//正序输出链表  
+void show(ListNode *pHead)  
+{  
+	while (pHead)  
+	{  
+		cout << pHead->val << " ";  
+		pHead = pHead->next;  
+	}  
+	cout << endl;  
+}  
+
+ListNode *insertionSortList(ListNode *head)  
+{  
+	//如果链表为空，或者只有一个元素，直接返回即可  
+	if (head == NULL || head->next == NULL)  
+		return head;  
+	//从链表的第二个元素开始遍历  
+	ListNode *p = head->next;  
+	while (p)  
+	{  
+		//如果当前遍历的元素小于已经排好序元素的最小元素，更新head指针  
+		if (p->val < head->val)  
+		{  
+			ListNode *tmp1 = head;  
+			while (tmp1->next != p)  
+			{  
+				tmp1 = tmp1->next;  
+			}  
+			ListNode *tmp = p;  
+			p = p->next;  
+			tmp1->next = p;  
+			tmp->next = head;  
+			head = tmp;  
+			continue;  
+		}  
+		//指向要插入位置的前一个指针  
+		ListNode *q = head;  
+		while (q->next != p)  
+		{  
+			if (q->next->val < p->val)  
+				q = q->next;  
+			else  
+				break;  
+		}  
+		//当前元素已在插入的位置，直接移动p即可  
+		if (q->next == p)  
+		{  
+			p = p->next;  
+		}  
+		else  
+		{  
+			//插入当前元素  
+			ListNode *tmp1 = q;  
+			while (tmp1->next != p)  
+			{  
+				tmp1 = tmp1->next;  
+			}  
+			ListNode *tmp = p;  
+			p = p->next;  
+			tmp1->next = p;  
+			tmp->next = q->next;  
+			q->next = tmp;  
+		}  
+	}  
+	return head;  
+}  
+
+int main()  
+{  
+	ListNode *pHead = NULL;  
+	for (int i = 0; i < 10; ++i)  
+	{  
+		appendTail(&pHead, rand() % 10);  
+	}  
+	cout << "排序之前的输出: ";  
+	show(pHead);  
+	ListNode *head = insertionSortList(pHead);  
+	cout << "排序之后的输出: ";  
+	show(head);  
+	system("pause");  
+	return 0;  
+}  

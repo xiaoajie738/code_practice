@@ -1,0 +1,47 @@
+#include <iostream>
+#include <vector>
+#include <deque>
+#include <algorithm>
+using namespace std;
+
+int func(int num)
+{
+   int count = 0;
+   int tmp = num;
+   if(tmp < 10)
+	   return count;
+   else
+   {
+	   int a = 1;
+	   while(1)
+	   {
+		   count++;
+		   if(a > 10)
+		   {
+			   num = a;
+			   a = 1;
+		   }
+			 
+		   while(num != 0)
+		   {
+			   a *= (num%10);
+			   num = num/10;
+		   }
+		   if(a < 10)
+			   break;
+	   } 
+    }
+   return count;
+
+}
+
+int main(void)
+{
+	int n;
+	while(cin >> n)
+	{
+	   cout << func(n);
+	}
+	//system("pause");
+	return 0;
+}

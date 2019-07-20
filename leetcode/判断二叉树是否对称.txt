@@ -1,0 +1,50 @@
+ bool isSymmetric(TreeNode *root) 
+{
+	if(root == NULL)
+		return true;
+	deque<TreeNode *> deq;
+	vector<char> vec;
+	deq.push_back(root);
+   bool isSymmetric = false;
+	while(!deq.empty())
+	{
+	   int len = deq.size();
+	   while(len--)
+	   {
+	       TreeNode * tmp = deq.front();
+		   deq.pop_front();
+		   if(tmp) {
+		     vec.push_back(tmp->val);
+		    deq.push_back(tmp->left);
+		    deq.push_back(tmp->right);
+		   }
+		   else
+			   vec.push_back('#');
+	   }
+	   //≈–∂œ «∑Ò∂‘≥∆
+	 
+	   int begin = 0;
+	   int end = vec.size()-1;
+	   if(begin == end)
+		   isSymmetric = true;
+	   else
+	   {
+	      while(begin < end)
+		  {
+			  if(vec[begin] == vec[end])
+			  {
+				  ++begin;
+				  --end;
+			  }
+			  else
+			  {
+				  isSymmetric = false;
+				  return isSymmetric;
+			  }
+		  }
+		  isSymmetric = true;
+	   }
+	   vec.clear();
+	}
+	return isSymmetric;
+}

@@ -1,0 +1,20 @@
+vector<int> buildMaxTree(vector<int> A, int n) 
+{
+	// write code here
+	vector<int> res(n, -1);
+	stack<int> s;
+	for (int i = 0; i < n; i++)
+	{
+		while (!s.empty() && A[s.top()] < A[i])
+		{
+			if (res[s.top()] == -1 || A[res[s.top()]] > A[i])
+				res[s.top()] = i;
+			s.pop();
+		}
+
+		if (!s.empty())
+			res[i] = s.top();
+		s.push(i);
+	}
+	return res;
+}

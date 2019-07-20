@@ -1,0 +1,23 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
+//考点;0和任一个数异或的值为该数本身，任一个数和该数本身异或的值为0
+int findOdd(vector<int> A, int n) {
+	// write code here
+	int result = 0;
+	for (int i=0; i<n; i++)
+	{
+		result = result ^ A[i];
+	}
+	return result;        
+}
+int main()
+{
+	int arr[5] = {1,2,3,2,1};
+   vector<int> vec(arr,arr+5);
+
+   cout << findOdd(vec,vec.size()) << endl;
+   system("pause");
+   return 0;
+}

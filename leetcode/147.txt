@@ -1,0 +1,22 @@
+//链接：https://www.nowcoder.com/practice/82c11b9392b14f3abfbf257f79a76025?tpId=46&tqId=29176&tPage=8&rp=8&ru=%2Fta%2Fleetcode&qru=%2Fta%2Fleetcode%2Fquestion-ranking
+来源：牛客网
+
+There are two sorted arrays A and B of size m and n respectively. Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).
+double find(int A[],int m,int B[],int n,int del)
+{
+	if(m==0)return B[del-1];
+	else if(n==0)return A[del-1];
+	else if(del==1)return A[0]<B[0]?A[0]:B[0];
+	int temp=del/2;
+	if(min(m,n)<temp)temp=min(m,n);
+	if(A[temp-1]>=B[temp-1])return find(A,m,B+temp,n-temp,del-temp);
+	else return find(A+temp,m-temp,B,n,del-temp);
+}
+
+double findMedianSortedArrays(int A[], int m, int B[], int n) 
+{
+	int del=(n+m+1)/2;
+	double temp=find(A,m,B,n,del);
+	if((m+n)&1)return temp;
+	else return (find(A,m,B,n,del+1)+temp)/2.0;
+}

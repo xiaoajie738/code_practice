@@ -1,0 +1,31 @@
+//×îÓÅ±à¼­
+#define MAX 303
+int f[MAX][MAX];
+int findMinCost(string A, int n, string B, int m, int c0, int c1, int c2)
+{
+	// write code here
+	for(int j = 0;j <= m; j++)
+		f[0][j] = j*c0;
+	for(int i = 0; i <= n; i++)
+		f[i][0] = i*c1;
+	for(int i = 1; i <= n; i++)
+	{
+		int temp = 0;
+	    for(int j = 1; j <= m; j++)
+		{
+		   temp =  min(f[i-1][j] + c1,f[i][j-1] + c0);
+		   if(A[i-1] == B[j-1])
+		   {
+		      temp = min(f[i-1][j-1],temp);
+		   }
+		   else
+		   {
+		       temp = min(f[i-1][j-1] + c2,temp);
+		   }
+		   f[i][j] = temp;
+		}
+		
+	}
+
+	return f[n][m];
+}

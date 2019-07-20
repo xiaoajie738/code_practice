@@ -1,0 +1,37 @@
+int minNumberInRotateArray(vector<int> rotateArray)
+{
+    if(rotateArray.size() == 0)
+        return 0;
+    int begin,mid,end;
+    begin = 0;
+    bool flag = true; //标志位，
+    end = rotateArray.size()-1;
+    //二分法查找
+    while((end - begin) != 1)
+    {
+        mid = (begin+end)/2;
+        if(rotateArray[mid] == rotateArray[begin] && rotateArray[mid] == rotateArray[end])
+        {
+            flag = false;  //当出现if语句中存在的情况时，不能再继续用二分法，比如数组｛2，2，2，2，1，2｝，只能用一般的顺序查找
+            break;
+        }
+             
+         else if(rotateArray[mid] >= rotateArray[begin])
+            begin = mid;
+         else if(rotateArray[mid] <= rotateArray[end])
+            end = mid;
+    }
+    if(flag)
+        return rotateArray[end];
+    //顺序查找
+    else
+    {
+       int Min = rotateArray[0];
+       for(int i = 1; i < rotateArray.size(); i++)
+       {
+           if(Min > rotateArray[i])
+               Min = rotateArray[i];
+       }
+       return Min;
+    }
+}

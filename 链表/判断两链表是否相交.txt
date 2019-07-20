@@ -1,0 +1,68 @@
+//分情况讨论
+ListNode* startNodeOfRing(ListNode* head)
+{
+  if(head == NULL || head->next == NULL)
+	  return NULL;
+   ListNode* pSlow = head;
+   ListNode* pQuick = head;
+   while(pQuick != NULL)
+   {
+       pSlow = pSlow->next;
+	   pQuick = pQuick->next == NULL?NULL:pQuick->next->next;
+	   if(pSlow == pQuick)
+		   break;
+   }
+   if(pQuick == NULL)
+	   return NULL;
+   pSlow = head;
+   while(pSlow != pQuick)
+   {
+       pSlow = pSlow->next;
+	   pQuick = pQuick->next;
+   }
+   return pSlow;
+}
+
+bool chkInter(ListNode* head1, ListNode* head2, int adjust0, int adjust1) 
+{
+	// write code here
+	if(head1 == NULL || head2 == NULL)
+		return false;
+	ListNode* p1;
+	ListNode* p2;
+	p1 = startNodeOfRing(head1);
+	p2 = startNodeOfRing(head2);
+	if(p1 == NULL && p2 != NULL || p1 != NULL && p2 == NULL)
+		return false;
+	else if(p1 == NULL && p2 == NULL)
+	{
+		p1 = head1;
+		while(p1->next != NULL)
+			p1 = p1->next;
+		p2 = head2;
+		while(p2->next != NULL)
+			p2 = p2->next;
+		if(p1 == p2)
+			return true;
+		else
+			return false;
+	}
+	else 
+	{
+		if(p1 == p2)
+			return true;
+		else
+		{
+		   ListNode* pp = p1->next;
+		   while(pp != p1)
+		   {
+		      if(pp == p2)
+				  return true;
+			  else
+				  pp = pp->next;
+		   }
+		   return false;
+		}
+	}
+    
+}

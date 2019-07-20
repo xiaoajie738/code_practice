@@ -1,0 +1,77 @@
+//方法1，没有用到完全二叉树的特性，时间复杂度为O(N)
+int count(TreeNode* root) 
+{
+	// write code here 
+	if(root == NULL)
+		return 0; 
+	int num = 1;
+	if(root->left != NULL)
+		num += count(root->left);
+	if(root->right != NULL)
+		num += count(root->right);
+	return num;
+}
+
+//方法二， 利用完全二叉树的特性，时间复杂度为O(log（H2）)，擦，怎么感觉时间复杂度是O(H平方)
+int count(TreeNode* root) 
+{
+	if(root==NULL)
+		return 0;
+	int leftdepth=0;
+	int rightdepth=1;
+	TreeNode* p=root;
+	while(p!=NULL)
+	{
+		leftdepth++;
+		p=p->left;  
+	}
+	p=root->right;
+	while(p!=NULL)
+	{
+		rightdepth++;
+		p=p->left; 
+	}
+	if(leftdepth==rightdepth)
+	{
+		int leftnode=pow(2,leftdepth-1)-1;
+		return leftnode+1+count(root->right);
+	}
+	else
+	{
+		int rightnode=pow(2,rightdepth-1)-1;
+		return rightnode+1+count(root->left);
+	}
+}
+
+//同方法2
+int count(TreeNode* root)
+{
+	int num=1;
+	if(root==NULL)
+		return 0;
+	int length=1;
+	TreeNode *test=root;
+	while(test->left!=NULL)
+	{
+		test=test->left;
+		++length;
+	}
+	int right_length=1;
+	test=root->right;
+	while(test!=NULL)
+	{
+		test=test->left;
+		++right_length;
+	}
+	if(right_length==length)
+	{
+		num+=pow(2.0,length-1)-1;
+		num+=count(root->right);
+	}
+	else
+	{
+		num+=pow(2.0,right_length-1)-1;
+		num+=count(root->left);
+	}
+	return num;
+}

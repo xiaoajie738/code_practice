@@ -1,0 +1,49 @@
+输入一个复杂链表（每个节点中有节点值，以及两个指针，一个指向下一个节点，另一个特殊指针指向任意一个节点）
+//code
+
+struct RandomListNode {
+	int label;
+	struct RandomListNode *next, *random;
+	RandomListNode(int x) :
+	label(x), next(NULL), random(NULL) {
+	}
+};
+RandomListNode* Clone(RandomListNode* pHead)
+{
+	if (pHead == NULL)
+	{
+		return NULL;
+	}
+	RandomListNode* pc = pHead;
+	RandomListNode* pM = NULL;
+	while (pc != NULL)
+	{
+		pM = new RandomListNode(pc->label);
+		pM->next = pc->next;
+		pc->next = pM;
+		pc = pM->next;               
+	}
+
+	pc = pHead;       
+	while (pc != NULL)
+	{
+		pM = pc->next;
+		if (pc->random != NULL){
+			pM->random = pc->random->next;
+		}           
+		pc = pc->next->next;                                  
+	}
+	RandomListNode *pHead1 = pHead;
+	RandomListNode *pHead2 = pHead->next;
+	RandomListNode *p1 = pHead1;
+	RandomListNode *p2 = pHead2;       
+	while ( p2->next != NULL){
+		p1->next = p1->next->next; 
+		p2->next = p2->next->next;
+		p1 = p1->next;           
+		p2 = p2->next;                       
+	}
+	p1->next = NULL;
+	p2->next = NULL;
+	return pHead2;
+}

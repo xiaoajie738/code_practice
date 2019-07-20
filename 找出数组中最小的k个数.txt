@@ -1,0 +1,71 @@
+#include<iostream>
+#include<math.h>
+#include<vector>
+#include<algorithm>
+using namespace std;
+
+vector<int> GetLeastNumbers_Solution(vector<int> input, int k) 
+{   
+	vector<int> temp;
+	sort(input.begin(),input.end());
+	for(int i = 0; i < k; i++)
+	{
+	   temp.push_back(input[i]);
+	}
+	return temp;
+}
+
+
+int main()
+{
+	int N;
+	int k =6;
+	vector<int> result;
+	int array[9] = {1,3,3,2,2,3,5,3,3};
+	vector<int> number(array,array+9);
+	result =  GetLeastNumbers_Solution(number,k); 
+    system("pause");
+	return 0;
+	
+}
+
+int parition(vector<int> &input, int low, int high)
+{
+     int pviot = input[low];
+	 while(low < high)
+	 {
+	     while(low < high && input[high] >= pviot)
+			 --high;
+		 swap(input[low],input[high]);
+		 while(low < high && input[low] <= pviot)
+			 ++low;
+		 swap(input[low],input[high]);
+	 }
+	 return low;
+}
+
+vector<int> GetLeastNumbers_Solution(vector<int> input, int k) 
+{
+	if(input.size() == 0 || input.size() < k || k <= 0)
+		return vector<int>();
+	vector<int> res(k);
+	int begin = 0, end = input.size()-1;
+	int index,mid;
+	index = parition(input,begin,end);
+	while(index != k-1)
+	{
+		if(index < k-1)
+		{
+			begin = index+1;
+			index = parition(input,begin,end);
+		}
+		if(index > k-1)
+		{
+			end = index-1;
+			index = parition(input,begin,end);
+		}
+	}
+	for(int i = 0; i < k; ++i)
+		res[i] = input[i];
+	return res;
+}

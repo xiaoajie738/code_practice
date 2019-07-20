@@ -1,0 +1,34 @@
+//双栈形成队列
+stack<int> stack_push;
+stack<int> stack_pop;
+ 
+vector<int> twoStack(vector<int> ope, int n) 
+{
+	// write code here
+	vector<int> result;
+	for(int i = 0; i < n; i++)
+	{
+	   if(ope[i] > 0)
+		   stack_push.push(ope[i]);
+	   else
+	   {
+		   if(stack_pop.empty())
+		   {
+		       while(!stack_push.empty())
+			   {
+				   stack_pop.push(stack_push.top());
+				   stack_push.pop();
+			   }
+			   result.push_back(stack_pop.top());
+			   stack_pop.pop();
+		   }
+		   else
+		   {
+			   result.push_back(stack_pop.top());
+			   stack_pop.pop();
+		   }
+	     
+	   }
+	}
+	return result;
+}

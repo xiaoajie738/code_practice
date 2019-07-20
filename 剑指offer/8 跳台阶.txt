@@ -1,0 +1,46 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
+//一只青蛙一次可以跳上1级台阶，也可以跳上2级。
+//求该青蛙跳上一个n级的台阶总共有多少种跳法
+
+//递归方法
+int jumpFloor(int number) 
+{
+	if(number <= 0)
+		return 0;
+	if(number == 1)
+		return 1;
+	if(number == 2)
+		return 2;
+	return jumpFloor(number-1) + jumpFloor(number-2);
+}
+
+//循环方法
+int jumpFloor(int number)
+{
+	int array[3] = {0,1,2};
+	if(number <= 0)
+		return array[0];
+	if(number == 1)
+		return array[1];
+	if(number == 2)
+		return array[2];
+	int res = 0,preFirst = array[1],preSecond = array[2];
+	for(int i = 3; i <= number; i++)
+	{
+	    res = preFirst + preSecond;
+		preFirst = preSecond;
+		preSecond = res;
+	}
+	return res;
+}
+int main()
+{    
+	 
+	cout << jumpFloor(5);
+	system("pause");
+	return 0;
+
+}

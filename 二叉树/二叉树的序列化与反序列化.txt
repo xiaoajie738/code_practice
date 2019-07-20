@@ -1,0 +1,81 @@
+#include <iostream>
+#include <sstream>
+#include <vector>
+#include <string>
+using namespace std;
+
+struct TreeNode {
+	int val;
+	struct TreeNode *left;
+	struct TreeNode *right;
+	TreeNode(int x) :
+	val(x), left(NULL), right(NULL) {
+	}
+};
+
+string toString(TreeNode* root) {
+	// write code here
+	string res;
+	if(root == NULL)
+	{
+		res += "#!";
+		return res;
+	}
+	int val = root->val;
+	string temp;
+	stringstream s;
+	s << val;	
+	s >> temp;
+	s.str("");
+	res += temp;
+	res += "!";
+	res += toString(root->left);
+	res += toString(root->right);
+	return res;
+}
+char* Serialize(TreeNode *root) 
+{    
+	string res = toString(root);
+	char* chr = new char(res.size()+1);
+	strcpy(chr,res.c_str());
+	return chr;
+}
+
+int p = 0;
+void func(TreeNode **root,char* str)
+{
+	if( str[p] == '\0')
+		return;
+	if(str[p] == '#')
+	{
+		p = p+2;
+		return;
+	}
+	if(*root == NULL)
+	{
+	    *root = new TreeNode(str[p]);
+		p = p+2;
+	}
+	func(&((*root)->left),str);
+	func(&((*root)->right),str);
+}
+TreeNode* Deserialize(char *str) 
+{
+	if(str == NULL)
+		return NULL;
+	int len = strlen(str);
+	TreeNode* root = NULL;
+	func(&root,str);
+	return root;
+}
+
+int main()
+{
+	string s("1,2,#,#,3,#,#");
+	char str[15] = {'a','!','b','!','#','!','#','!','c','!','#','!','#','!'}; 
+	TreeNode* tmp = NULL;
+	tmp = Deserialize(str);
+	cout << Serialize(tmp);
+    system("pause");
+	return 0;
+}

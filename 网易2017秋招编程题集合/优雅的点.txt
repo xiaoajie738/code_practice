@@ -1,0 +1,31 @@
+#include<iostream>
+#include<algorithm>
+#include<vector>
+using namespace std;
+
+
+int main()
+{
+   int N;
+   while(cin >> N)
+   {
+      int b,c;
+	  c = (int)sqrt((double)N);
+	  int count = 0;
+	  for( int i = 0; i <= c; i++)
+	  {
+		  b = (int)sqrt((double)(N - i*i));
+		  if(b*b == N - i*i)
+		  {
+			  if(i == 0 || b == 0 )
+			  {
+				  count = count + 2;
+			  }
+			  else
+			      count = count + 4;
+		  }
+	  }
+	  cout << count << endl;
+   }
+   return 0;
+}

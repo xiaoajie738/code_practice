@@ -1,0 +1,29 @@
+vector<vector<int> > levelOrder(TreeNode *root) {
+        vector<vector<int> > vec;
+	if(root == NULL)
+		return vec;
+	deque<TreeNode*> dq;
+	dq.push_back(root);
+
+	while(!dq.empty())
+	{
+		int low = 0;
+		int high = dq.size();
+		vector<int> temp;
+
+		while(low++ < high)
+		{
+			TreeNode* cur = dq.front();
+			temp.push_back(cur->val);
+			dq.pop_front();
+			if(cur->left) 
+				dq.push_back(cur->left);
+			if(cur->right) 
+				dq.push_back(cur->right);
+		}
+		vec.push_back(temp);
+	}
+	//reverse(vec.begin(),vec.end());
+	return vec;
+        
+    }turn vec;

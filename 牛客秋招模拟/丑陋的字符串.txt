@@ -1,0 +1,35 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+string str;
+
+int calc(string s, int j)
+{
+	int res = 0;
+	for(int i = j + 1; i < s.size(); i++) 
+	{
+		if(s[i] == s[i - 1])
+			res++;
+	}
+	return res;
+}
+int main() 
+{
+	cin >> str;
+	int pos = 0;
+	while(pos < str.size() && str[pos] == '?') 
+		pos++;
+	for(int i = pos + 1; i < str.size(); i++) 
+	{
+		if(str[i] == '?') 
+		{
+			if(str[i - 1] == 'A') 
+				str[i] = 'B';
+			else 
+				str[i] = 'A';
+		}
+	}
+	cout << calc(str, pos) << endl;
+	return 0;
+}

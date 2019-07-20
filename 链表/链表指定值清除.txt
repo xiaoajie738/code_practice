@@ -1,0 +1,24 @@
+ListNode* clear(ListNode* head, int val) 
+{
+	// write code here
+	if(head->val == val)
+		head = head->next;
+	ListNode* preNode = head;
+	ListNode* curNode = head->next;
+	while(curNode != NULL)
+	{
+		if(curNode->val == val)
+		{
+		   preNode->next = curNode->next;
+                   delete curNode;
+		   curNode = curNode->next;
+		}
+		else
+		{
+			preNode = preNode->next;
+			curNode = curNode->next;
+		}
+		
+	}
+	return head;
+}

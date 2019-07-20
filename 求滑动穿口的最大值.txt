@@ -1,0 +1,40 @@
+//常规方法
+#include<iostream>  
+#include<string>  
+//#include<cstdio>  
+#include<vector>  
+//#include<cmath>  
+using namespace std;  
+
+vector<int> maxInWindows(const vector<int>& num, unsigned int size)
+{
+	int numSize = num.size();
+	vector<int> max;
+	if(size == 0)
+	{
+		return max;
+	}
+	int maxNum;
+	for(int i = 0; i < numSize - size + 1; i++)
+	{   maxNum= num[i];
+	for(int j = i + 1; j < i + size; j++)
+	{
+
+		if(num[j] > maxNum)
+			maxNum = num[j];
+	}
+	max.push_back(maxNum);
+	}
+	return max;
+}
+
+int main()  
+{  
+	int arr[8] = {2,3,4,2,6,2,5,1};
+	vector<int> num(arr,arr+8);
+	vector<int> max;
+	max.resize(8);
+	max = maxInWindows(num,3);
+
+	return 0;  
+} 

@@ -1,0 +1,60 @@
+#include<iostream>
+#include<string>
+#include<vector>
+#include<set>
+#include<map>
+#include<limits.h>
+#include<algorithm>
+#include<cstring>
+using namespace std;
+
+//返回以数字k开头，<=n的数的个数
+int getNum(int n, int k)
+{
+	int base = 1, sum = 0;
+	while (n >= base * (k+1) -1)
+	{
+		sum += base;
+		base *= 10;
+	}
+	if (n >= base * k)
+		sum += n - base * k + 1;
+	return sum;
+}
+
+int ans = 0;
+void getMth(int n, int m, int& k, int cur)
+{
+	if (++k == m)
+	{
+		ans = cur;
+		return;
+	}
+	for (int i = 0; i <= 9; i++)
+	{
+		int t = cur * 10 + i;
+		if (t <= n)
+			getMth(n, m, k, t);
+		if (k >= m)
+			return;
+	}
+}
+
+int main()
+{
+	int m, n, k = 0;
+	cin >> m >> n;
+	int i;
+	for (i = 1; i <= 9; i++)
+	{
+		int num = getNum(n, i);
+		if (num < m)
+			m -= num;
+		else
+			break;
+	}
+	getMth(n, m, k, i);
+	cout << ans << endl;
+	system("pause");
+	return 0;
+}

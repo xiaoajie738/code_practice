@@ -1,0 +1,35 @@
+#include<iostream>
+
+using namespace std;
+
+int f(int x){
+    int res = 0;
+    while(x){
+        res += x % 10;
+        x = x / 10;
+    }
+    return res;
+}
+
+int g(int x){
+    int res = 0;
+    while(x){
+       res += x % 2;
+        x >>= 1; 
+    }
+   return res;
+}
+
+int main(){
+    int n;
+    while(cin >> n){
+        int count = 0;
+        for(int i = 1; i <= n; ++i){
+            if(f(i) == g(i))
+                ++count;
+        }
+        cout << count << endl;
+    }
+    
+    return 0;
+}

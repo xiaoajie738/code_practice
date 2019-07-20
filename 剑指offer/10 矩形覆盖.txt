@@ -1,0 +1,31 @@
+//Ñ­»··¨
+int rectCover(int number) 
+{
+	if(number <= 0)
+		return 0;
+	int array[2] = {1,2};
+	if(number == 1)
+		return array[number-1];
+	if(number == 2)
+		return array[number-1];
+	int preNum1 = array[0],preNum2 = array[1],res = 0;
+	for(int i = 2; i < number; i++)
+	{
+	    res = preNum1 + preNum2;
+		preNum1 = preNum2;
+		preNum2 = res;
+	}
+	return res;
+}
+//µÝ¹é·¨
+int rectCover(int number) 
+{
+	if(number <= 0)
+		return 0;
+	int array[2] = {1,2};
+	if(number == 1)
+		return array[number-1];
+	if(number == 2)
+		return array[number-1];
+	return rectCover(number-2) + rectCover(number-1);
+}

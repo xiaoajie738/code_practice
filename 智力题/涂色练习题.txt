@@ -1,0 +1,4 @@
+int getMost(int n, int m) {
+        // write code here
+        return (m*n +1)/2;
+    }

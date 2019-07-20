@@ -1,0 +1,18 @@
+//最长无重复子串练习题
+
+int longestSubstring(string A, int n) 
+{
+	// write code here
+	int hashTable[256] = {0};
+        vector<int> vec(n);
+	vec[0] = 1;
+	hashTable[A[0]] = 1;
+	int pre = 0;
+	for(int i = 1; i < n; i++)
+	{
+	   pre =  max(pre,hashTable[A[i]]);
+	   vec[i] = max(vec[i-1],i - pre +1) ;
+	   hashTable[A[i]] = i+1;
+	}
+	return vec[n-1];
+}

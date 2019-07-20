@@ -1,0 +1,29 @@
+unsigned fun_yueshu(unsigned int a, unsigned int b)
+{
+   if(a < b)
+	   return -1;
+   unsigned r;
+   while(r=(a%b))
+   {
+       a = b;
+	   b = r;
+   }
+   return b;
+}
+
+vector<int> collision(int n) 
+{
+	vector<int> res;
+	if(n < 3)
+		return res;
+	//Çó·ÖÄ¸
+	int total = 1;
+	for(int i = 1; i <= n; i++)
+		total *= 2;
+	int Meet = total - 2;
+	int Max_yueshu = 1;
+    Max_yueshu = fun_yueshu(total,Meet);
+	res.push_back(Meet/Max_yueshu);
+	res.push_back(total/Max_yueshu);
+	return res;
+}

@@ -1,0 +1,60 @@
+#include<iostream>
+#include<vector>
+#include<ctime>
+using namespace std;
+
+//一只青蛙一次可以跳上1级台阶，也可以跳上2级……它也可以跳上n级。
+//求该青蛙跳上一个n级的台阶总共有多少种跳法。
+
+//循环
+int jumpFloorII(int number) 
+{
+	if(number <= 0)
+		return 0;
+	vector<int> res(number+1,0);
+	res[0] = 1,res[1] = 1, res[2] = 2;
+	int temp = res[0] + res[1] + res[2];
+	for(int i = 3; i <= number; i++)
+	{
+	   res[i] += temp;
+	   temp = res[i]*2;
+	
+	}
+	return res[number];
+}
+
+//递归
+int jumpFloorII2(int number) 
+{
+	int res = 0;
+	if(number <= 0)
+		return 0;
+	if(number == 1)
+		return 1;
+	if(number == 2)
+		return 2;
+	for(int i = number-1; i > 0; i--)
+	{
+		res += jumpFloorII2(i);
+	}
+	return res +1;
+}
+
+int main()
+{    
+	 
+	// vector<int> vec(array,array+2);
+	clock_t start,end;
+	//srand((unsigned)time(NULL));
+	start = clock();
+    cout << jumpFloorII(20) << endl;
+	end = clock();
+	cout << "循环时间消耗" <<end-start << endl;
+	start = clock();
+	 cout << jumpFloorII2(20) <<  endl;
+	 end = clock();
+	 cout << "递归时间消耗" << end-start << endl;
+	system("pause");
+	return 0;
+
+}
